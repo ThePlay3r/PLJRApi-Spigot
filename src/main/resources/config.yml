@@ -1,0 +1,48 @@
+# Big thanks and love for using my plugins! ^^
+
+#|--------------------------------------------------------------------------------------------------------------------|#
+# Plugin: PLJRApi
+# Author: https://www.mc-market.org/members/89497/ | https://www.spigotmc.org/members/radekjenejlepsi.227786/
+# Description: Main API for all of my plugins to work.
+# Dependencies:
+#   -> MySQL Database
+#   -> Vault (https://www.spigotmc.org/resources/vault.34315/)
+#   -> PlaceholderAPI<Optional> (https://www.spigotmc.org/resources/placeholderapi.6245/)
+#|--------------------------------------------------------------------------------------------------------------------|#
+
+###############\
+# MySQL Setup ##############################################################################################\
+############### This is the most important part, as the plugin can not work without proper MySQL Database. # \
+              ##############################################################################################  \
+mysql:
+  host: "127.0.0.1"
+  port: "3306"
+  database: "db"
+  username: "root"
+  password: ""
+#|--------------------------------------------------------------------------------------------------------------------|#
+
+##################\
+# Settings Setup #############################################################\
+################## Here, you can enable or disable functions of this plugin. # \
+                 #############################################################  \
+settings:
+  sounds: true #-> Should the plugin play sounds?
+#|--------------------------------------------------------------------------------------------------------------------|#
+
+################\
+# Sounds Setup #######################################################\
+################ Here, you can customize sounds, made by the plugin. # \
+               #######################################################  \
+sounds:
+  COMMAND_FAIL: "ENTITY_VILLAGER_NO"
+#|--------------------------------------------------------------------------------------------------------------------|#
+
+##############\
+# Lang Setup ################################################################\
+############## Here, you can customize messages, send by the plugin itself. # \
+             ################################################################  \
+lang:
+  NO_PERM: "&c&l! §8» §fYou don't have enough permissions to do this!"
+  OFFLINE: "&c&l! §8» §e%name §fis not on the server!"
+#|--------------------------------------------------------------------------------------------------------------------|#

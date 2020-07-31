@@ -1,0 +1,8 @@
+name: PLJRApi
+version: ${project.version}
+main: me.pljr.pljrapi.PLJRApi
+api-version: 1.13
+authors: [9hx]
+depends: [Vault]
+softdepend: [PlaceholderAPI]
+description: API for all of my plugins.
