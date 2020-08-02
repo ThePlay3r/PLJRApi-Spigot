@@ -2,6 +2,7 @@ package me.pljr.pljrapi.managers;
 
 import com.cryptomorin.xseries.XMaterial;
 import com.cryptomorin.xseries.XSound;
+import me.pljr.pljrapi.objects.PLJRActionBar;
 import me.pljr.pljrapi.objects.PLJRSound;
 import me.pljr.pljrapi.objects.PLJRTitle;
 import me.pljr.pljrapi.utils.FormatUtil;
@@ -170,7 +171,7 @@ public class ConfigManager {
             }
 
             Optional<XMaterial> xMaterialOptional = XMaterial.matchXMaterial(materialName);
-            if (xMaterialOptional.isPresent()){
+            if (xMaterialOptional.isPresent() && xMaterialOptional.get().parseMaterial() != null){
                 return xMaterialOptional.get().parseMaterial();
             }
 
@@ -221,7 +222,7 @@ public class ConfigManager {
         return EntityDamageEvent.DamageCause.VOID;
     }
 
-    public PLJRTitle getTitleManager(String path){
+    public PLJRTitle getPLJRTitle(String path){
         if (config.isSet(path)){
             String title = getString(path+".title");
             String subtitle = getString(path+".subtitle");
@@ -235,7 +236,7 @@ public class ConfigManager {
         return new PLJRTitle("§cTitle", "§cWas not found!", 20, 40, 20);
     }
 
-    public PLJRSound getSoundManager(String path){
+    public PLJRSound getPLJRSound(String path){
         if (config.isSet(path)){
             Sound type = getSound(path+".type");
             int volume = getInt(path+".volume");
@@ -254,6 +255,17 @@ public class ConfigManager {
 
         pathNotFound(path);
         return null;
+    }
+
+    public PLJRActionBar getPLJRActionBar(String path){
+        if (config.isSet(path)){
+            String message = getString(path+".message");
+            int duration = getInt(path+".duration");
+            return new PLJRActionBar(message, duration);
+        }
+
+        pathNotFound(path);
+        return new PLJRActionBar("§c"+path, 20);
     }
 }
 

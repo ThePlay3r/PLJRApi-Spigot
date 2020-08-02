@@ -1,6 +1,5 @@
 package me.pljr.pljrapi;
 
-import com.cryptomorin.xseries.messages.Titles;
 import me.pljr.pljrapi.config.CfgLang;
 import me.pljr.pljrapi.config.CfgMysql;
 import me.pljr.pljrapi.config.CfgSettings;
@@ -10,6 +9,7 @@ import me.pljr.pljrapi.managers.ConfigManager;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
+import org.bukkit.ChatColor;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -36,7 +36,7 @@ public final class PLJRApi extends JavaPlugin {
 
     private void setupVault(){
         if (!setupVaultEconomy() || !setupVaultChat() || !setupVaultPermissions()){
-            log.severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
+            log.severe(String.format(ChatColor.RED + "[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
             getServer().getPluginManager().disablePlugin(this);
         }
     }
@@ -55,12 +55,18 @@ public final class PLJRApi extends JavaPlugin {
 
     private boolean setupVaultChat(){
         RegisteredServiceProvider<Chat> rsp = getServer().getServicesManager().getRegistration(Chat.class);
+        if (rsp == null) {
+            return false;
+        }
         vaultChat = rsp.getProvider();
         return vaultChat != null;
     }
 
     private boolean setupVaultPermissions(){
         RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
+        if (rsp == null) {
+            return false;
+        }
         vaultPerms = rsp.getProvider();
         return vaultPerms != null;
     }

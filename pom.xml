@@ -52,7 +52,7 @@
                     <relocations>
                         <relocation>
                             <pattern>com.cryptomorin.xseries</pattern>
-                            <shadedPattern>my.pljr.pljrpapi</shadedPattern>
+                            <shadedPattern>me.pljr.pljrapi</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
