@@ -1,8 +1,6 @@
 package me.pljr.pljrapi.managers;
 
 import com.cryptomorin.xseries.XMaterial;
-import com.cryptomorin.xseries.messages.Titles;
-import me.pljr.pljrapi.config.CfgSettings;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;

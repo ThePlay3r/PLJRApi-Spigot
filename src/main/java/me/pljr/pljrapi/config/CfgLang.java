@@ -12,6 +12,7 @@ public class CfgLang {
     public static HashMap<Lang, String> lang = new HashMap<>();
 
     public static void load(){
+        CfgSettings.bungee = config.getBoolean("settings.bungee");
         for (Lang lang : Lang.values()){
             CfgLang.lang.put(lang, config.getString("lang." + lang.toString()));
         }

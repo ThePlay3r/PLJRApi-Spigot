@@ -6,4 +6,3 @@ authors: [9hx]
 depends: [Vault]
 softdepend: [PlaceholderAPI]
 description: API for all of my plugins.
-load: STARTUP
