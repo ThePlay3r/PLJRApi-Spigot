@@ -71,8 +71,7 @@ public final class PLJRApi extends JavaPlugin {
         return vaultPerms != null;
     }
     private void setupDatabase(){
-        dataSource = new DataSource();
-        dataSource.load();
+        dataSource = new DataSource(CfgMysql.host, CfgMysql.port, CfgMysql.database, CfgMysql.username, CfgMysql.password);
         dataSource.initPool();
     }
 

@@ -12,14 +12,14 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class CommandUtil {
+public abstract class CommandUtil {
 
-    public static void fail(Player player){
+    public void fail(Player player){
         Location playerLoc = player.getLocation();
         if (CfgSettings.sounds) player.playSound(playerLoc, CfgSounds.sounds.get(Sounds.COMMAND_FAIL), 10, 1);
     }
 
-    public static boolean checkPerm(CommandSender sender, String perm){
+    public boolean checkPerm(CommandSender sender, String perm){
         if (!(sender instanceof Player)) return true;
         Player player = (Player) sender;
         if (player.hasPermission(perm)) return true;
@@ -28,18 +28,18 @@ public class CommandUtil {
         return false;
     }
 
-    public static boolean checkPlayer(CommandSender sender, String requestName){
+    public boolean checkPlayer(CommandSender sender, String requestName){
         if (!PlayerUtil.isPlayer(requestName)){
             sender.sendMessage(CfgLang.lang.get(Lang.OFFLINE).replace("%name", requestName));
             if (sender instanceof Player){
-                CommandUtil.fail((Player) sender);
+                fail((Player) sender);
             }
             return false;
         }
         return true;
     }
 
-    public static void sendHelp(CommandSender sender, List<String> help){
+    public void sendHelp(CommandSender sender, List<String> help){
         if (sender instanceof Player){
             Player player = (Player) sender;
             for (String line : help){

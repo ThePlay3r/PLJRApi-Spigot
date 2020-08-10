@@ -2,7 +2,8 @@ package me.pljr.pljrapi.database;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import me.pljr.pljrapi.config.CfgMysql;
+import me.pljr.pljrapi.PLJRApi;
+import me.pljr.pljrapi.managers.ConfigManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,12 +16,25 @@ public class DataSource {
     private final HikariConfig config = new HikariConfig();
     private HikariDataSource ds;
 
-    public void load() {
-        host = CfgMysql.host;
-        port = CfgMysql.port;
-        database = CfgMysql.database;
-        username = CfgMysql.username;
-        password = CfgMysql.password;
+    public DataSource(String host, String port, String database, String username, String password){
+        this.host = host;
+        this.port = port;
+        this.database = database;
+        this.username = username;
+        this.password = password;
+    }
+
+    public static DataSource getFromConfig(ConfigManager config){
+        if (config.getBoolean("mysql.enabled")){
+            return new DataSource(
+                    config.getString("mysql.host"),
+                    config.getString("mysql.port"),
+                    config.getString("mysql.database"),
+                    config.getString("mysql.username"),
+                    config.getString("mysql.password")
+            );
+        }
+        return PLJRApi.getDataSource();
     }
 
     public void initPool() {
@@ -34,8 +48,6 @@ public class DataSource {
         config.setMinimumIdle(2);
         ds = new HikariDataSource(config);
     }
-
-    public DataSource() {}
 
     public Connection getConnection() throws SQLException {
         return ds.getConnection();
