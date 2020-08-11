@@ -1,5 +1,7 @@
 package me.pljr.pljrapi.utils;
 
+import me.pljr.pljrapi.config.CfgLang;
+import me.pljr.pljrapi.enums.Lang;
 import org.bukkit.ChatColor;
 
 import java.util.Random;
@@ -17,11 +19,11 @@ public class FormatUtil {
             minutes %= 60;
             if (hours >= 24) {
                 long days = hours / 24;
-                return String.format("§b%d d, §b%02d h. §b%02d m. §b%02d s.", days, hours % 24, minutes, seconds);
+                return String.format(CfgLang.lang.get(Lang.TIME_FORMAT_DAYS), days, hours % 24, minutes, seconds);
             }
-            return String.format("§b%02d h. §b%02d m. §b%02d s.", hours, minutes, seconds);
+            return String.format(CfgLang.lang.get(Lang.TIME_FORMAT_HOURS), hours, minutes, seconds);
         }
-        return String.format("§b00 h. §b%02d m. §b%02d s.", minutes, seconds);
+        return String.format(CfgLang.lang.get(Lang.TIME_FORMAT_MINUTES), minutes, seconds);
     }
 
     public static String scramble(String inputString) {
