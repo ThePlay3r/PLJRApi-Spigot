@@ -10,7 +10,7 @@ public class ChatUtil {
 
     public static void message(String receiver, String message){
         if (CfgSettings.bungee){
-            BungeeUtil.broadcastMessage(message);
+            BungeeUtil.message(receiver, message);
         }else{
             if (PlayerUtil.isPlayer(receiver)){
                 Player player = Bukkit.getPlayer(receiver);
