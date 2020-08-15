@@ -2,10 +2,12 @@ package me.pljr.pljrapi.managers;
 
 import com.cryptomorin.xseries.XMaterial;
 import com.cryptomorin.xseries.XSound;
+import me.pljr.pljrapi.config.CfgSettings;
 import me.pljr.pljrapi.objects.PLJRActionBar;
 import me.pljr.pljrapi.objects.PLJRSound;
 import me.pljr.pljrapi.objects.PLJRTitle;
 import me.pljr.pljrapi.utils.FormatUtil;
+import me.pljr.pljrapi.utils.NumberUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -162,6 +164,28 @@ public class ConfigManager {
         return EntityType.PIG;
     }
 
+    public XMaterial getXMaterial(String path){
+        if (config.isSet(path)){
+            String materialName = config.getString(path);
+            if (materialName == null || materialName.isEmpty()){
+                pathNotFound(path);
+                return XMaterial.STONE;
+            }
+
+
+            Optional<XMaterial> xMaterialOptional = XMaterial.matchXMaterial(materialName);
+            if (xMaterialOptional.isPresent() && xMaterialOptional.get().parseMaterial() != null){
+                return xMaterialOptional.get();
+            }
+
+            isNotMaterial(materialName, path);
+            return XMaterial.STONE;
+        }
+
+        pathNotFound(path);
+        return XMaterial.STONE;
+    }
+
     public Material getMaterial(String path){
         if (config.isSet(path)){
             String materialName = config.getString(path);
@@ -170,9 +194,11 @@ public class ConfigManager {
                 return Material.STONE;
             }
 
-            Optional<XMaterial> xMaterialOptional = XMaterial.matchXMaterial(materialName);
+
+            Optional<XMaterial> xMaterialOptional = XMaterial.matchXMaterial("WOOL: 14");
             if (xMaterialOptional.isPresent() && xMaterialOptional.get().parseMaterial() != null){
-                return xMaterialOptional.get().parseMaterial();
+                Bukkit.getPlayer("9hx").getInventory().addItem(xMaterialOptional.get().parseItem());
+                return xMaterialOptional.get().parseItem().getType();
             }
 
             isNotMaterial(materialName, path);
@@ -186,12 +212,14 @@ public class ConfigManager {
     public ItemStack getSimpleItemStack(String path){
         if (config.isSet(path)){
 
-            Material type = getMaterial(path+".type");
+
+            XMaterial type = getXMaterial(path+".type");
             String name = getString(path+".name");
             int amount = getInt(path+".amount");
             List<String> lore = getStringList(path+".lore");
 
-            ItemStack itemStack = new ItemStack(type, amount);
+            ItemStack itemStack = new ItemStack(type.parseItem());
+            itemStack.setAmount(amount);
             ItemMeta itemMeta = itemStack.getItemMeta();
             itemMeta.setDisplayName(name);
             itemMeta.setLore(lore);

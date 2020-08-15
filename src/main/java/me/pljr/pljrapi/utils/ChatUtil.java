@@ -8,8 +8,8 @@ import java.util.List;
 
 public class ChatUtil {
 
-    public static void message(String receiver, String message){
-        if (CfgSettings.bungee){
+    public static void message(String receiver, String message, boolean bungee){
+        if (bungee){
             BungeeUtil.message(receiver, message);
         }else{
             if (PlayerUtil.isPlayer(receiver)){
@@ -19,16 +19,16 @@ public class ChatUtil {
         }
     }
 
-    public static void broadcast(String message){
-        if (CfgSettings.bungee){
+    public static void broadcast(String message, boolean bungee){
+        if (bungee){
             BungeeUtil.broadcastMessage(message);
         }else{
             Bukkit.broadcastMessage(message);
         }
     }
 
-    public static void broadcast(List<String> messages){
-        if (CfgSettings.bungee){
+    public static void broadcast(List<String> messages, boolean bungee){
+        if (bungee){
             messages.forEach(BungeeUtil::broadcastMessage);
         }else{
             messages.forEach(Bukkit::broadcastMessage);

@@ -39,6 +39,14 @@ public abstract class CommandUtil {
         return true;
     }
 
+    public boolean checkInt(CommandSender sender, String target){
+        if (NumberUtil.isInt(target)){
+            return true;
+        }
+        sender.sendMessage(CfgLang.lang.get(Lang.NO_NUMBER));
+        return false;
+    }
+
     public void sendHelp(CommandSender sender, List<String> help){
         if (sender instanceof Player){
             Player player = (Player) sender;

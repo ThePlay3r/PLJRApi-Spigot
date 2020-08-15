@@ -29,7 +29,7 @@ public class GuiManager {
     }
 
     public static ItemStack createHead(String owner, String name, String... lore){
-        ItemStack skull = new ItemStack(XMaterial.PLAYER_HEAD.parseMaterial());
+        ItemStack skull = new ItemStack(XMaterial.PLAYER_HEAD.parseItem());
         SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
         skullMeta.setOwner(owner);
         skullMeta.setDisplayName(name);
@@ -39,7 +39,7 @@ public class GuiManager {
     }
 
     public static ItemStack createHead(String owner, String name, List<String> lore){
-        ItemStack skull = new ItemStack(XMaterial.PLAYER_HEAD.parseMaterial());
+        ItemStack skull = new ItemStack(XMaterial.PLAYER_HEAD.parseItem());
         SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
         skullMeta.setOwner(owner);
         skullMeta.setDisplayName(name);

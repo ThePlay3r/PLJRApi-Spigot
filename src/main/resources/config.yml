@@ -28,7 +28,6 @@ mysql:
                  #############################################################  \
 settings:
   sounds: true #-> Should the plugin play sounds?
-  bungee: false #-> Should the plugin use BungeeCord functions?
 #|--------------------------------------------------------------------------------------------------------------------|#
 
 ################\
@@ -45,6 +44,7 @@ sounds:
              ################################################################  \
 lang:
   NO_PERM: "&c&l! §8» §fYou don't have enough permissions to do this!"
+  NO_NUMBER: "§c§l! §8» §b%arg §fis not a number!"
   OFFLINE: "&c&l! §8» §e%name §fis not on the server!"
   TIME_FORMAT_DAYS: "%d d, %02d h. %02d m. %02d s."
   TIME_FORMAT_HOURS: "%02d h. %02d m. %02d s."
