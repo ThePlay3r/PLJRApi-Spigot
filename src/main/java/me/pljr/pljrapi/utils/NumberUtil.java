@@ -10,4 +10,14 @@ public class NumberUtil {
             return false;
         }
     }
+
+    public static boolean isDouble(String number){
+        try {
+            Double.parseDouble(number);
+            return true;
+        }
+        catch (NumberFormatException e) {
+            return false;
+        }
+    }
 }

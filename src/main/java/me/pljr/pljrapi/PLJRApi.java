@@ -5,6 +5,7 @@ import me.pljr.pljrapi.config.CfgMysql;
 import me.pljr.pljrapi.config.CfgSettings;
 import me.pljr.pljrapi.config.CfgSounds;
 import me.pljr.pljrapi.database.DataSource;
+import me.pljr.pljrapi.events.PLJRApiStartupEvent;
 import me.pljr.pljrapi.managers.ConfigManager;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
@@ -32,6 +33,7 @@ public final class PLJRApi extends JavaPlugin {
         setupDatabase();
         setupBungee();
         setupVault();
+        getServer().getPluginManager().callEvent(new PLJRApiStartupEvent());
     }
 
     private void setupVault(){

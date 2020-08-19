@@ -1,5 +1,6 @@
 package me.pljr.pljrapi.managers;
 
+import com.cryptomorin.xseries.SkullUtils;
 import com.cryptomorin.xseries.XMaterial;
 import com.cryptomorin.xseries.XSound;
 import me.pljr.pljrapi.config.CfgSettings;
@@ -7,6 +8,7 @@ import me.pljr.pljrapi.objects.PLJRActionBar;
 import me.pljr.pljrapi.objects.PLJRSound;
 import me.pljr.pljrapi.objects.PLJRTitle;
 import me.pljr.pljrapi.utils.FormatUtil;
+import me.pljr.pljrapi.utils.ItemStackUtil;
 import me.pljr.pljrapi.utils.NumberUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -19,6 +21,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +43,10 @@ public class ConfigManager {
 
     private void isNotInt(String integer, String path){
         console.sendMessage(prefix + " " + integer + " is not an int on " + path + " in " + fileName + " !");
+    }
+
+    private void isNotDouble(String integer, String path){
+        console.sendMessage(prefix + " " + integer + " is not an double on " + path + " in " + fileName + " !");
     }
 
     private void isNotBoolean(String bool, String path){
@@ -104,6 +111,20 @@ public class ConfigManager {
             }
 
             isNotInt(config.getString(path), path);
+            return 1;
+        }
+
+        pathNotFound(path);
+        return 1;
+    }
+
+    public double getDouble(String path){
+        if (config.isSet(path)){
+            if (NumberUtil.isDouble(getString(path))){
+                return config.getDouble(path);
+            }
+
+            isNotDouble(config.getString(path), path);
             return 1;
         }
 
@@ -211,7 +232,9 @@ public class ConfigManager {
 
     public ItemStack getSimpleItemStack(String path){
         if (config.isSet(path)){
-
+            if (config.isSet(path+".head") && config.isBoolean(path+".head") && config.getBoolean(path+".head")){
+                return getHead(path);
+            }
 
             XMaterial type = getXMaterial(path+".type");
             String name = getString(path+".name");
@@ -226,6 +249,24 @@ public class ConfigManager {
             itemStack.setItemMeta(itemMeta);
 
             return itemStack;
+        }
+
+        pathNotFound(path);
+        return new ItemStack(Material.STONE);
+    }
+
+    public ItemStack getHead(String path){
+        if (config.isSet(path)){
+            String owner = getString(path+".head-owner");
+            String name = getString(path+".name");
+            int amount = getInt(path+".amount");
+            List<String> lore = getStringList(path+".lore");
+
+            return ItemStackUtil.createHead(
+                    owner,
+                    name,
+                    amount,
+                    lore);
         }
 
         pathNotFound(path);
