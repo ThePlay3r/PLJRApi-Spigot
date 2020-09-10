@@ -2,12 +2,13 @@
 
 #|--------------------------------------------------------------------------------------------------------------------|#
 # Plugin: PLJRApi
-# Author: https://www.mc-market.org/members/89497/ | https://www.spigotmc.org/members/radekjenejlepsi.227786/
+# Author: https://www.mc-market.org/members/89497/
 # Description: Main API for all of my plugins to work.
 # Dependencies:
 #   -> MySQL Database
 #   -> Vault (https://www.spigotmc.org/resources/vault.34315/)
 #   -> PlaceholderAPI<Optional> (https://www.spigotmc.org/resources/placeholderapi.6245/)
+#   -> HolographicDisplays<Optional> (https://dev.bukkit.org/projects/holographic-displays)
 #|--------------------------------------------------------------------------------------------------------------------|#
 
 ###############\
@@ -28,6 +29,10 @@ mysql:
                  #############################################################  \
 settings:
   sounds: true #-> Should the plugin play sounds?
+  teleport-delay: 7 #-> How long should be delay before teleporting player?
+  holograms: false #-> Should we use holograms? (Requires HolographicDisplays on server)
+  placeholders: false #-> Should we try to replace PlaceholderAPI placeholders?
+  disabled-messages: true #-> Should we message the Console, when the plugin tries to use disabled function?
 #|--------------------------------------------------------------------------------------------------------------------|#
 
 ################\
@@ -36,15 +41,39 @@ settings:
                #######################################################  \
 sounds:
   COMMAND_FAIL: "ENTITY_VILLAGER_NO"
+  TELEPORT_TICK: "CLICK"
+  TELEPORT_FAIL: "VILLAGER_HIT"
+  TELEPORT_TP: "CAT_MEOW"
 #|--------------------------------------------------------------------------------------------------------------------|#
 
 ##############\
 # Lang Setup ################################################################\
 ############## Here, you can customize messages, send by the plugin itself. # \
              ################################################################  \
+teleport-title:
+  ticking:
+    title: "§b§lTeleportation"
+    subtitle: "§7%time§8s"
+    in: 20
+    stay: 40
+    out: 20
+  fail:
+    title: "§b§lMove detected"
+    subtitle: "§cTeleportation canceled.."
+    in: 20
+    stay: 60
+    out: 20
+  teleport:
+    title: "§bTeleportation"
+    subtitle: "§7Teleporting.."
+    in: 20
+    stay: 60
+    out: 20
+
 lang:
   NO_PERM: "&c&l! §8» §fYou don't have enough permissions to do this!"
   NO_NUMBER: "§c§l! §8» §b%arg §fis not a number!"
+  NO_MATERIAL: "§c§l! §8» §b%material §fis not a material!"
   OFFLINE: "&c&l! §8» §e%name §fis not on the server!"
   TIME_FORMAT_DAYS: "%d d, %02d h. %02d m. %02d s."
   TIME_FORMAT_HOURS: "%02d h. %02d m. %02d s."

@@ -7,9 +7,9 @@ import me.pljr.pljrapi.config.CfgSounds;
 import me.pljr.pljrapi.database.DataSource;
 import me.pljr.pljrapi.events.PLJRApiStartupEvent;
 import me.pljr.pljrapi.managers.ConfigManager;
-import net.milkbowl.vault.chat.Chat;
+import me.pljr.pljrapi.utils.BungeeUtil;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.milkbowl.vault.economy.Economy;
-import net.milkbowl.vault.permission.Permission;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -22,13 +22,13 @@ public final class PLJRApi extends JavaPlugin {
     private static DataSource dataSource;
     private static final Logger log = Logger.getLogger("Minecraft");
     private static Economy vaultEcon = null;
-    private static Permission vaultPerms = null;
-    private static Chat vaultChat = null;
+    private static BukkitAudiences bukkitAudiences;
 
     @Override
     public void onEnable() {
         // Plugin startup logic
         instance = this;
+        setupMiniMessage();
         setupConfig();
         setupDatabase();
         setupBungee();
@@ -36,8 +36,12 @@ public final class PLJRApi extends JavaPlugin {
         getServer().getPluginManager().callEvent(new PLJRApiStartupEvent());
     }
 
+    private void setupMiniMessage(){
+        bukkitAudiences = BukkitAudiences.create(this);
+    }
+
     private void setupVault(){
-        if (!setupVaultEconomy() || !setupVaultChat() || !setupVaultPermissions()){
+        if (!setupVaultEconomy()){
             log.severe(String.format(ChatColor.RED + "[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
             getServer().getPluginManager().disablePlugin(this);
         }
@@ -55,30 +59,14 @@ public final class PLJRApi extends JavaPlugin {
         return vaultEcon != null;
     }
 
-    private boolean setupVaultChat(){
-        RegisteredServiceProvider<Chat> rsp = getServer().getServicesManager().getRegistration(Chat.class);
-        if (rsp == null) {
-            return false;
-        }
-        vaultChat = rsp.getProvider();
-        return vaultChat != null;
-    }
-
-    private boolean setupVaultPermissions(){
-        RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
-        if (rsp == null) {
-            return false;
-        }
-        vaultPerms = rsp.getProvider();
-        return vaultPerms != null;
-    }
     private void setupDatabase(){
         dataSource = new DataSource(CfgMysql.host, CfgMysql.port, CfgMysql.database, CfgMysql.username, CfgMysql.password);
         dataSource.initPool();
     }
 
     private void setupBungee(){
-        getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+        getServer().getMessenger().registerIncomingPluginChannel(this, "pljrapi:chat", new BungeeUtil());
+        getServer().getMessenger().registerOutgoingPluginChannel(this, "pljrapi:chat");
     }
 
     private void setupConfig(){
@@ -99,14 +87,11 @@ public final class PLJRApi extends JavaPlugin {
     public static Economy getVaultEcon() {
         return vaultEcon;
     }
-    public static Permission getVaultPerms() {
-        return vaultPerms;
-    }
-    public static Chat getVaultChat() {
-        return vaultChat;
-    }
     public static PLJRApi getInstance() {
         return instance;
+    }
+    public static BukkitAudiences getBukkitAudiences() {
+        return bukkitAudiences;
     }
 
     @Override

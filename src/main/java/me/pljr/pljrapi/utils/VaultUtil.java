@@ -2,41 +2,68 @@ package me.pljr.pljrapi.utils;
 
 import me.pljr.pljrapi.PLJRApi;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 
+/**
+ * @see net.milkbowl.vault.economy.Economy
+ */
 public class VaultUtil {
-
-    public static double getBalance(OfflinePlayer player){
-        return PLJRApi.getVaultEcon().getBalance(player);
+    /**
+     * Will get the current Economy balance of {@link OfflinePlayer}.
+     *
+     * @param target {@link OfflinePlayer} that we should get the balance of
+     * @return Target's Economy balance
+     */
+    public static double getBalance(OfflinePlayer target){
+        return PLJRApi.getVaultEcon().getBalance(target);
     }
 
-    public static double getBalance(String player){
-        return PLJRApi.getVaultEcon().getBalance(player);
+    /**
+     * Will get the current Economy balance of target.
+     *
+     * @param target Target that we should get the balance of
+     * @return Target's Economy balance
+     */
+    public static double getBalance(String target){
+        return PLJRApi.getVaultEcon().getBalance(target);
     }
 
-    public static void deposit(OfflinePlayer player, double amount){
-        PLJRApi.getVaultEcon().depositPlayer(player, amount);
+    /**
+     * Will deposit funds to Economy balance of {@link OfflinePlayer}.
+     *
+     * @param target {@link OfflinePlayer} that should get the amount deposited
+     * @param amount Amount of money that should be deposited
+     */
+    public static void deposit(OfflinePlayer target, double amount){
+        PLJRApi.getVaultEcon().depositPlayer(target, amount);
     }
 
-    public static void deposit(String player, double amount){
-        PLJRApi.getVaultEcon().depositPlayer(player, amount);
+    /**
+     * Will deposit funds to Economy balance of target.
+     *
+     * @param target Target that should get the amount deposited
+     * @param amount Amount of money that should be deposited
+     */
+    public static void deposit(String target, double amount){
+        PLJRApi.getVaultEcon().depositPlayer(target, amount);
     }
 
-    public static void withdraw(OfflinePlayer player, double amount){
-        PLJRApi.getVaultEcon().withdrawPlayer(player, amount);
+    /**
+     * Will withdraw funds from Economy balance of {@link OfflinePlayer}.
+     *
+     * @param target {@link OfflinePlayer} that should get the amount withdrawn
+     * @param amount Amount of money that should be withdrawn
+     */
+    public static void withdraw(OfflinePlayer target, double amount){
+        PLJRApi.getVaultEcon().withdrawPlayer(target, amount);
     }
 
-    public static void withdraw(String player, double amount){
-        PLJRApi.getVaultEcon().withdrawPlayer(player, amount);
-    }
-
-    public static void setPerm(Player player, String permission, boolean state){
-        if (state){
-            if (PLJRApi.getVaultPerms().has(player, permission)) return;
-            PLJRApi.getVaultPerms().playerAdd(player, permission);
-        }else{
-            if (!PLJRApi.getVaultPerms().has(player, permission)) return;
-            PLJRApi.getVaultPerms().playerRemove(player, permission);
-        }
+    /**
+     * Will withdraw funds from Economy balance of target.
+     *
+     * @param target Target that should get the amount withdrawn
+     * @param amount Amount of money that should be withdrawn
+     */
+    public static void withdraw(String target, double amount){
+        PLJRApi.getVaultEcon().withdrawPlayer(target, amount);
     }
 }

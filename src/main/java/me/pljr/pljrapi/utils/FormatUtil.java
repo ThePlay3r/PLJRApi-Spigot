@@ -7,10 +7,22 @@ import org.bukkit.ChatColor;
 import java.util.Random;
 
 public class FormatUtil {
+    /**
+     * Applies default {@link ChatColor} codes to String and returns it.
+     *
+     * @param string String that should get default ChatColor applied
+     * @return Colored string
+     */
     public static String colorString(String string){
         return ChatColor.translateAlternateColorCodes('&', string);
     }
 
+    /**
+     * Formats a time in seconds to better looking format, set in configuration.
+     *
+     * @param sec Time that should be formatted
+     * @return Formatted time in String
+     */
     public static String formatTime(long sec) {
         long seconds = sec % 60;
         long minutes = sec / 60;
@@ -26,6 +38,12 @@ public class FormatUtil {
         return String.format(CfgLang.lang.get(Lang.TIME_FORMAT_MINUTES), minutes, seconds);
     }
 
+    /**
+     * Randomly scrambles String.
+     *
+     * @param inputString String that should be scrambled
+     * @return Scrambled inputString
+     */
     public static String scramble(String inputString) {
         char[] a = inputString.toCharArray();
 

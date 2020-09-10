@@ -4,5 +4,5 @@ main: me.pljr.pljrapi.PLJRApi
 api-version: 1.13
 authors: [9hx]
 depend: [Vault]
-softdepend: [PlaceholderAPI]
+softdepend: [PlaceholderAPI, HolographicDisplays]
 description: API for all of my plugins.

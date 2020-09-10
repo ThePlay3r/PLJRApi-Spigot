@@ -1,37 +1,166 @@
 package me.pljr.pljrapi.utils;
 
-import me.pljr.pljrapi.config.CfgSettings;
+import me.pljr.pljrapi.PLJRApi;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;
 
 public class ChatUtil {
+    /**
+     * Sends a message with parsed {@link MiniMessage} tags and PAPI Placeholders to {@link OfflinePlayer}, if online.
+     *
+     * @param player {@link OfflinePlayer} that we will try to send the message to
+     * @param message String that will be send to player, if online
+     *
+     * @see #sendMessage(Player, String)
+     */
+    public static void sendMessage(OfflinePlayer player, String message){
+        if (!player.isOnline()) return;
+        sendMessage(player.getPlayer(), message);
+    }
 
-    public static void message(String receiver, String message, boolean bungee){
+    /**
+     * Sends a message with parsed PAPI Placeholders to {@link OfflinePlayer}, if online.
+     *
+     * @param player {@link OfflinePlayer} that we will try to send the message to
+     * @param message String that will be send to player, if online
+     *
+     * @see #sendMessageClean(Player, String)
+     */
+    public static void sendMessageClean(OfflinePlayer player, String message){
+        if (!player.isOnline()) return;
+        sendMessageClean(player.getPlayer(), message);
+    }
+
+    /**
+     * Sends a message with parsed {@link MiniMessage} tags and PAPI Placeholders to {@link Player}.
+     *
+     * @param player {@link Player} that will receive the message
+     * @param message String that will be send to the player
+     */
+    public static void sendMessage(Player player, String message){
+        PLJRApi.getBukkitAudiences().player(player).sendMessage(MiniMessage.get().parse(PapiUtil.setPlaceholders(player, message)));
+    }
+
+    /**
+     * Sends a message with parsed PAPI Placeholders to {@link Player}.
+     *
+     * @param player {@link Player} that will receive the message
+     * @param message String that will be send to the player
+     */
+    public static void sendMessageClean(Player player, String message){
+        player.sendMessage(PapiUtil.setPlaceholders(player, message));
+    }
+
+    /**
+     * Sends a message with parsed {@link MiniMessage} tags and PAPI Placeholders to {@link CommandSender}.
+     *
+     * @param target {@link CommandSender} that will receive the message
+     * @param message String that will be send to the target
+     *
+     * @see #sendMessage(Player, String)
+     */
+    public static void sendMessage(CommandSender target, String message){
+        if (target instanceof Player){
+            sendMessage((Player) target, message);
+            return;
+        }
+        PLJRApi.getBukkitAudiences().audience(target).sendMessage(MiniMessage.get().parse(message));
+    }
+
+    /**
+     * Sends a message with parsed PAPI Placeholders to {@link CommandSender}.
+     *
+     * @param target {@link CommandSender} that will receive the message
+     * @param message String that will be send to the target
+     *
+     * @see #sendMessageClean(Player, String)
+     */
+    public static void sendMessageClean(CommandSender target, String message){
+        if (target instanceof Player){
+            sendMessageClean((Player) target, message);
+            return;
+        }
+        target.sendMessage(message);
+    }
+
+    /**
+     * Broadcasts a message with parsed {@link MiniMessage} tags and PAPI Placeholders to either Bukkit or Bungee.
+     *
+     * @param message String that will be send to all Players and ConsoleSender
+     * @param perm Permission that is required to receive the message
+     * @param bungee Determines if message should be send to Bungee or not
+     *
+     * @see #sendMessage(Player, String)
+     * @see #sendMessage(CommandSender, String)
+     */
+    public static void broadcast(String message, String perm, boolean bungee){
         if (bungee){
-            BungeeUtil.message(receiver, message);
+            BungeeUtil.broadcastMessage(message, perm);
         }else{
-            if (PlayerUtil.isPlayer(receiver)){
-                Player player = Bukkit.getPlayer(receiver);
-                player.sendMessage(message);
+            for (Player player : Bukkit.getOnlinePlayers()){
+                if (player.hasPermission(perm) || perm.equals("")){
+                    sendMessage(player, message);
+                }
             }
         }
+        sendMessage(Bukkit.getConsoleSender(), message);
     }
 
-    public static void broadcast(String message, boolean bungee){
-        if (bungee){
-            BungeeUtil.broadcastMessage(message);
-        }else{
-            Bukkit.broadcastMessage(message);
+    /**
+     * Broadcasts a list of messages with parsed {@link MiniMessage} tags and PAPI Placeholders to either Bukkit or Bungee.
+     *
+     * @param messages ArrayList that will be send to all Players and ConsoleSender
+     * @param perm Permission that is required to receive the messages
+     * @param bungee Determines if messages should be send to Bungee or not
+     *
+     * @see #broadcast(String, String, boolean)
+     */
+    public static void broadcast(List<String> messages, String perm, boolean bungee){
+        for (String line : messages){
+            broadcast(line, perm, bungee);
         }
     }
 
-    public static void broadcast(List<String> messages, boolean bungee){
+    /**
+     * Broadcasts a message with parsed PAPI Placeholders to either Bukkit or Bungee.
+     *
+     * @param message String that will be send to all Players and ConsoleSender
+     * @param perm Permission that is required to receive the message
+     * @param bungee Determines if message should be send to Bungee or not
+     *
+     * @see #sendMessage(Player, String)
+     * @see #sendMessageClean(CommandSender, String)
+     */
+    public static void broadcastClean(String message, String perm, boolean bungee){
         if (bungee){
-            messages.forEach(BungeeUtil::broadcastMessage);
+            BungeeUtil.broadcastMessage(message, perm);
         }else{
-            messages.forEach(Bukkit::broadcastMessage);
+            for (Player player : Bukkit.getOnlinePlayers()){
+                if (player.hasPermission(perm) || perm.equals("")){
+                    sendMessageClean(player, message);
+                }
+            }
+        }
+        sendMessageClean(Bukkit.getConsoleSender(), message);
+    }
+
+    /**
+     * Broadcasts a list of messages with parsed PAPI Placeholders to either Bukkit or Bungee.
+     *
+     * @param messages ArrayList that will be send to all Players and ConsoleSender
+     * @param perm Permission that is required to receive the messages
+     * @param bungee Determines if messages should be send to Bungee or not
+     *
+     * @see #broadcastClean(List, String, boolean)
+     */
+    public static void broadcastClean(List<String> messages, String perm, boolean bungee){
+        for (String line : messages){
+            broadcastClean(line, perm, bungee);
         }
     }
 }
