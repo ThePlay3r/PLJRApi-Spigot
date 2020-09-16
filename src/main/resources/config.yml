@@ -6,7 +6,7 @@
 # Description: Main API for all of my plugins to work.
 # Dependencies:
 #   -> MySQL Database
-#   -> Vault (https://www.spigotmc.org/resources/vault.34315/)
+#   -> Vault<Optional> (https://www.spigotmc.org/resources/vault.34315/)
 #   -> PlaceholderAPI<Optional> (https://www.spigotmc.org/resources/placeholderapi.6245/)
 #   -> HolographicDisplays<Optional> (https://dev.bukkit.org/projects/holographic-displays)
 #|--------------------------------------------------------------------------------------------------------------------|#
@@ -30,6 +30,7 @@ mysql:
 settings:
   sounds: true #-> Should the plugin play sounds?
   teleport-delay: 7 #-> How long should be delay before teleporting player?
+  vault: false #-> Should we try to hook to Vault? (Requires Vault and any Vault Economy plugin)
   holograms: false #-> Should we use holograms? (Requires HolographicDisplays on server)
   placeholders: false #-> Should we try to replace PlaceholderAPI placeholders?
   disabled-messages: true #-> Should we message the Console, when the plugin tries to use disabled function?

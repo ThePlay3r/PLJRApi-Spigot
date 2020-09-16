@@ -32,7 +32,7 @@ public final class PLJRApi extends JavaPlugin {
         setupConfig();
         setupDatabase();
         setupBungee();
-        setupVault();
+        if (CfgSettings.vault) setupVault();
         getServer().getPluginManager().callEvent(new PLJRApiStartupEvent());
     }
 
