@@ -69,7 +69,7 @@ public class ChatUtil {
             sendMessage((Player) target, message);
             return;
         }
-        PLJRApi.getBukkitAudiences().audience(target).sendMessage(MiniMessage.get().parse(message));
+        PLJRApi.getBukkitAudiences().sender(target).sendMessage(MiniMessage.get().parse(message));
     }
 
     /**

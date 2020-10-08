@@ -4,6 +4,7 @@ import com.cryptomorin.xseries.XEnchantment;
 import com.cryptomorin.xseries.XMaterial;
 import com.cryptomorin.xseries.XSound;
 import me.pljr.pljrapi.objects.PLJRActionBar;
+import me.pljr.pljrapi.objects.PLJRScoreboard;
 import me.pljr.pljrapi.objects.PLJRSound;
 import me.pljr.pljrapi.objects.PLJRTitle;
 import me.pljr.pljrapi.utils.FormatUtil;
@@ -21,6 +22,8 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.ScoreboardManager;
 
 import java.util.*;
 
@@ -329,7 +332,7 @@ public class ConfigManager {
      */
     public ItemStack getSimpleItemStack(String path){
         if (config.isSet(path)){
-            if (config.isSet(path+".head") && config.isBoolean(path+".head") && config.getBoolean(path+".head")){
+            if (config.isSet(path+".head-owner")){
                 return getHead(path);
             }
 
@@ -428,9 +431,19 @@ public class ConfigManager {
     public ItemStack getHead(String path){
         if (config.isSet(path)){
             String owner = getString(path+".head-owner");
-            String name = getString(path+".name");
-            int amount = getInt(path+".amount");
-            List<String> lore = getStringList(path+".lore");
+            String name = "Head";
+            int amount = 1;
+            List<String> lore = new ArrayList<>();
+
+            if (config.isSet(path+".amount")){
+               amount = getInt(path+".amount");
+            }
+            if (config.isSet(path+".name")){
+                name = getString(path+".name");
+            }
+            if (config.isSet(path+".lore")){
+                lore = getStringList(path+".lore");
+            }
 
             return ItemStackUtil.createHead(
                     owner,
@@ -529,6 +542,8 @@ public class ConfigManager {
         return null;
     }
 
+    Boolean test;
+
     /**
      * Tries to get an {@link PLJRActionBar} from {@link FileConfiguration}.
      *
@@ -546,6 +561,27 @@ public class ConfigManager {
 
         pathNotFound(path);
         return new PLJRActionBar("§c"+path, 20);
+    }
+
+    /**
+     * Tries to get an {@link PLJRScoreboard} from {@link FileConfiguration}.
+     * 
+     * @param path Path to the {@link PLJRScoreboard}
+     * @return Custom {@link PLJRScoreboard} if one was found, PLJRScoreboard("") otherwise
+     * 
+     * @see #getStringList(String) 
+     */
+    public PLJRScoreboard getPLJRScoreboard(String path){
+        List<String> lines = getStringList(path);
+        if (lines.isEmpty()){
+            return new PLJRScoreboard("");
+        }
+        PLJRScoreboard scoreboard = new PLJRScoreboard(lines.get(0));
+        lines.remove(0);
+        for (String line : lines){
+            scoreboard.getLines().add(line);
+        }
+        return scoreboard;
     }
 }
 

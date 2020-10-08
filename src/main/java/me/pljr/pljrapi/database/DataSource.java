@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DataSource {
-    private String host, port, database, username, password;
+    private final String host, port, database, username, password;
 
     private final HikariConfig config = new HikariConfig();
     private HikariDataSource ds;
@@ -26,13 +26,15 @@ public class DataSource {
 
     public static DataSource getFromConfig(ConfigManager config){
         if (config.getBoolean("mysql.enabled")){
-            return new DataSource(
+            DataSource dataSource = new DataSource(
                     config.getString("mysql.host"),
                     config.getString("mysql.port"),
                     config.getString("mysql.database"),
                     config.getString("mysql.username"),
                     config.getString("mysql.password")
             );
+            dataSource.initPool();
+            return dataSource;
         }
         return PLJRApi.getDataSource();
     }

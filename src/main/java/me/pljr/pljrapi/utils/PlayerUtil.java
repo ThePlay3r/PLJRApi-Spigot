@@ -88,7 +88,16 @@ public class PlayerUtil {
         if (delay){
             countdown = CfgSettings.teleportDelay;
         }else{
-            countdown = 0;
+            TitleManager.send(player, new PLJRTitle(
+                    CfgLang.teleportTitleTp.getTitle(),
+                    CfgLang.teleportTitleTp.getSubtitle(),
+                    CfgLang.teleportTitleTp.getIn(),
+                    CfgLang.teleportTitleTp.getStay(),
+                    CfgLang.teleportTitleTp.getOut()
+            ));
+            player.teleport(location);
+            player.playSound(player.getLocation(), CfgSounds.sounds.get(Sounds.TELEPORT_TP), 1, 1);
+            return;
         }
         new BukkitRunnable() {
             int finalCountdown = countdown;

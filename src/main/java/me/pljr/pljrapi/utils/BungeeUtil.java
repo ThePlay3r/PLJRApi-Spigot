@@ -28,6 +28,14 @@ public class BungeeUtil implements PluginMessageListener {
         player.sendPluginMessage(instance, "pljrapi:chat", out.toByteArray());
     }
 
+    public static void send(Player player, String server){
+        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+        out.writeUTF("Connect");
+        out.writeUTF(server);
+
+        player.sendPluginMessage(instance, "BungeeCord", out.toByteArray());
+    }
+
     private static void receiveMessage(String receiver, String message){
         if (PlayerUtil.isPlayer(receiver)){
             Player player = Bukkit.getPlayer(receiver);

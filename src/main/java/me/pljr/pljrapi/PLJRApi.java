@@ -65,6 +65,7 @@ public final class PLJRApi extends JavaPlugin {
     }
 
     private void setupBungee(){
+        getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         getServer().getMessenger().registerIncomingPluginChannel(this, "pljrapi:chat", new BungeeUtil());
         getServer().getMessenger().registerOutgoingPluginChannel(this, "pljrapi:chat");
     }
