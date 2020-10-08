@@ -108,4 +108,38 @@ public class ItemStackUtil {
         item.setItemMeta(meta);
         return item;
     }
+
+    /**
+     * Creates a custom copy of {@link ItemStack} with display name and lore.
+     *
+     * @param itemStack ItemStack that will be copied
+     * @param name Display name of ItemStack
+     * @param lore Lore of ItemStack
+     * @return ItemStack with specified attributes
+     */
+    public static ItemStack createItem(ItemStack itemStack, String name, List<String> lore){
+        ItemStack item = new ItemStack(itemStack);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(name);
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    /**
+     * Creates a custom copy of {@link ItemStack} with display name and lore.
+     *
+     * @param itemStack ItemStack that will be copied
+     * @param name Display name of ItemStack
+     * @param lore Lore of ItemStack
+     * @return ItemStack with specified attributes
+     */
+    public static ItemStack createItem(ItemStack itemStack, String name, String... lore){
+        ItemStack item = new ItemStack(itemStack);
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(name);
+        meta.setLore(Arrays.asList(lore));
+        item.setItemMeta(meta);
+        return item;
+    }
 }
