@@ -2,8 +2,8 @@
 Spigot plugin created to make development of other plugins as easy and efficient as possible for me.
 
 ----
-## Dependencies
-- Vault: https://www.spigotmc.org/resources/vault.34315/
+## BungeeCord Support
+- If you want to have full BungeeCord support, please drag-n-drop [PLJRApi-Bungee](https://github.com/ThePlay3r/PLJRApi-Bungee/releases/latest) to your BungeeCord's plugin folder.
 
 ----
 
