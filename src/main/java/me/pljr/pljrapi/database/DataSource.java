@@ -3,6 +3,7 @@ package me.pljr.pljrapi.database;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import me.pljr.pljrapi.PLJRApi;
+import me.pljr.pljrapi.config.CfgMysql;
 import me.pljr.pljrapi.managers.ConfigManager;
 
 import java.sql.Connection;
@@ -43,11 +44,13 @@ public class DataSource {
         config.setJdbcUrl("jdbc:mysql://" + host + ":" + Integer.parseInt(port) + "/" + database + "?characterEncoding=UTF-8&autoReconnect=true&useSSL=false");
         config.setUsername(username);
         config.setPassword(password);
-        config.addDataSourceProperty("cachePrepStmts", "true");
-        config.addDataSourceProperty("prepStmtCacheSize", "250");
-        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-        config.setMaximumPoolSize(16);
-        config.setMinimumIdle(2);
+        config.addDataSourceProperty("cachePrepStmts", CfgMysql.cachePrepStmts);
+        config.addDataSourceProperty("prepStmtCacheSize", CfgMysql.prepStmtCacheSize);
+        config.addDataSourceProperty("prepStmtCacheSqlLimit", CfgMysql.prepStmtCacheSqlLimit);
+        config.setMaximumPoolSize(CfgMysql.maximumPoolSize);
+        config.setMinimumIdle(CfgMysql.maximumIdle);
+        config.setMaxLifetime(CfgMysql.maxLifetime);
+        config.setConnectionTimeout(CfgMysql.connectionTimeout);
         ds = new HikariDataSource(config);
     }
 

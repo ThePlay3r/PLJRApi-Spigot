@@ -76,7 +76,7 @@ public final class PLJRApi extends JavaPlugin {
         CfgLang.load();
         CfgSettings.load(config);
         CfgSounds.load();
-        CfgMysql.load();
+        CfgMysql.load(config);
     }
 
     public static ConfigManager getConfigManager() {
