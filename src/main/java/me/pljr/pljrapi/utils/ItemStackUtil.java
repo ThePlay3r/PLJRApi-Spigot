@@ -19,6 +19,8 @@ public class ItemStackUtil {
      * @param target String that should be replaced.
      * @param replacement String that the target should be replaced with.
      * @return ItemStack with replaced lore.
+     *
+     * @deprecated No longer updated, see {@link me.pljr.pljrapi.builders.ItemBuilder#replaceLore(String, String)}.
      */
     public static ItemStack replaceLore(ItemStack item, String target, String replacement){
         ItemStack itemStack = new ItemStack(item);
@@ -41,6 +43,8 @@ public class ItemStackUtil {
      * @param amount Display name of ItemStack.
      * @param lore Lore of the ItemStack
      * @return Head ItemStack with specified attributes.
+     *
+     * @deprecated No longer updated, see {@link me.pljr.pljrapi.builders.ItemBuilder#withOwner(String)}.
      */
     public static ItemStack createHead(String owner, String name, int amount, String... lore){
         ItemStack head = new ItemStack(XMaterial.PLAYER_HEAD.parseItem());
@@ -62,6 +66,8 @@ public class ItemStackUtil {
      * @param amount Display name of ItemStack.
      * @param lore Lore of the ItemStack
      * @return Head ItemStack with specified attributes.
+     *
+     * @deprecated No longer updated, see {@link me.pljr.pljrapi.builders.ItemBuilder#withOwner(String)}.
      */
     public static ItemStack createHead(String owner, String name, int amount, List<String> lore){
         ItemStack head = new ItemStack(XMaterial.PLAYER_HEAD.parseItem());
@@ -82,6 +88,8 @@ public class ItemStackUtil {
      * @param name Display name of ItemStack.
      * @param lore Lore of ItemStack.
      * @return ItemStack with specified attributes.
+     *
+     * @deprecated No longer updated, see {@link me.pljr.pljrapi.builders.ItemBuilder}.
      */
     public static ItemStack createItem(Material material, String name, String... lore){
         ItemStack item = new ItemStack(material);
@@ -99,6 +107,8 @@ public class ItemStackUtil {
      * @param name Display name of ItemStack
      * @param lore Lore of ItemStack
      * @return ItemStack with specified attributes
+     *
+     * @deprecated No longer updated, see {@link me.pljr.pljrapi.builders.ItemBuilder}.
      */
     public static ItemStack createItem(Material material, String name, List<String> lore){
         ItemStack item = new ItemStack(material);
@@ -116,6 +126,8 @@ public class ItemStackUtil {
      * @param name Display name of ItemStack
      * @param lore Lore of ItemStack
      * @return ItemStack with specified attributes
+     *
+     * @deprecated No longer updated, see {@link me.pljr.pljrapi.builders.ItemBuilder}.
      */
     public static ItemStack createItem(ItemStack itemStack, String name, List<String> lore){
         ItemStack item = new ItemStack(itemStack);
@@ -133,6 +145,8 @@ public class ItemStackUtil {
      * @param name Display name of ItemStack
      * @param lore Lore of ItemStack
      * @return ItemStack with specified attributes
+     *
+     * @deprecated No longer updated, see {@link me.pljr.pljrapi.builders.ItemBuilder}.
      */
     public static ItemStack createItem(ItemStack itemStack, String name, String... lore){
         ItemStack item = new ItemStack(itemStack);

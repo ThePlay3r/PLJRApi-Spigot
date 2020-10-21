@@ -1,5 +1,6 @@
 package me.pljr.pljrapi.builders;
 
+import com.cryptomorin.xseries.SkullUtils;
 import com.cryptomorin.xseries.XMaterial;
 import me.pljr.pljrapi.utils.FormatUtil;
 import org.bukkit.Material;
@@ -32,6 +33,9 @@ public class ItemBuilder {
         return lore;
     }
 
+    /**
+     * Creates a default ItemBuilder from {@link Material#STONE}.
+     */
     public ItemBuilder(){
         this.itemStack = new ItemStack(Material.STONE);
         this.name = "";
@@ -39,6 +43,11 @@ public class ItemBuilder {
         this.lore = new ArrayList<>();
     }
 
+    /**
+     * Creates an ItemBuilder from selected itemStack.
+     *
+     * @param itemStack {@link ItemStack} from what the values will be set to.
+     */
     public ItemBuilder(ItemStack itemStack){
         this.itemStack = itemStack;
         this.amount = itemStack.getAmount();
@@ -57,29 +66,64 @@ public class ItemBuilder {
         this.lore = lore;
     }
 
+    /**
+     * Creates an ItemBuilder from selected material.
+     *
+     * @param material {@link Material} Which will be to create and {@link ItemStack} in {@link ItemBuilder#ItemBuilder(ItemStack)}.
+     */
     public ItemBuilder(Material material){
         this(new ItemStack(material));
     }
 
+    /**
+     * Creates an ItemBuilder from selected material.
+     *
+     * @param xMaterial {@link XMaterial} Which will be to create and {@link ItemStack} in {@link ItemBuilder#ItemBuilder(ItemStack)}.
+     */
     public ItemBuilder(XMaterial xMaterial){
         this(xMaterial.parseItem());
     }
 
+    /**
+     * Changes the current name.
+     *
+     * @param name {@link String} that will represent the new name.
+     * @return {@link ItemBuilder} with changed name.
+     */
     public ItemBuilder withName(String name){
         this.name = name;
         return this;
     }
 
+    /**
+     * Changes the current lore.
+     *
+     * @param lore {@link List<String>} that will represent the new lore.
+     * @return {@link ItemBuilder} with changed lore.
+     */
     public ItemBuilder withLore(List<String> lore){
         this.lore = lore;
         return this;
     }
 
+    /**
+     * Changes the current lore.
+     *
+     * @param lore {@link String} that will represent the new lore.
+     * @return {@link ItemBuilder} with changed lore.
+     */
     public ItemBuilder withLore(String... lore){
         this.lore = Arrays.asList(lore);
         return this;
     }
 
+    /**
+     * Replaces a String with another String in the lore.
+     *
+     * @param target {@link String} that should be replaced.
+     * @param replacement {@link String} that the target should be replaced with.
+     * @return {@link ItemBuilder} with changed lore.
+     */
     public ItemBuilder replaceLore(String target, String replacement){
         List<String> lore = new ArrayList<>();
         for (String line : this.lore){
@@ -89,11 +133,35 @@ public class ItemBuilder {
         return this;
     }
 
+    /**
+     * Changes the current amount.
+     *
+     * @param amount Int, that will represent the new amount.
+     * @return {@link ItemBuilder} with changed amount.
+     */
     public ItemBuilder withAmount(int amount){
         this.amount = amount;
         return this;
     }
 
+    /**
+     * Changes the current owner, has no effect if the ItemStack isn't skull.
+     *
+     * @param owner {@link String} that will represent the new owner.
+     * @return {@link ItemBuilder} with changed owner.
+     */
+    public ItemBuilder withOwner(String owner){
+        ItemMeta itemMeta = this.itemStack.getItemMeta();
+        itemMeta = SkullUtils.applySkin(itemMeta, owner);
+        this.itemStack.setItemMeta(itemMeta);
+        return this;
+    }
+
+    /**
+     * Creates ItemStack from selected values.
+     *
+     * @return {@link ItemStack} consisting of all previously selected values.
+     */
     public ItemStack create(){
         ItemStack itemStack = new ItemStack(this.itemStack);
         itemStack.setAmount(this.amount);
