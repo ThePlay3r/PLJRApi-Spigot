@@ -7,10 +7,13 @@ import me.pljr.pljrapi.config.CfgSounds;
 import me.pljr.pljrapi.database.DataSource;
 import me.pljr.pljrapi.events.PLJRApiStartupEvent;
 import me.pljr.pljrapi.managers.ConfigManager;
+import me.pljr.pljrapi.managers.GUIManager;
 import me.pljr.pljrapi.utils.BungeeUtil;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.milkbowl.vault.economy.Economy;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -32,6 +35,7 @@ public final class PLJRApi extends JavaPlugin {
         setupConfig();
         setupDatabase();
         setupBungee();
+        setupListeners();
         if (CfgSettings.vault) setupVault();
         getServer().getPluginManager().callEvent(new PLJRApiStartupEvent());
     }
@@ -77,6 +81,11 @@ public final class PLJRApi extends JavaPlugin {
         CfgSettings.load(config);
         CfgSounds.load();
         CfgMysql.load(config);
+    }
+
+    private void setupListeners(){
+        PluginManager pluginManager = Bukkit.getPluginManager();
+        pluginManager.registerEvents(new GUIManager(), this);
     }
 
     public static ConfigManager getConfigManager() {
