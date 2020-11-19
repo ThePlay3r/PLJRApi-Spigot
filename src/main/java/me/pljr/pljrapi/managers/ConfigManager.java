@@ -3,6 +3,7 @@ package me.pljr.pljrapi.managers;
 import com.cryptomorin.xseries.XEnchantment;
 import com.cryptomorin.xseries.XMaterial;
 import com.cryptomorin.xseries.XSound;
+import me.pljr.pljrapi.builders.ScoreboardBuilder;
 import me.pljr.pljrapi.objects.PLJRActionBar;
 import me.pljr.pljrapi.objects.PLJRScoreboard;
 import me.pljr.pljrapi.objects.PLJRSound;
@@ -22,8 +23,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.ScoreboardManager;
 
 import java.util.*;
 
@@ -574,14 +573,14 @@ public class ConfigManager {
     public PLJRScoreboard getPLJRScoreboard(String path){
         List<String> lines = getStringList(path);
         if (lines.isEmpty()){
-            return new PLJRScoreboard("");
+            return new ScoreboardBuilder().create();
         }
-        PLJRScoreboard scoreboard = new PLJRScoreboard(lines.get(0));
+        ScoreboardBuilder builder = new ScoreboardBuilder(lines.get(0));
         lines.remove(0);
         for (String line : lines){
-            scoreboard.getLines().add(line);
+            builder.getLines().add(line);
         }
-        return scoreboard;
+        return builder.create();
     }
 }
 

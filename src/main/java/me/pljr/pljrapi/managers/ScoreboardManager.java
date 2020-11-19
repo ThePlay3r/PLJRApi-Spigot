@@ -1,5 +1,6 @@
 package me.pljr.pljrapi.managers;
 
+import me.pljr.pljrapi.builders.ScoreboardBuilder;
 import me.pljr.pljrapi.objects.PLJRScoreboard;
 import me.pljr.pljrapi.utils.PapiUtil;
 import org.bukkit.Bukkit;
@@ -16,12 +17,13 @@ public class ScoreboardManager {
      * @param scoreboard {@link PLJRScoreboard} that should be sent to player
      */
     public static void send(Player player, PLJRScoreboard scoreboard){
+        ScoreboardBuilder builder = new ScoreboardBuilder(scoreboard);
         List<String> linesWithPAPI = new ArrayList<>();
-        for (String line : scoreboard.getLines()){
+        for (String line : builder.getLines()){
             linesWithPAPI.add(PapiUtil.setPlaceholders(player, line));
         }
-        scoreboard.setLines(linesWithPAPI);
-        player.setScoreboard(scoreboard.parseScoreboard());
+        builder.withLines(linesWithPAPI);
+        player.setScoreboard(builder.create().parseScoreboard());
     }
 
     /**

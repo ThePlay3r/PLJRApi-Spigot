@@ -1,50 +1,35 @@
 package me.pljr.pljrapi.objects;
 
+import me.pljr.pljrapi.managers.ScoreboardManager;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PLJRScoreboard {
-    private String title;
-    private List<String> lines;
+    private final String title;
+    private final List<String> lines;
 
     public PLJRScoreboard(PLJRScoreboard scoreboard){
         this.title = scoreboard.getTitle();
         this.lines = scoreboard.getLines();
     }
 
-    public PLJRScoreboard(String title){
+    public PLJRScoreboard(String title, List<String> lines){
         this.title = title;
-        this.lines = new ArrayList<>();
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+        this.lines = lines;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setLines(List<String> lines) {
-        this.lines = lines;
-    }
-
     public List<String> getLines() {
         return lines;
-    }
-
-    public void replaceLines(String target, String input){
-        List<String> replacedLines = new ArrayList<>();
-        for (String line : lines){
-            replacedLines.add(line.replace(target, input));
-        }
-        setLines(replacedLines);
     }
 
     public Scoreboard parseScoreboard(){
@@ -62,5 +47,13 @@ public class PLJRScoreboard {
         }
 
         return scoreboard;
+    }
+
+    public void send(Player player){
+        ScoreboardManager.send(player, this);
+    }
+
+    public void broadcast(){
+        ScoreboardManager.broadcast(this);
     }
 }

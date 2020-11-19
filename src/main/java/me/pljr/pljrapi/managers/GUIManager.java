@@ -47,7 +47,6 @@ public class GUIManager implements Listener {
 
     @EventHandler
     private void onOpen(GUIOpenEvent event){
-        System.out.println("Listened to the event.");
         Player player = event.getPlayer();
         UUID playerId = player.getUniqueId();
 

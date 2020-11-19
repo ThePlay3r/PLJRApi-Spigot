@@ -17,10 +17,9 @@ public class GUIOpenEvent extends Event {
     }
 
     private final Player player;
-    private GUI gui;
+    private final GUI gui;
 
     public GUIOpenEvent(Player player, GUI gui){
-        System.out.println("Firing the event.");
         this.player = player;
         this.gui = gui;
     }

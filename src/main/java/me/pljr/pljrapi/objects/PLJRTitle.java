@@ -1,5 +1,8 @@
 package me.pljr.pljrapi.objects;
 
+import me.pljr.pljrapi.managers.TitleManager;
+import org.bukkit.entity.Player;
+
 public class PLJRTitle {
     private final String title;
     private final String subtitle;
@@ -33,5 +36,13 @@ public class PLJRTitle {
 
     public int getOut() {
         return out;
+    }
+
+    public void send(Player player){
+        TitleManager.send(player, this);
+    }
+
+    public void broadcast(){
+        TitleManager.broadcast(this);
     }
 }
