@@ -19,7 +19,7 @@ public class LevelManager {
     private final int othersCost;
 
     private final int rewardMinute;
-    private final int rewardKill;
+    private final int rewardCustom;
     private final int rewardWin;
 
     private final String progressSymbol;
@@ -59,7 +59,7 @@ public class LevelManager {
         othersCost = config.getInt("levels.levels.others.rankup-cost");
 
         rewardMinute = config.getInt("levels.xp.per-minute");
-        rewardKill = config.getInt("levels.xp.per-kill");
+        rewardCustom = config.getInt("levels.xp.custom");
         rewardWin = config.getInt("levels.xp.game-win");
 
         progressSymbol = config.getString("levels.progress-bar.symbol");
@@ -136,8 +136,8 @@ public class LevelManager {
     public int getRewardMinute() {
         return rewardMinute;
     }
-    public int getRewardKill() {
-        return rewardKill;
+    public int getRewardCustom() {
+        return rewardCustom;
     }
     public int getRewardWin() {
         return rewardWin;
