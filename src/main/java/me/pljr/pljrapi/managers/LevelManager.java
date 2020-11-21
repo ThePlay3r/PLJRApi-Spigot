@@ -101,7 +101,7 @@ public class LevelManager {
         if (xp >= nextCost){
             players.put(uuid, getLevel(playerLevel.getLevel()+1));
         }
-        playerLevel.setXp(xp+amount);
+        playerLevel.setXp(xp);
         players.put(uuid, playerLevel);
     }
 
