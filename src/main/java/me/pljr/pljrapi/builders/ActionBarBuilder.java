@@ -63,6 +63,18 @@ public class ActionBarBuilder {
     }
 
     /**
+     * Replaces a String with another String in the message.
+     *
+     * @param target {@link String} that should be replaced.
+     * @param replacement {@link String} that the target should be replaced with.
+     * @return {@link ActionBarBuilder} with changed lore.
+     */
+    public ActionBarBuilder replaceMessage(String target, String replacement){
+        this.message = message.replace(target, replacement);
+        return this;
+    }
+
+    /**
      * Changes the current duration.
      *
      * @param duration long that will represent the new duration.

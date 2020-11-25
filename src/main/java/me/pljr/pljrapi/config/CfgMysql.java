@@ -1,6 +1,5 @@
 package me.pljr.pljrapi.config;
 
-import me.pljr.pljrapi.PLJRApi;
 import me.pljr.pljrapi.managers.ConfigManager;
 
 public class CfgMysql {

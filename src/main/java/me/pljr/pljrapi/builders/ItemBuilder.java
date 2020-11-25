@@ -4,6 +4,8 @@ import com.cryptomorin.xseries.SkullUtils;
 import com.cryptomorin.xseries.XMaterial;
 import me.pljr.pljrapi.utils.FormatUtil;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -96,6 +98,18 @@ public class ItemBuilder {
     }
 
     /**
+     * Replaces a String with another String in the name.
+     *
+     * @param target {@link String} that should be replaced.
+     * @param replacement {@link String} that the target should be replaced with.
+     * @return {@link ItemBuilder} with changed lore.
+     */
+    public ItemBuilder replaceName(String target, String replacement){
+        this.name = name.replace(target, replacement);
+        return this;
+    }
+
+    /**
      * Changes the current lore.
      *
      * @param lore {@link List<String>} that will represent the new lore.
@@ -153,6 +167,20 @@ public class ItemBuilder {
     public ItemBuilder withOwner(String owner){
         ItemMeta itemMeta = this.itemStack.getItemMeta();
         itemMeta = SkullUtils.applySkin(itemMeta, owner);
+        this.itemStack.setItemMeta(itemMeta);
+        return this;
+    }
+
+    /**
+     * Makes the current item glowing, cannot be undone.
+     * Gives item Durability I {@link Enchantment} and hides all enchantments.
+     *
+     * @return {@link ItemBuilder} with glowing effect.
+     */
+    public ItemBuilder setGlowing(){
+        ItemMeta itemMeta = this.itemStack.getItemMeta();
+        itemMeta.addEnchant(Enchantment.DURABILITY, 1, true);
+        itemMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         this.itemStack.setItemMeta(itemMeta);
         return this;
     }

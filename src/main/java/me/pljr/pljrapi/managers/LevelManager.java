@@ -2,7 +2,6 @@ package me.pljr.pljrapi.managers;
 
 import me.pljr.pljrapi.database.LevelQuery;
 import me.pljr.pljrapi.objects.Level;
-import me.pljr.pljrapi.utils.FormatUtil;
 import me.pljr.pljrapi.utils.NumberUtil;
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -73,6 +72,7 @@ public class LevelManager {
         if (level == null){
             level = getLevel(1);
         }
+        level.setManager(this);
         players.put(uuid, level);
     }
 
@@ -100,6 +100,7 @@ public class LevelManager {
         xp+=amount;
         if (xp >= nextCost){
             players.put(uuid, getLevel(playerLevel.getLevel()+1));
+            return;
         }
         playerLevel.setXp(xp);
         players.put(uuid, playerLevel);
@@ -107,30 +108,18 @@ public class LevelManager {
 
     public Level getLevel(int level){
         if (levels.containsKey(level)){
-            return levels.get(level);
+            Level lvl = levels.get(level);
+            lvl.setManager(this);
+            return lvl;
         }
-        return new Level(level, 0, othersName, othersCost);
+        Level lvl = new Level(level, 0, othersName, othersCost);
+        lvl.setManager(this);
+        return lvl;
     }
 
+    @Deprecated
     public String getProgress(Level level){
-        int cost = level.getNextCost();
-        int xp = level.getXp();
-        float onePercent = cost / 100;
-        float percent = xp / onePercent;
-        int symbols = Math.round(percent / 10);
-        int missingSymbols = Math.round((100 - percent) / 10);
-        StringBuilder progress = new StringBuilder();
-        progress.append(progressUnlockedColor);
-        while (symbols != 0){
-            progress.append(progressSymbol);
-            symbols--;
-        }
-        progress.append(progressLockedColor);
-        while (missingSymbols != 0){
-            progress.append(progressSymbol);
-            missingSymbols--;
-        }
-        return progressFormat.replace("{progress}", FormatUtil.colorString(progress.toString()));
+        return level.getProgress();
     }
 
     public int getRewardMinute() {
@@ -141,5 +130,21 @@ public class LevelManager {
     }
     public int getRewardWin() {
         return rewardWin;
+    }
+
+    public String getProgressSymbol() {
+        return progressSymbol;
+    }
+
+    public String getProgressUnlockedColor() {
+        return progressUnlockedColor;
+    }
+
+    public String getProgressLockedColor() {
+        return progressLockedColor;
+    }
+
+    public String getProgressFormat() {
+        return progressFormat;
     }
 }

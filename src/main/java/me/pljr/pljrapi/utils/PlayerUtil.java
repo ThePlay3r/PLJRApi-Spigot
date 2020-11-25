@@ -1,6 +1,7 @@
 package me.pljr.pljrapi.utils;
 
 import me.pljr.pljrapi.PLJRApi;
+import me.pljr.pljrapi.builders.TitleBuilder;
 import me.pljr.pljrapi.config.CfgLang;
 import me.pljr.pljrapi.config.CfgSettings;
 import me.pljr.pljrapi.config.CfgSounds;
@@ -88,13 +89,7 @@ public class PlayerUtil {
         if (delay){
             countdown = CfgSettings.teleportDelay;
         }else{
-            TitleManager.send(player, new PLJRTitle(
-                    CfgLang.teleportTitleTp.getTitle(),
-                    CfgLang.teleportTitleTp.getSubtitle(),
-                    CfgLang.teleportTitleTp.getIn(),
-                    CfgLang.teleportTitleTp.getStay(),
-                    CfgLang.teleportTitleTp.getOut()
-            ));
+            TitleManager.send(player, CfgLang.teleportTitleTp);
             player.teleport(location);
             player.playSound(player.getLocation(), CfgSounds.sounds.get(Sounds.TELEPORT_TP), 1, 1);
             return;
@@ -109,38 +104,32 @@ public class PlayerUtil {
                 Location currentLoc = player.getLocation();
                 double currentX = currentLoc.getX();
                 double currentZ = currentLoc.getZ();
+                // Fail (Player moved)
                 if (currentX != x || currentZ != z){
-                    TitleManager.send(player, new PLJRTitle(
-                            CfgLang.teleportTitleFail.getTitle().replace("%time", finalCountdown+""),
-                            CfgLang.teleportTitleFail.getSubtitle().replace("%time", finalCountdown+""),
-                            CfgLang.teleportTitleFail.getIn(),
-                            CfgLang.teleportTitleFail.getStay(),
-                            CfgLang.teleportTitleFail.getOut()
-                    ));
+                    TitleManager.send(player, new TitleBuilder(CfgLang.teleportTitleFail)
+                            .replaceTitle("%time", finalCountdown+"")
+                            .replaceSubtitle("%time", finalCountdown+"")
+                            .create());
                     player.playSound(player.getLocation(), CfgSounds.sounds.get(Sounds.TELEPORT_FAIL), 1, 1);
                     cancel();
                     return;
                 }
+                // Success (Teleporting Player)
                 if (finalCountdown <= 0){
-                    TitleManager.send(player, new PLJRTitle(
-                            CfgLang.teleportTitleTp.getTitle().replace("%time", finalCountdown+""),
-                            CfgLang.teleportTitleTp.getSubtitle().replace("%time", finalCountdown+""),
-                            CfgLang.teleportTitleTp.getIn(),
-                            CfgLang.teleportTitleTp.getStay(),
-                            CfgLang.teleportTitleTp.getOut()
-                    ));
+                    TitleManager.send(player, new TitleBuilder(CfgLang.teleportTitleTp)
+                            .replaceTitle("%time", finalCountdown+"")
+                            .replaceSubtitle("%time", finalCountdown+"")
+                            .create());
                     player.playSound(player.getLocation(), CfgSounds.sounds.get(Sounds.TELEPORT_TP), 1, 1);
                     Bukkit.getScheduler().runTask(PLJRApi.getInstance(), ()-> player.teleport(location));
                     cancel();
                     return;
                 }
-                TitleManager.send(player, new PLJRTitle(
-                        CfgLang.teleportTitleTick.getTitle().replace("%time", finalCountdown+""),
-                        CfgLang.teleportTitleTick.getSubtitle().replace("%time", finalCountdown+""),
-                        CfgLang.teleportTitleTick.getIn(),
-                        CfgLang.teleportTitleTick.getStay(),
-                        CfgLang.teleportTitleTick.getOut()
-                ));
+                // Ticking (Waiting to be teleported)
+                TitleManager.send(player, new TitleBuilder(CfgLang.teleportTitleTick)
+                        .replaceTitle("%time", finalCountdown+"")
+                        .replaceSubtitle("%time", finalCountdown+"")
+                        .create());
                 player.playSound(player.getLocation(), CfgSounds.sounds.get(Sounds.TELEPORT_TICK), 1, 1);
                 finalCountdown--;
             }

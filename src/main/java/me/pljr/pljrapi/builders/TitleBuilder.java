@@ -97,6 +97,18 @@ public class TitleBuilder {
     }
 
     /**
+     * Replaces a String with another String in the title.
+     *
+     * @param target {@link String} that should be replaced.
+     * @param replacement {@link String} that the target should be replaced with.
+     * @return {@link TitleBuilder} with changed lore.
+     */
+    public TitleBuilder replaceTitle(String target, String replacement){
+        this.title = title.replace(target, replacement);
+        return this;
+    }
+
+    /**
      * Changes current subtitle.
      *
      * @param subtitle {@link String} that will represent the new subtitle.
@@ -104,6 +116,18 @@ public class TitleBuilder {
      */
     public TitleBuilder withSubtitle(String subtitle){
         this.subtitle = subtitle;
+        return this;
+    }
+
+    /**
+     * Replaces a String with another String in the subtitle.
+     *
+     * @param target {@link String} that should be replaced.
+     * @param replacement {@link String} that the target should be replaced with.
+     * @return {@link TitleBuilder} with changed lore.
+     */
+    public TitleBuilder replaceSubtitle(String target, String replacement){
+        this.subtitle = subtitle.replace(target, replacement);
         return this;
     }
 
