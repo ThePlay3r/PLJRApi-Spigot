@@ -32,4 +32,20 @@ public class NumberUtil {
             return false;
         }
     }
+
+    /**
+     * Checks if String is an Float.
+     *
+     * @param number String that should be checked
+     * @return True if number is an Float, false if otherwise
+     */
+    public static boolean isFloat(String number){
+        try {
+            Float.parseFloat(number);
+            return true;
+        }
+        catch (NumberFormatException e) {
+            return false;
+        }
+    }
 }

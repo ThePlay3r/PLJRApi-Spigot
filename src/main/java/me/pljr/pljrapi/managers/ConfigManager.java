@@ -11,10 +11,7 @@ import me.pljr.pljrapi.objects.PLJRTitle;
 import me.pljr.pljrapi.utils.FormatUtil;
 import me.pljr.pljrapi.utils.ItemStackUtil;
 import me.pljr.pljrapi.utils.NumberUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -78,6 +75,10 @@ public class ConfigManager {
 
     private void isNotEnchantment(String enchantment, String path){
         console.sendMessage(prefix + enchantment + " is not a valid enchantment at " + path + " in " + fileName + " !");
+    }
+
+    private void isNotWorld(String worldName, String path){
+        console.sendMessage(prefix + worldName + " is not a valid world at " + path + " in " + fileName + " !");
     }
 
     public ConfigManager(FileConfiguration config, String prefix, String fileName){
@@ -171,6 +172,18 @@ public class ConfigManager {
 
         pathNotFound(path);
         return 1;
+    }
+
+    /**
+     * Gets an Float from {@link FileConfiguration},
+     *
+     * @param path Path to the Float.
+     * @return Custom Float.
+     * 
+     * @see #getDouble(String) 
+     */
+    public float getFloat(String path){
+        return (float) getDouble(path);
     }
 
     /**
@@ -581,6 +594,44 @@ public class ConfigManager {
             builder.getLines().add(line);
         }
         return builder.create();
+    }
+
+    /**
+     * Tries to get an {@link World} from {@link FileConfiguration}.
+     * 
+     * @param path Path to the {@link World}
+     * @return {@link World} if one was found, random from loaded worlds otherwise.
+     * 
+     * @see #getString(String) 
+     * @see #isNotWorld(String, String) 
+     */
+    public World getWorld(String path){
+        String worldName = getString(path);
+        if (Bukkit.getWorld(worldName) == null){
+            isNotWorld(worldName, path);
+            return Bukkit.getWorlds().get(0);
+        }
+        return Bukkit.getWorld(worldName);
+    }
+
+    /**
+     * Gets an {@link Location} from {@link FileConfiguration}.
+     * 
+     * @param path Path to the {@link Location}
+     * @return Custom {@link Location} from the settings.
+     * 
+     * @see #getWorld(String)
+     * @see #getInt(String)
+     * @see #getFloat(String) 
+     */
+    public Location getLocation(String path){
+        World world = getWorld(path+".world");
+        double x = getDouble(path+".x");
+        double y = getDouble(path+".y");
+        double z = getDouble(path+".z");
+        float yaw = getFloat(path+".yaw");
+        float pitch = getFloat(path+".pitch");
+        return new Location(world, x, y, z, yaw, pitch);
     }
 }
 

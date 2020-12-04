@@ -7,10 +7,10 @@ import org.bukkit.entity.Player;
 
 public class PLJRSound {
     private final Sound type;
-    private final int volume;
-    private final int pitch;
+    private final float volume;
+    private final float pitch;
 
-    public PLJRSound(Sound type, int volume, int pitch){
+    public PLJRSound(Sound type, float volume, float pitch){
         this.type = type;
         this.volume = volume;
         this.pitch = pitch;
@@ -20,11 +20,11 @@ public class PLJRSound {
         return type;
     }
 
-    public int getVolume() {
+    public float getVolume() {
         return volume;
     }
 
-    public int getPitch() {
+    public float getPitch() {
         return pitch;
     }
 
