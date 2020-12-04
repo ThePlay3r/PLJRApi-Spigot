@@ -6,8 +6,10 @@ import me.pljr.pljrapi.config.CfgSettings;
 import me.pljr.pljrapi.config.CfgSounds;
 import me.pljr.pljrapi.database.DataSource;
 import me.pljr.pljrapi.events.PLJRApiStartupEvent;
+import me.pljr.pljrapi.listeners.PlayerJoinListener;
 import me.pljr.pljrapi.managers.ConfigManager;
 import me.pljr.pljrapi.managers.GUIManager;
+import me.pljr.pljrapi.managers.QueryManager;
 import me.pljr.pljrapi.utils.BungeeUtil;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.milkbowl.vault.economy.Economy;
@@ -26,6 +28,7 @@ public final class PLJRApi extends JavaPlugin {
     private static final Logger log = Logger.getLogger("Minecraft");
     private static Economy vaultEcon = null;
     private static BukkitAudiences bukkitAudiences;
+    private static QueryManager queryManager;
 
     @Override
     public void onEnable() {
@@ -66,6 +69,7 @@ public final class PLJRApi extends JavaPlugin {
     private void setupDatabase(){
         dataSource = new DataSource(CfgMysql.host, CfgMysql.port, CfgMysql.database, CfgMysql.username, CfgMysql.password);
         dataSource.initPool();
+        queryManager = new QueryManager(dataSource, this);
     }
 
     private void setupBungee(){
@@ -86,6 +90,7 @@ public final class PLJRApi extends JavaPlugin {
     private void setupListeners(){
         PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new GUIManager(), this);
+        pluginManager.registerEvents(new PlayerJoinListener(queryManager), this);
     }
 
     public static ConfigManager getConfigManager() {
@@ -102,6 +107,9 @@ public final class PLJRApi extends JavaPlugin {
     }
     public static BukkitAudiences getBukkitAudiences() {
         return bukkitAudiences;
+    }
+    public static QueryManager getQueryManager() {
+        return queryManager;
     }
 
     @Override

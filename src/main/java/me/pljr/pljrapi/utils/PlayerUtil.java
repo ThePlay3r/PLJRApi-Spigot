@@ -6,6 +6,7 @@ import me.pljr.pljrapi.config.CfgLang;
 import me.pljr.pljrapi.config.CfgSettings;
 import me.pljr.pljrapi.config.CfgSounds;
 import me.pljr.pljrapi.enums.Sounds;
+import me.pljr.pljrapi.managers.QueryManager;
 import me.pljr.pljrapi.managers.TitleManager;
 import me.pljr.pljrapi.objects.PLJRTitle;
 import org.bukkit.Bukkit;
@@ -47,7 +48,16 @@ public class PlayerUtil {
      * @return Username of offlinePlayer, "?" otherwise
      */
     public static String getName(OfflinePlayer offlinePlayer){
-        String name = offlinePlayer.getName();
+        QueryManager queryManager = PLJRApi.getQueryManager();
+
+        UUID playerId = offlinePlayer.getUniqueId();
+
+        if (offlinePlayer.isOnline()){
+            queryManager.savePlayerName(playerId, offlinePlayer.getName());
+            return offlinePlayer.getName();
+        }
+
+        String name = queryManager.getPlayerName(playerId);
         if (name == null){
             return  "?";
         }
