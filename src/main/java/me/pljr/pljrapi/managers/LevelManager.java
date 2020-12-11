@@ -3,8 +3,13 @@ package me.pljr.pljrapi.managers;
 import me.pljr.pljrapi.database.LevelQuery;
 import me.pljr.pljrapi.objects.Level;
 import me.pljr.pljrapi.utils.NumberUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -95,6 +100,14 @@ public class LevelManager {
 
     public void addPlayerXp(UUID uuid, int amount){
         Level playerLevel = getPlayer(uuid);
+        DayOfWeek day = LocalDateTime.now().getDayOfWeek();
+        if (day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY){
+            amount = amount * 2;
+        }
+        Player player = Bukkit.getPlayer(uuid);
+        if (player != null && player.isOnline()){
+            player.sendMessage("§e§l+DOUBLE XP");
+        }
         int xp = playerLevel.getXp();
         int nextCost = playerLevel.getNextCost();
         xp+=amount;
