@@ -51,7 +51,7 @@ public class ItemBuilder {
      * @param itemStack {@link ItemStack} from what the values will be set to.
      */
     public ItemBuilder(ItemStack itemStack){
-        this.itemStack = itemStack;
+        this.itemStack = new ItemStack(itemStack);
         this.amount = itemStack.getAmount();
         ItemMeta itemMeta = itemStack.getItemMeta();
         String name = "";
