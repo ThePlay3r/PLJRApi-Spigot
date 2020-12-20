@@ -8,10 +8,10 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.UUID;
 
-public class PlayerJoinListener implements Listener {
+public class PlayerQuitListener implements Listener {
     private final QueryManager queryManager;
 
-    public PlayerJoinListener(QueryManager queryManager){
+    public PlayerQuitListener(QueryManager queryManager){
         this.queryManager = queryManager;
     }
 

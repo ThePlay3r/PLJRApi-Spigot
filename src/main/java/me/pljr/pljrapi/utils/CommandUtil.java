@@ -7,12 +7,96 @@ import me.pljr.pljrapi.enums.Lang;
 import me.pljr.pljrapi.enums.Sounds;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
 
-public abstract class CommandUtil {
+public abstract class CommandUtil implements CommandExecutor {
+    private final String command;
+    private String permission;
+
+    /**
+     * Creates a new CommandUtil without command nor
+     * permission.
+     *
+     * @deprecated Added to not lose support of older resources. (Should not be used in newer ones)
+     */
+    @Deprecated
+    public CommandUtil(){
+        this.command = "";
+        this.permission = "";
+    }
+
+    /**
+     * Creates a new CommandUtil with no permission.
+     *
+     * @param command Name of the command.
+     */
+    public CommandUtil(String command){
+        this.command = command;
+        this.permission = "";
+    }
+
+    /**
+     * Creates a new CommandUtil with permission
+     *
+     * @param command Name of the command.
+     * @param permission Required permission.
+     */
+    public CommandUtil(String command, String permission){
+        this.command = command;
+        this.permission = permission;
+    }
+
+    /**
+     * Registers the command to plugin.
+     *
+     * @param plugin {@link JavaPlugin} that this command will be registered to.
+     */
+    public void registerCommand(JavaPlugin plugin){
+        PluginManager pluginManager = plugin.getServer().getPluginManager();
+        plugin.getCommand(command).setExecutor(this);
+    }
+
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (sender instanceof Player){
+            Player player = (Player) sender;
+            if (permission != ""){
+                if (!checkPerm(player, permission)) return false;
+            }
+            onPlayerCommand(player, args);
+            return true;
+        }
+        onConsoleCommand(sender, args);
+        return true;
+    }
+
+    /**
+     * Executes the command for player, after checking the permission.
+     *
+     * @param player {@link Player} that sent the command.
+     * @param args Passed command arguments
+     */
+    public void onPlayerCommand(Player player, String[] args){
+        sendMessageClean(player, CfgLang.lang.get(Lang.COMMAND_RESPONSE_PLAYER));
+    }
+
+    /**
+     * Executes the command for CommandSender, after checking the permission.
+     *
+     * @param sender Source of the command.
+     * @param args Passed command arguments
+     */
+    public void onConsoleCommand(CommandSender sender, String[] args){
+        sendMessageClean(sender, CfgLang.lang.get(Lang.COMMAND_RESPONSE_CONSOLE));
+    }
+
     /**
      * Plays a sound of command failure to {@link Player}, if sounds are enabled in configuration.
      *

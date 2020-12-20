@@ -17,7 +17,7 @@ public class VaultUtil {
      */
     public static double getBalance(OfflinePlayer target){
         if (!CfgSettings.vault){
-            if (CfgSettings.disabledMessages) Bukkit.getConsoleSender().sendMessage("§cPLJRApi: Tried to use Vault, while disabled!");
+            if (CfgSettings.disabledMessages) Bukkit.getConsoleSender().sendMessage("§cPLJRApi: Tried to use Vault, while disabled in config!");
             return 0;
         }
         return PLJRApi.getVaultEcon().getBalance(target);
@@ -31,7 +31,7 @@ public class VaultUtil {
      */
     public static double getBalance(String target){
         if (!CfgSettings.vault){
-            if (CfgSettings.disabledMessages) Bukkit.getConsoleSender().sendMessage("§cPLJRApi: Tried to use Vault, while disabled!");
+            if (CfgSettings.disabledMessages) Bukkit.getConsoleSender().sendMessage("§cPLJRApi: Tried to use Vault, while disabled in config!");
             return 0;
         }
         return PLJRApi.getVaultEcon().getBalance(target);
@@ -45,7 +45,7 @@ public class VaultUtil {
      */
     public static void deposit(OfflinePlayer target, double amount){
         if (!CfgSettings.vault){
-            if (CfgSettings.disabledMessages) Bukkit.getConsoleSender().sendMessage("§cPLJRApi: Tried to use Vault, while disabled!");
+            if (CfgSettings.disabledMessages) Bukkit.getConsoleSender().sendMessage("§cPLJRApi: Tried to use Vault, while disabled in config!");
             return;
         }
         PLJRApi.getVaultEcon().depositPlayer(target, amount);
@@ -59,7 +59,7 @@ public class VaultUtil {
      */
     public static void deposit(String target, double amount){
         if (!CfgSettings.vault){
-            if (CfgSettings.disabledMessages) Bukkit.getConsoleSender().sendMessage("§cPLJRApi: Tried to use Vault, while disabled!");
+            if (CfgSettings.disabledMessages) Bukkit.getConsoleSender().sendMessage("§cPLJRApi: Tried to use Vault, while disabled in config!");
             return;
         }
         PLJRApi.getVaultEcon().depositPlayer(target, amount);
@@ -73,7 +73,7 @@ public class VaultUtil {
      */
     public static void withdraw(OfflinePlayer target, double amount){
         if (!CfgSettings.vault){
-            if (CfgSettings.disabledMessages) Bukkit.getConsoleSender().sendMessage("§cPLJRApi: Tried to use Vault, while disabled!");
+            if (CfgSettings.disabledMessages) Bukkit.getConsoleSender().sendMessage("§cPLJRApi: Tried to use Vault, while disabled in config!");
             return;
         }
         PLJRApi.getVaultEcon().withdrawPlayer(target, amount);
@@ -87,7 +87,7 @@ public class VaultUtil {
      */
     public static void withdraw(String target, double amount){
         if (!CfgSettings.vault){
-            if (CfgSettings.disabledMessages) Bukkit.getConsoleSender().sendMessage("§cPLJRApi: Tried to use Vault, while disabled!");
+            if (CfgSettings.disabledMessages) Bukkit.getConsoleSender().sendMessage("§cPLJRApi: Tried to use Vault, while disabled in config!");
             return;
         }
         PLJRApi.getVaultEcon().withdrawPlayer(target, amount);

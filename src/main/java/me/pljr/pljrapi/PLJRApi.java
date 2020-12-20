@@ -6,7 +6,7 @@ import me.pljr.pljrapi.config.CfgSettings;
 import me.pljr.pljrapi.config.CfgSounds;
 import me.pljr.pljrapi.database.DataSource;
 import me.pljr.pljrapi.events.PLJRApiStartupEvent;
-import me.pljr.pljrapi.listeners.PlayerJoinListener;
+import me.pljr.pljrapi.listeners.PlayerQuitListener;
 import me.pljr.pljrapi.managers.ConfigManager;
 import me.pljr.pljrapi.managers.GUIManager;
 import me.pljr.pljrapi.managers.QueryManager;
@@ -90,7 +90,7 @@ public final class PLJRApi extends JavaPlugin {
     private void setupListeners(){
         PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new GUIManager(), this);
-        pluginManager.registerEvents(new PlayerJoinListener(queryManager), this);
+        pluginManager.registerEvents(new PlayerQuitListener(queryManager), this);
     }
 
     public static ConfigManager getConfigManager() {

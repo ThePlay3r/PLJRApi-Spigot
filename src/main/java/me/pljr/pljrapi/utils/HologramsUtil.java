@@ -20,7 +20,7 @@ public class HologramsUtil {
      */
     public static void create(Location location, List<String> text, int ticks){
         if (!CfgSettings.holograms){
-            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "PLJRApi: Tried to create a HolographicDisplays Hologram while disabled!");
+            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "PLJRApi: Tried to create a HolographicDisplays Hologram while disabled in config!");
             return;
         }
         Hologram hologram = HologramsAPI.createHologram(PLJRApi.getInstance(), location);

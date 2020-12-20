@@ -19,7 +19,7 @@ public class PapiUtil {
             return PlaceholderAPI.setPlaceholders(player, input);
         }
         if (CfgSettings.disabledMessages){
-            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "PLJRApi: Tried to parse PAPI Placeholders, while disabled!");
+            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "PLJRApi: Tried to parse PAPI Placeholders, while disabled in config!");
         }
         return input;
     }

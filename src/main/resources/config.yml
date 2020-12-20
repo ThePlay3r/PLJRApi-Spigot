@@ -89,4 +89,9 @@ lang:
   TIME_FORMAT_DAYS: "%d d, %02d h. %02d m. %02d s."
   TIME_FORMAT_HOURS: "%02d h. %02d m. %02d s."
   TIME_FORMAT_MINUTES: "00 h. %02d m. %02d s."
+
+  # These messages will be shown, after using a command, that does not
+  # have set any custom behaviour. (Default responses)
+  COMMAND_RESPONSE_PLAYER: "&c&l! §8» §fYou can't use this command!"
+  COMMAND_RESPONSE_CONSOLE: "&c&l! §8» §fThis command is for in-game use only!"
 #|--------------------------------------------------------------------------------------------------------------------|#
