@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>me.pljr</groupId>
-    <artifactId>PLJRApi</artifactId>
-    <version>1.6</version>
+    <artifactId>PLJRApi-Spigot</artifactId>
+    <version>2.0</version>
     <packaging>jar</packaging>
 
     <name>PLJRApi</name>
@@ -36,11 +36,15 @@
                     <relocations>
                         <relocation>
                             <pattern>com.cryptomorin.xseries</pattern>
-                            <shadedPattern>me.pljr.pljrapi</shadedPattern>
+                            <shadedPattern>me.pljr.pljrapispigot.xseries</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>net.kyori</pattern>
-                            <shadedPattern>me.pljr.pljrapi</shadedPattern>
+                            <shadedPattern>me.pljr.pljrapispigot.kyori</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>xyz.xenondevs</pattern>
+                            <shadedPattern>me.pljr.pljrapispigot.xenondevs</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>

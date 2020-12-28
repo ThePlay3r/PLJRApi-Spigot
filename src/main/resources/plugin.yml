@@ -1,6 +1,6 @@
-name: PLJRApi
+name: PLJRApi-Spigot
 version: ${project.version}
-main: me.pljr.pljrapi.PLJRApi
+main: me.pljr.pljrapispigot.PLJRApiSpigot
 api-version: 1.13
 authors: [9hx]
 softdepend: [Vault, PlaceholderAPI, HolographicDisplays]
