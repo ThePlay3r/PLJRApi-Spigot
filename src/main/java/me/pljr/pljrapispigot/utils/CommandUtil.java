@@ -130,7 +130,7 @@ public abstract class CommandUtil implements CommandExecutor {
      */
     public boolean checkPlayer(CommandSender sender, String requestName){
         if (!PlayerUtil.isPlayer(requestName)){
-            sendMessage(sender, Lang.OFFLINE.get().replace("%name", requestName));
+            sendMessage(sender, Lang.OFFLINE.get().replace("{name}", requestName));
             if (sender instanceof Player){
                 fail((Player) sender);
             }
@@ -154,7 +154,7 @@ public abstract class CommandUtil implements CommandExecutor {
         if (NumberUtil.isInt(target)){
             return true;
         }
-        sendMessage(sender, Lang.NO_NUMBER.get().replace("%arg", target));
+        sendMessage(sender, Lang.NO_NUMBER.get().replace("{arg}", target));
         if (sender instanceof Player){
             fail((Player) sender);
         }
@@ -176,7 +176,7 @@ public abstract class CommandUtil implements CommandExecutor {
         if (MaterialUtil.isMaterial(target)){
             return true;
         }
-        sendMessage(sender, Lang.NO_MATERIAL.get().replace("%material", target));
+        sendMessage(sender, Lang.NO_MATERIAL.get().replace("{material}", target));
         if (sender instanceof Player){
             fail((Player) sender);
         }

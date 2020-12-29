@@ -116,8 +116,8 @@ public class PlayerUtil {
                 // Fail (Player moved)
                 if (currentX != x || currentZ != z){
                     TitleManager.send(player, new TitleBuilder(Lang.TELEPORT_TITLE_FAIL)
-                            .replaceTitle("%time", finalCountdown+"")
-                            .replaceSubtitle("%time", finalCountdown+"")
+                            .replaceTitle("{time}", finalCountdown+"")
+                            .replaceSubtitle("{time}", finalCountdown+"")
                             .create());
                     player.playSound(player.getLocation(), SoundType.TELEPORT_FAIL.get(), 1, 1);
                     cancel();
@@ -126,8 +126,8 @@ public class PlayerUtil {
                 // Success (Teleporting Player)
                 if (finalCountdown <= 0){
                     TitleManager.send(player, new TitleBuilder(Lang.TELEPORT_TITLE_TP)
-                            .replaceTitle("%time", finalCountdown+"")
-                            .replaceSubtitle("%time", finalCountdown+"")
+                            .replaceTitle("{time}", finalCountdown+"")
+                            .replaceSubtitle("{time}", finalCountdown+"")
                             .create());
                     player.playSound(player.getLocation(), SoundType.TELEPORT_TP.get(), 1, 1);
                     Bukkit.getScheduler().runTask(PLJRApiSpigot.getInstance(), ()-> player.teleport(location));
@@ -136,8 +136,8 @@ public class PlayerUtil {
                 }
                 // Ticking (Waiting to be teleported)
                 TitleManager.send(player, new TitleBuilder(Lang.TELEPORT_TITLE_TICK)
-                        .replaceTitle("%time", finalCountdown+"")
-                        .replaceSubtitle("%time", finalCountdown+"")
+                        .replaceTitle("{time}", finalCountdown+"")
+                        .replaceSubtitle("{time}", finalCountdown+"")
                         .create());
                 player.playSound(player.getLocation(), SoundType.TELEPORT_TICK.get(), 1, 1);
                 finalCountdown--;

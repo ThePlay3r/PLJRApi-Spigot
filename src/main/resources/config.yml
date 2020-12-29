@@ -64,7 +64,7 @@ sounds:
 teleport-title:
   ticking:
     title: "§b§lTeleportation"
-    subtitle: "§7%time§8s"
+    subtitle: "§7{time}§8s"
     in: 20
     stay: 40
     out: 20
@@ -83,9 +83,9 @@ teleport-title:
 
 lang:
   NO_PERM: "&c&l! §8» §fYou don't have enough permissions to do this!"
-  NO_NUMBER: "§c§l! §8» §b%arg §fis not a number!"
-  NO_MATERIAL: "§c§l! §8» §b%material §fis not a material!"
-  OFFLINE: "&c&l! §8» §e%name §fis not on the server!"
+  NO_NUMBER: "§c§l! §8» §b{arg} §fis not a number!"
+  NO_MATERIAL: "§c§l! §8» §b{material} §fis not a material!"
+  OFFLINE: "&c&l! §8» §e{name} §fis not on the server!"
   TIME_FORMAT_DAYS: "%d d, %02d h. %02d m. %02d s."
   TIME_FORMAT_HOURS: "%02d h. %02d m. %02d s."
   TIME_FORMAT_MINUTES: "00 h. %02d m. %02d s."
