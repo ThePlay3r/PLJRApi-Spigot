@@ -45,20 +45,28 @@ public class PlayerUtil {
      *
      * @param offlinePlayer {@link OfflinePlayer} that we will try to get the username of
      * @return Username of offlinePlayer, "?" otherwise
+     *
+     * @see #getName(UUID)
      */
     public static String getName(OfflinePlayer offlinePlayer){
-        QueryManager queryManager = PLJRApiSpigot.getQueryManager();
-
-        UUID playerId = offlinePlayer.getUniqueId();
-
         if (offlinePlayer.isOnline()){
-            queryManager.savePlayerName(playerId, offlinePlayer.getName());
             return offlinePlayer.getName();
         }
+        return getName(offlinePlayer.getUniqueId());
+    }
 
-        String name = queryManager.getPlayerName(playerId);
+    /**
+     * Will try to get a username of Player, from {@link UUID}
+     *
+     * @param uuid {@link UUID} of Player.
+     * @return Username of player, "?" otherwise
+     */
+    public static String getName(UUID uuid){
+        QueryManager queryManager = PLJRApiSpigot.getQueryManager();
+
+        String name = queryManager.getPlayerName(uuid);
         if (name == null){
-            return  "?";
+            return "?";
         }
         return name;
     }
