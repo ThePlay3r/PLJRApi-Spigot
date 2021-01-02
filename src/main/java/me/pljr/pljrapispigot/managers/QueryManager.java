@@ -35,6 +35,7 @@ public class QueryManager {
         }catch (SQLException e){
             e.printStackTrace();
         }
+        loadPlayerNames();
     }
 
     public void loadPlayerNames(){
