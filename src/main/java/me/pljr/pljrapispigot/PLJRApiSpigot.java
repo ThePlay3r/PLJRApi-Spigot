@@ -1,9 +1,6 @@
 package me.pljr.pljrapispigot;
 
-import me.pljr.pljrapispigot.config.CfgMysql;
-import me.pljr.pljrapispigot.config.CfgSettings;
-import me.pljr.pljrapispigot.config.Lang;
-import me.pljr.pljrapispigot.config.SoundType;
+import me.pljr.pljrapispigot.config.*;
 import me.pljr.pljrapispigot.database.DataSource;
 import me.pljr.pljrapispigot.events.PLJRApiStartupEvent;
 import me.pljr.pljrapispigot.listeners.PlayerQuitListener;
@@ -23,12 +20,17 @@ import java.util.logging.Logger;
 
 public final class PLJRApiSpigot extends JavaPlugin {
     private static PLJRApiSpigot instance;
-    private static ConfigManager config;
     private static DataSource dataSource;
     private static final Logger log = Logger.getLogger("Minecraft");
     private static Economy vaultEcon = null;
     private static BukkitAudiences bukkitAudiences;
     private static QueryManager queryManager;
+
+    // Files
+    private static ConfigManager configManager;
+    private static ConfigManager langManager;
+    private static ConfigManager titleTypeManager;
+    private static ConfigManager soundTypeManager;
 
     @Override
     public void onEnable() {
@@ -80,11 +82,15 @@ public final class PLJRApiSpigot extends JavaPlugin {
 
     private void setupConfig(){
         saveDefaultConfig();
-        config = new ConfigManager(this, "config.yml");
-        Lang.load(config);
-        CfgSettings.load(config);
-        SoundType.load(config);
-        CfgMysql.load(config);
+        configManager = new ConfigManager(this, "config.yml");
+        langManager = new ConfigManager(this, "lang.yml");
+        titleTypeManager = new ConfigManager(this, "titles.yml");
+        soundTypeManager = new ConfigManager(this, "sounds.yml");
+        Lang.load(langManager);
+        SoundType.load(soundTypeManager);
+        TitleType.load(titleTypeManager);
+        CfgSettings.load(configManager);
+        CfgMysql.load(configManager);
     }
 
     private void setupListeners(){
@@ -94,7 +100,7 @@ public final class PLJRApiSpigot extends JavaPlugin {
     }
 
     public static ConfigManager getConfigManager() {
-        return config;
+        return configManager;
     }
     public static DataSource getDataSource(){
         return dataSource;

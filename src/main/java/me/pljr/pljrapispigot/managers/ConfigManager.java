@@ -223,8 +223,8 @@ public class ConfigManager {
      *
      * @param path Path to the Float.
      * @return Custom Float.
-     * 
-     * @see #getDouble(String) 
+     *
+     * @see #getDouble(String)
      */
     public float getFloat(String path){
         return (float) getDouble(path);
@@ -492,7 +492,7 @@ public class ConfigManager {
             List<String> lore = new ArrayList<>();
 
             if (config.isSet(path+".amount")){
-               amount = getInt(path+".amount");
+                amount = getInt(path+".amount");
             }
             if (config.isSet(path+".name")){
                 name = getString(path+".name");
@@ -563,6 +563,20 @@ public class ConfigManager {
     }
 
     /**
+     * Sets {@link PLJRTitle} to {@link PLJRActionBar}.
+     *
+     * @param path Path to where the {@link PLJRTitle} should be set.
+     * @param title {@link PLJRTitle} that should be set.
+     */
+    public void setPLJRTitle(String path, PLJRTitle title){
+        config.set(path+".title", title.getTitle());
+        config.set(path+".subtitle", title.getSubtitle());
+        config.set(path+".in", title.getIn());
+        config.set(path+".stay", title.getStay());
+        config.set(path+".out", title.getOut());
+    }
+
+    /**
      * Tries to get an {@link PLJRSound} from {@link FileConfiguration}.
      *
      * @param path Path to the {@link PLJRSound}
@@ -573,13 +587,25 @@ public class ConfigManager {
     public PLJRSound getPLJRSound(String path){
         if (config.isSet(path)){
             Sound type = getSound(path+".type");
-            int volume = getInt(path+".volume");
-            int pitch = getInt(path+".pitch");
+            float volume = getFloat(path+".volume");
+            float pitch = getFloat(path+".pitch");
             return new PLJRSound(type, volume, pitch);
         }
 
         pathNotFound(path);
         return new PLJRSound(XSound.ENTITY_BAT_DEATH.parseSound(), 1, 1);
+    }
+
+    /**
+     * Sets {@link PLJRSound} to {@link PLJRActionBar}.
+     *
+     * @param path Path to where the {@link PLJRSound} should be set.
+     * @param sound {@link PLJRSound} that should be set.
+     */
+    public void setPLJRSound(String path, PLJRSound sound){
+        config.set(path+".type", sound.getType().toString());
+        config.set(path+".volume", sound.getVolume());
+        config.set(path+".pitch", sound.getPitch());
     }
 
     /**
@@ -598,8 +624,6 @@ public class ConfigManager {
         pathNotFound(path);
         return null;
     }
-
-    Boolean test;
 
     /**
      * Tries to get an {@link PLJRActionBar} from {@link FileConfiguration}.
@@ -621,12 +645,23 @@ public class ConfigManager {
     }
 
     /**
+     * Sets {@link PLJRActionBar} to {@link FileConfiguration}.
+     *
+     * @param path Path to where the {@link PLJRActionBar} should be set.
+     * @param actionBar {@link PLJRActionBar} that should be set.
+     */
+    public void setPLJRActionBar(String path, PLJRActionBar actionBar){
+        config.set(path+".message", actionBar.getMessage());
+        config.set(path+".duration", actionBar.getDuration());
+    }
+
+    /**
      * Tries to get an {@link PLJRScoreboard} from {@link FileConfiguration}.
-     * 
+     *
      * @param path Path to the {@link PLJRScoreboard}
      * @return Custom {@link PLJRScoreboard} if one was found, PLJRScoreboard("") otherwise
-     * 
-     * @see #getStringList(String) 
+     *
+     * @see #getStringList(String)
      */
     public PLJRScoreboard getPLJRScoreboard(String path){
         List<String> lines = getStringList(path);
@@ -642,13 +677,26 @@ public class ConfigManager {
     }
 
     /**
+     * Sets {@link PLJRScoreboard} to {@link FileConfiguration}.
+     *
+     * @param path Path to where the {@link PLJRScoreboard} should be set.
+     * @param scoreboard {@link PLJRScoreboard} that should be set.
+     */
+    public void setPLJRScoreboard(String path, PLJRScoreboard scoreboard){
+        List<String> lines = new ArrayList<>();
+        lines.add(scoreboard.getTitle());
+        lines.addAll(scoreboard.getLines());
+        config.set(path, lines);
+    }
+
+    /**
      * Tries to get an {@link World} from {@link FileConfiguration}.
-     * 
+     *
      * @param path Path to the {@link World}
      * @return {@link World} if one was found, random from loaded worlds otherwise.
-     * 
-     * @see #getString(String) 
-     * @see #isNotWorld(String, String) 
+     *
+     * @see #getString(String)
+     * @see #isNotWorld(String, String)
      */
     public World getWorld(String path){
         String worldName = getString(path);
@@ -661,13 +709,13 @@ public class ConfigManager {
 
     /**
      * Gets an {@link Location} from {@link FileConfiguration}.
-     * 
+     *
      * @param path Path to the {@link Location}
      * @return Custom {@link Location} from the settings.
-     * 
+     *
      * @see #getWorld(String)
      * @see #getInt(String)
-     * @see #getFloat(String) 
+     * @see #getFloat(String)
      */
     public Location getLocation(String path){
         World world = getWorld(path+".world");

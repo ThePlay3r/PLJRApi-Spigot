@@ -94,7 +94,7 @@ public abstract class CommandUtil implements CommandExecutor {
      */
     public void fail(Player player){
         Location playerLoc = player.getLocation();
-        if (CfgSettings.SOUNDS) player.playSound(playerLoc, SoundType.COMMAND_FAIL.get(), 10, 1);
+        if (CfgSettings.SOUNDS) SoundType.COMMAND_FAIL.get().play(player);
     }
 
     /**

@@ -3,7 +3,7 @@ package me.pljr.pljrapispigot.utils;
 import me.pljr.pljrapispigot.PLJRApiSpigot;
 import me.pljr.pljrapispigot.builders.TitleBuilder;
 import me.pljr.pljrapispigot.config.CfgSettings;
-import me.pljr.pljrapispigot.config.Lang;
+import me.pljr.pljrapispigot.config.TitleType;
 import me.pljr.pljrapispigot.config.SoundType;
 import me.pljr.pljrapispigot.managers.QueryManager;
 import me.pljr.pljrapispigot.managers.TitleManager;
@@ -98,17 +98,17 @@ public class PlayerUtil {
     public static void teleport(Player player, Location location, boolean delay){
         if (player.hasPermission("pljrapi.teleport.bypass")){
             player.teleport(location);
-            player.playSound(player.getLocation(), SoundType.TELEPORT_TP.get(), 1, 1);
-            TitleManager.send(player, Lang.TELEPORT_TITLE_TP);
+            SoundType.TELEPORT_TP.get().play(player);
+            TitleManager.send(player, TitleType.TELEPORT_TELEPORT.get());
             return;
         }
         final int countdown;
         if (delay){
             countdown = CfgSettings.TELEPORT_DELAY;
         }else{
-            TitleManager.send(player, Lang.TELEPORT_TITLE_TP);
+            TitleManager.send(player, TitleType.TELEPORT_TELEPORT.get());
             player.teleport(location);
-            player.playSound(player.getLocation(), SoundType.TELEPORT_TP.get(), 1, 1);
+            SoundType.TELEPORT_TP.get().play(player);
             return;
         }
         new BukkitRunnable() {
@@ -123,31 +123,31 @@ public class PlayerUtil {
                 double currentZ = currentLoc.getZ();
                 // Fail (Player moved)
                 if (currentX != x || currentZ != z){
-                    TitleManager.send(player, new TitleBuilder(Lang.TELEPORT_TITLE_FAIL)
+                    TitleManager.send(player, new TitleBuilder(TitleType.TELEPORT_FAIL.get())
                             .replaceTitle("{time}", finalCountdown+"")
                             .replaceSubtitle("{time}", finalCountdown+"")
                             .create());
-                    player.playSound(player.getLocation(), SoundType.TELEPORT_FAIL.get(), 1, 1);
+                    SoundType.TELEPORT_FAIL.get().play(player);
                     cancel();
                     return;
                 }
                 // Success (Teleporting Player)
                 if (finalCountdown <= 0){
-                    TitleManager.send(player, new TitleBuilder(Lang.TELEPORT_TITLE_TP)
+                    TitleManager.send(player, new TitleBuilder(TitleType.TELEPORT_TELEPORT.get())
                             .replaceTitle("{time}", finalCountdown+"")
                             .replaceSubtitle("{time}", finalCountdown+"")
                             .create());
-                    player.playSound(player.getLocation(), SoundType.TELEPORT_TP.get(), 1, 1);
+                    SoundType.TELEPORT_TP.get().play(player);
                     Bukkit.getScheduler().runTask(PLJRApiSpigot.getInstance(), ()-> player.teleport(location));
                     cancel();
                     return;
                 }
                 // Ticking (Waiting to be teleported)
-                TitleManager.send(player, new TitleBuilder(Lang.TELEPORT_TITLE_TICK)
+                TitleManager.send(player, new TitleBuilder(TitleType.TELEPORT_TICKING.get())
                         .replaceTitle("{time}", finalCountdown+"")
                         .replaceSubtitle("{time}", finalCountdown+"")
                         .create());
-                player.playSound(player.getLocation(), SoundType.TELEPORT_TICK.get(), 1, 1);
+                SoundType.TELEPORT_TICK.get().play(player);
                 finalCountdown--;
             }
         }.runTaskTimerAsynchronously(PLJRApiSpigot.getInstance(), 0, 20);

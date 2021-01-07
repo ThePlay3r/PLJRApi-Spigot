@@ -1,5 +1,6 @@
 package me.pljr.pljrapispigot.builders;
 
+import com.cryptomorin.xseries.XSound;
 import me.pljr.pljrapispigot.objects.PLJRSound;
 import org.bukkit.Sound;
 
@@ -43,8 +44,19 @@ public class SoundBuilder {
      * @param sound {@link Sound} that will represent the sound.
      * @param volume float that will represent the volume.
      */
-    public SoundBuilder(Sound sound, int volume){
+    public SoundBuilder(Sound sound, float volume){
         this(sound, volume, 1);
+    }
+
+    /**
+     * Creates an SoundBuilder with selected sound and volume.
+     *
+     * @param sound {@link XSound} that will represent the sound.
+     * @param volume float that will represent the volume.
+     * @param pitch float that will represent the pitch.
+     */
+    public SoundBuilder(XSound sound, float volume, float pitch){
+        this(sound.parseSound(), volume, pitch);
     }
 
     /**
@@ -54,7 +66,7 @@ public class SoundBuilder {
      * @param volume float that will represent the volume.
      * @param pitch float that will represent the pitch.
      */
-    public SoundBuilder(Sound sound, int volume, int pitch){
+    public SoundBuilder(Sound sound, float volume, float pitch){
         this.sound = sound;
         this.volume = volume;
         this.pitch = pitch;
