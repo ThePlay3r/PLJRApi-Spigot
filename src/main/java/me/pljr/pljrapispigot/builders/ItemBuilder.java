@@ -189,6 +189,20 @@ public class ItemBuilder {
     }
 
     /**
+     * Adds an {@link Enchantment} to an item.
+     *
+     * @param enchant {@link Enchantment} that should be added.
+     * @param level Level of the enchantment.
+     * @return {@link ItemBuilder} with added enchantment.
+     */
+    public ItemBuilder withEnchant(Enchantment enchant, int level){
+        ItemMeta itemMeta = this.itemStack.getItemMeta();
+        itemMeta.addEnchant(enchant, level, true);
+        this.itemStack.setItemMeta(itemMeta);
+        return this;
+    }
+
+    /**
      * Creates ItemStack from selected values.
      *
      * @return {@link ItemStack} consisting of all previously selected values.

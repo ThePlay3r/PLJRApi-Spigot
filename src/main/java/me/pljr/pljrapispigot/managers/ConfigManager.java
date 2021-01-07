@@ -1,5 +1,6 @@
 package me.pljr.pljrapispigot.managers;
 
+import com.cryptomorin.xseries.SkullUtils;
 import com.cryptomorin.xseries.XEnchantment;
 import com.cryptomorin.xseries.XMaterial;
 import com.cryptomorin.xseries.XSound;
@@ -21,6 +22,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -408,8 +410,7 @@ public class ConfigManager {
             itemStack.setItemMeta(itemMeta);
 
             if (config.isSet(path+".enchantments")){
-                HashMap<Enchantment, Integer> enchs = getEnchantments(path+".enchantments");
-                itemStack.addEnchantments(enchs);
+                itemStack.addEnchantments(getEnchantments(path+".enchantments"));
             }
 
             return itemStack;
@@ -417,6 +418,25 @@ public class ConfigManager {
 
         pathNotFound(path);
         return new ItemStack(Material.STONE);
+    }
+
+    /**
+     * Sets an {@link ItemStack} into a {@link FileConfiguration} in SimpleItemStack format.
+     *
+     * @param path Path to where the itemstack will be saved.
+     * @param itemStack {@link ItemStack} that should be saved.
+     */
+    public void setSimpleItemStack(String path, ItemStack itemStack){
+        Material type = itemStack.getType();
+        ItemBuilder builder = new ItemBuilder(itemStack);
+
+        if (type == XMaterial.PLAYER_HEAD.parseMaterial()) config.set(path+".head-owner", SkullUtils.getSkinValue(itemStack));
+        else config.set(path+".type", type.toString());
+
+        if (builder.getAmount() > 1) config.set(path+".amount", builder.getAmount());
+        if (builder.getName() != "") config.set(path+".name", builder.getName());
+        if (!builder.getLore().isEmpty()) config.set(path+".lore", builder.getLore());
+        if (!itemStack.getEnchantments().isEmpty()) setEnchantments(path+".enchantments", itemStack.getEnchantments());
     }
 
     /**
@@ -451,6 +471,20 @@ public class ConfigManager {
             }
         }
         return enchs;
+    }
+
+    /**
+     * Saves an array of {@link Enchantment} to {@link FileConfiguration}.
+     *
+     * @param path Path to where the array will be saved.
+     * @param enchants Enchantments that should be saved.
+     */
+    public void setEnchantments(String path, Map<Enchantment, Integer> enchants){
+        List<String> enchs = new ArrayList<>();
+        for (Map.Entry<Enchantment, Integer> entry : enchants.entrySet()){
+            enchs.add(entry.getKey().getName() + ":" + entry.getValue());
+        }
+        config.set(path, enchs);
     }
 
     /**
@@ -501,12 +535,18 @@ public class ConfigManager {
                 lore = getStringList(path+".lore");
             }
 
-            return new ItemBuilder(XMaterial.PLAYER_HEAD)
+            ItemStack head =  new ItemBuilder(XMaterial.PLAYER_HEAD)
                     .withName(name)
                     .withAmount(amount)
                     .withLore(lore)
                     .withOwner(owner)
                     .create();
+
+            if (config.isSet(path+".enchantments")){
+                head.addEnchantments(getEnchantments(path+".enchantments"));
+            }
+
+            return head;
         }
 
         pathNotFound(path);
