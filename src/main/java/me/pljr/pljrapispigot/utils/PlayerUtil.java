@@ -63,7 +63,6 @@ public class PlayerUtil {
      */
     public static String getName(UUID uuid){
         QueryManager queryManager = PLJRApiSpigot.getQueryManager();
-
         String name = queryManager.getPlayerName(uuid);
         if (name == null){
             return "?";
@@ -72,16 +71,13 @@ public class PlayerUtil {
     }
 
     /**
-     * Will teleport {@link Player} to another {@link Player} using {@link #teleport(Player, Location, boolean)}.
+     * Will teleport {@link Player} to another {@link Player} using {@link #teleport(Player, Location)}.
      *
      * @param player {@link Player} that will be teleported to target
      * @param target {@link Player} that whose location will be set as the destination
-     * @param delay Determines if the teleportation should be immediate or delayed
-     *
-     * @see #teleport(Player, Location, boolean)
      */
-    public static void teleport(Player player, Player target, boolean delay){
-        teleport(player, target.getLocation(), delay);
+    public static void teleport(Player player, Player target){
+        teleport(player, target.getLocation());
     }
 
     /**
@@ -90,27 +86,18 @@ public class PlayerUtil {
      *
      * @param player {@link Player} that should be teleported
      * @param location {@link Location} destination player should be teleported to
-     * @param delay Determines if the teleportation should be immediate or delayed
      *
      * @see PLJRTitle
      * @see TitleManager
      */
-    public static void teleport(Player player, Location location, boolean delay){
+    public static void teleport(Player player, Location location){
         if (player.hasPermission("pljrapi.teleport.bypass")){
             player.teleport(location);
             SoundType.TELEPORT_TP.get().play(player);
             TitleManager.send(player, TitleType.TELEPORT_TELEPORT.get());
             return;
         }
-        final int countdown;
-        if (delay){
-            countdown = CfgSettings.TELEPORT_DELAY;
-        }else{
-            TitleManager.send(player, TitleType.TELEPORT_TELEPORT.get());
-            player.teleport(location);
-            SoundType.TELEPORT_TP.get().play(player);
-            return;
-        }
+        final int countdown = CfgSettings.TELEPORT_DELAY;
         new BukkitRunnable() {
             int finalCountdown = countdown;
             final Location pLoc = player.getLocation();

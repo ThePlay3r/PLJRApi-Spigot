@@ -54,7 +54,7 @@ public abstract class CommandUtil implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player){
             Player player = (Player) sender;
-            if (permission != ""){
+            if (!permission.equals("")){
                 if (!checkPerm(player, permission)) return false;
             }
             onPlayerCommand(player, args);
@@ -180,6 +180,26 @@ public abstract class CommandUtil implements CommandExecutor {
         if (sender instanceof Player){
             fail((Player) sender);
         }
+        return false;
+    }
+
+    /**
+     * Checks if sender has enough Vault balance.
+     *
+     * @param sender Target, that will be checked for the balance.
+     * @param amount Amount of balance, target should at least have.
+     * @return If target has at least the amount of balance.
+     * 
+     * @see VaultUtil
+     * @see #fail(Player)
+     * @see #sendMessage(Player, String) 
+     */
+    public boolean checkBalance(CommandSender sender, double amount){
+        if (!(sender instanceof Player)) return true;
+        Player player = (Player) sender;
+        if (VaultUtil.hasBalance(player, amount)) return true;
+        sendMessage(player, Lang.NO_BALANCE.get().replace("{amount}", amount+""));
+        fail(player);
         return false;
     }
 

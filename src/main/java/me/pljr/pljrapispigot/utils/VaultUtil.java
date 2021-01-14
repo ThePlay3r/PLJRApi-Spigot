@@ -39,6 +39,40 @@ public class VaultUtil {
     }
 
     /**
+     * Will check, if target has enough balance.
+     *
+     * @param target Target that we should get the balance of
+     * @param amount Amount that will be check.
+     * @return If target has at least the amount of balance.
+     *
+     * @see #getBalance(OfflinePlayer)
+     */
+    public static boolean hasBalance(OfflinePlayer target, double amount){
+        if (!CfgSettings.VAULT){
+            if (CfgSettings.DISABLED_MESSAGES) Bukkit.getConsoleSender().sendMessage("§cPLJRApi: Tried to use Vault, while disabled in config!");
+            return true;
+        }
+        return getBalance(target) >= amount;
+    }
+
+    /**
+     * Will check, if target has enough balance.
+     *
+     * @param target Target that we should get the balance of
+     * @param amount Amount that will be check.
+     * @return If target has at least the amount of balance.
+     *
+     * @see #getBalance(String)
+     */
+    public static boolean hasBalance(String target, double amount){
+        if (!CfgSettings.VAULT){
+            if (CfgSettings.DISABLED_MESSAGES) Bukkit.getConsoleSender().sendMessage("§cPLJRApi: Tried to use Vault, while disabled in config!");
+            return true;
+        }
+        return getBalance(target) >= amount;
+    }
+
+    /**
      * Will deposit funds to Economy balance of {@link OfflinePlayer}.
      *
      * @param target {@link OfflinePlayer} that should get the amount deposited

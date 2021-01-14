@@ -431,10 +431,10 @@ public class ConfigManager {
         ItemBuilder builder = new ItemBuilder(itemStack);
 
         if (type == XMaterial.PLAYER_HEAD.parseMaterial()) config.set(path+".head-owner", SkullUtils.getSkinValue(itemStack));
-        else config.set(path+".type", type.toString());
+        config.set(path+".type", type.toString());
 
         if (builder.getAmount() > 1) config.set(path+".amount", builder.getAmount());
-        if (builder.getName() != "") config.set(path+".name", builder.getName());
+        if (!builder.getName().equals("")) config.set(path+".name", builder.getName());
         if (!builder.getLore().isEmpty()) config.set(path+".lore", builder.getLore());
         if (!itemStack.getEnchantments().isEmpty()) setEnchantments(path+".enchantments", itemStack.getEnchantments());
     }
