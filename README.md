@@ -16,6 +16,41 @@ Spigot plugin created to make development of other plugins as easy and efficient
 - PlaceholderAPI: https://github.com/PlaceholderAPI/PlaceholderAPI
 - ParticleLib: https://github.com/ByteZ1337/ParticleLib
 
+## Importing to your project
+
+- Maven
+```xml
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
+```
+```xml
+<dependencies>
+    <dependency>
+        <groupId>com.github.ThePlay3r</groupId>
+        <artifactId>PLJRApi</artifactId>
+        <version>v2.0</version>
+    </dependency>
+</dependencies>
+```
+
+- Gradle
+```groovy
+allprojects {
+    repositories {
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+```groovy
+dependencies {
+    implementation 'com.github.ThePlay3r:PLJRApi:v2.0'
+}
+```
+
 ## Features
 - ConfigManager for easier usage of Bukkit's FileConfiguration
 - QueryManager using Hikari for better performance

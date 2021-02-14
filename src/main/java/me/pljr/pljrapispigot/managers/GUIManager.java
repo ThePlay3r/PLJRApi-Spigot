@@ -8,7 +8,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -74,6 +76,7 @@ public class GUIManager implements Listener {
 
         if (!guis.containsKey(playerId)) return;
         event.setCancelled(true);
+        player.updateInventory();
 
         int slot = event.getRawSlot();
         GUI gui = guis.get(playerId);

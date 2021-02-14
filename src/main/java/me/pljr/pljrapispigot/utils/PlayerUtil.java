@@ -6,7 +6,6 @@ import me.pljr.pljrapispigot.config.CfgSettings;
 import me.pljr.pljrapispigot.config.TitleType;
 import me.pljr.pljrapispigot.config.SoundType;
 import me.pljr.pljrapispigot.managers.QueryManager;
-import me.pljr.pljrapispigot.managers.TitleManager;
 import me.pljr.pljrapispigot.objects.PLJRTitle;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -81,20 +80,18 @@ public class PlayerUtil {
     }
 
     /**
-     * Will teleport {@link Player} to {@link Location} with countdown displayed by {@link PLJRTitle},
-     * using {@link TitleManager}.
+     * Will teleport {@link Player} to {@link Location} with countdown displayed by {@link PLJRTitle}.
      *
      * @param player {@link Player} that should be teleported
      * @param location {@link Location} destination player should be teleported to
      *
      * @see PLJRTitle
-     * @see TitleManager
      */
     public static void teleport(Player player, Location location){
         if (player.hasPermission("pljrapi.teleport.bypass")){
             player.teleport(location);
             SoundType.TELEPORT_TP.get().play(player);
-            TitleManager.send(player, TitleType.TELEPORT_TELEPORT.get());
+            TitleType.TELEPORT_TELEPORT.get().send(player);
             return;
         }
         final int countdown = CfgSettings.TELEPORT_DELAY;
@@ -110,30 +107,30 @@ public class PlayerUtil {
                 double currentZ = currentLoc.getZ();
                 // Fail (Player moved)
                 if (currentX != x || currentZ != z){
-                    TitleManager.send(player, new TitleBuilder(TitleType.TELEPORT_FAIL.get())
+                    new TitleBuilder(TitleType.TELEPORT_FAIL.get())
                             .replaceTitle("{time}", finalCountdown+"")
                             .replaceSubtitle("{time}", finalCountdown+"")
-                            .create());
+                            .create().send(player);
                     SoundType.TELEPORT_FAIL.get().play(player);
                     cancel();
                     return;
                 }
                 // Success (Teleporting Player)
                 if (finalCountdown <= 0){
-                    TitleManager.send(player, new TitleBuilder(TitleType.TELEPORT_TELEPORT.get())
+                    new TitleBuilder(TitleType.TELEPORT_TELEPORT.get())
                             .replaceTitle("{time}", finalCountdown+"")
                             .replaceSubtitle("{time}", finalCountdown+"")
-                            .create());
+                            .create().send(player);
                     SoundType.TELEPORT_TP.get().play(player);
                     Bukkit.getScheduler().runTask(PLJRApiSpigot.getInstance(), ()-> player.teleport(location));
                     cancel();
                     return;
                 }
                 // Ticking (Waiting to be teleported)
-                TitleManager.send(player, new TitleBuilder(TitleType.TELEPORT_TICKING.get())
+                new TitleBuilder(TitleType.TELEPORT_TICKING.get())
                         .replaceTitle("{time}", finalCountdown+"")
                         .replaceSubtitle("{time}", finalCountdown+"")
-                        .create());
+                        .create().send(player);
                 SoundType.TELEPORT_TICK.get().play(player);
                 finalCountdown--;
             }
