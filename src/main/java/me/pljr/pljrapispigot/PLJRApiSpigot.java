@@ -7,6 +7,7 @@ import me.pljr.pljrapispigot.listeners.PlayerQuitListener;
 import me.pljr.pljrapispigot.managers.ConfigManager;
 import me.pljr.pljrapispigot.managers.GUIManager;
 import me.pljr.pljrapispigot.managers.QueryManager;
+import me.pljr.pljrapispigot.utils.BStatsUtil;
 import me.pljr.pljrapispigot.utils.BungeeUtil;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.milkbowl.vault.economy.Economy;
@@ -16,9 +17,12 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Map;
 import java.util.logging.Logger;
 
 public final class PLJRApiSpigot extends JavaPlugin {
+    private static final int BSTATS_ID = 10442;
+
     private static PLJRApiSpigot instance;
     private static DataSource dataSource;
     private static final Logger log = Logger.getLogger("Minecraft");
@@ -36,6 +40,7 @@ public final class PLJRApiSpigot extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         instance = this;
+        BStatsUtil.addMetrics(this, BSTATS_ID);
         setupMiniMessage();
         setupConfig();
         setupDatabase();
@@ -64,6 +69,7 @@ public final class PLJRApiSpigot extends JavaPlugin {
         if (rsp == null) {
             return false;
         }
+
         vaultEcon = rsp.getProvider();
         return vaultEcon != null;
     }

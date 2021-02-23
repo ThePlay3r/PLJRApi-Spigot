@@ -31,8 +31,8 @@ Spigot plugin created to make development of other plugins as easy and efficient
 <dependencies>
     <dependency>
         <groupId>com.github.ThePlay3r</groupId>
-        <artifactId>PLJRApi</artifactId>
-        <version>v2.0</version>
+        <artifactId>PLJRApi-Spigot</artifactId>
+        <version>v</version>
     </dependency>
 </dependencies>
 ```
@@ -47,7 +47,7 @@ allprojects {
 ```
 ```groovy
 dependencies {
-    implementation 'com.github.ThePlay3r:PLJRApi:v2.0'
+    implementation 'com.github.ThePlay3r:PLJRApi-Spigot:v2.0'
 }
 ```
 
