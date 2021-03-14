@@ -17,7 +17,7 @@ import java.util.List;
 
 public abstract class CommandUtil implements CommandExecutor {
     private final String command;
-    private String permission;
+    private final String permission;
 
     /**
      * Creates a new CommandUtil with no permission.

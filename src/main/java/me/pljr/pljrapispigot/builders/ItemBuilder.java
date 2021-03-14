@@ -215,7 +215,9 @@ public class ItemBuilder {
             itemMeta.setDisplayName(FormatUtil.colorString(name));
         }
         if (!lore.isEmpty()){
-            itemMeta.setLore(lore);
+            List<String> coloredLore = new ArrayList<>();
+            lore.forEach(line -> coloredLore.add(FormatUtil.colorString(name)));
+            itemMeta.setLore(coloredLore);
         }
         itemStack.setItemMeta(itemMeta);
         return itemStack;
