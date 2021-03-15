@@ -1,7 +1,6 @@
 package me.pljr.pljrapispigot.config;
 
 import me.pljr.pljrapispigot.managers.ConfigManager;
-import me.pljr.pljrapispigot.objects.PLJRTitle;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.HashMap;

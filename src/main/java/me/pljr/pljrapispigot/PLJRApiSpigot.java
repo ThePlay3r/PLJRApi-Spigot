@@ -1,7 +1,10 @@
 package me.pljr.pljrapispigot;
 
 import lombok.Getter;
-import me.pljr.pljrapispigot.config.*;
+import me.pljr.pljrapispigot.config.Lang;
+import me.pljr.pljrapispigot.config.Settings;
+import me.pljr.pljrapispigot.config.SoundType;
+import me.pljr.pljrapispigot.config.TitleType;
 import me.pljr.pljrapispigot.database.DataSource;
 import me.pljr.pljrapispigot.events.PLJRApiStartupEvent;
 import me.pljr.pljrapispigot.listeners.BungeeListeners;
@@ -10,7 +13,6 @@ import me.pljr.pljrapispigot.managers.ConfigManager;
 import me.pljr.pljrapispigot.managers.GUIManager;
 import me.pljr.pljrapispigot.managers.QueryManager;
 import me.pljr.pljrapispigot.utils.BStatsUtil;
-import me.pljr.pljrapispigot.utils.BungeeUtil;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
