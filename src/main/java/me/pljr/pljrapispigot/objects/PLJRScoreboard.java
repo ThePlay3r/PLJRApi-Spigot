@@ -1,6 +1,6 @@
 package me.pljr.pljrapispigot.objects;
 
-import me.pljr.pljrapispigot.managers.ScoreboardManager;
+import me.pljr.pljrapispigot.utils.ScoreboardUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -50,10 +50,10 @@ public class PLJRScoreboard {
     }
 
     public void send(Player player){
-        ScoreboardManager.send(player, this);
+        ScoreboardUtil.send(player, this);
     }
 
     public void broadcast(){
-        ScoreboardManager.broadcast(this);
+        ScoreboardUtil.broadcast(this);
     }
 }

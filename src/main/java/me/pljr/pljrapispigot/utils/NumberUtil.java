@@ -1,6 +1,6 @@
 package me.pljr.pljrapispigot.utils;
 
-public class NumberUtil {
+public final class NumberUtil {
     /**
      * Checks if String is an Integer.
      *

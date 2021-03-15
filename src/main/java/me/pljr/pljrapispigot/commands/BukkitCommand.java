@@ -1,8 +1,8 @@
-package me.pljr.pljrapispigot.utils;
+package me.pljr.pljrapispigot.commands;
 
-import me.pljr.pljrapispigot.config.CfgSettings;
 import me.pljr.pljrapispigot.config.Lang;
 import me.pljr.pljrapispigot.config.SoundType;
+import me.pljr.pljrapispigot.utils.*;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -15,7 +15,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
 
-public abstract class CommandUtil implements CommandExecutor {
+public abstract class BukkitCommand implements CommandExecutor {
     private final String command;
     private final String permission;
 
@@ -24,7 +24,7 @@ public abstract class CommandUtil implements CommandExecutor {
      *
      * @param command Name of the command.
      */
-    public CommandUtil(String command){
+    public BukkitCommand(String command){
         this.command = command;
         this.permission = "";
     }
@@ -35,7 +35,7 @@ public abstract class CommandUtil implements CommandExecutor {
      * @param command Name of the command.
      * @param permission Required permission.
      */
-    public CommandUtil(String command, String permission){
+    public BukkitCommand(String command, String permission){
         this.command = command;
         this.permission = permission;
     }
@@ -94,7 +94,7 @@ public abstract class CommandUtil implements CommandExecutor {
      */
     public void fail(Player player){
         Location playerLoc = player.getLocation();
-        if (CfgSettings.SOUNDS) SoundType.COMMAND_FAIL.get().play(player);
+        SoundType.COMMAND_FAIL.get().play(player);
     }
 
     /**

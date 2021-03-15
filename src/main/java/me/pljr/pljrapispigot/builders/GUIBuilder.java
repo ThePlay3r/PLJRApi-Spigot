@@ -5,6 +5,7 @@ import me.pljr.pljrapispigot.objects.GUI;
 import me.pljr.pljrapispigot.objects.GUIItem;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
@@ -39,21 +40,6 @@ public class GUIBuilder {
         this.title = "";
         this.rows = 1;
         this.items = new HashMap<>();
-        this.onClose = null;
-    }
-
-    /**
-     * Creates a new GUIBuilder  from an existing {@link Inventory}.
-     *
-     * @param inventory {@link Inventory} which attributes will be copied.
-     */
-    public GUIBuilder(Inventory inventory){
-        this.title = inventory.getTitle();
-        this.rows = inventory.getSize() / 9;
-        this.items = new HashMap<>();
-        for (int i = 0; i<=inventory.getSize(); i++){
-            items.put(i, new GUIItem(inventory.getItem(i), null));
-        }
         this.onClose = null;
     }
 

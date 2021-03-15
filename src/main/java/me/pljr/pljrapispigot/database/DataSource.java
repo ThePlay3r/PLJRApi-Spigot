@@ -2,8 +2,6 @@ package me.pljr.pljrapispigot.database;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import me.pljr.pljrapispigot.PLJRApiSpigot;
-import me.pljr.pljrapispigot.config.CfgMysql;
 import me.pljr.pljrapispigot.managers.ConfigManager;
 
 import java.sql.Connection;
@@ -12,46 +10,49 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DataSource {
-    private final String host, port, database, username, password;
+    private final String host;
+    private final String port;
+    private final String database;
+    private final String username;
+    private final String password;
+    private final int maximumPoolSize;
+    private final int maximumIdle;
+    private final int maxLifetime;
+    private final int connectionTimeout;
+    private final boolean cachePrepStmts;
+    private final int prepStmtCacheSize;
+    private final int prepStmtCacheSqlLimit;
 
     private final HikariConfig config = new HikariConfig();
     private HikariDataSource ds;
 
-    public DataSource(String host, String port, String database, String username, String password){
-        this.host = host;
-        this.port = port;
-        this.database = database;
-        this.username = username;
-        this.password = password;
-    }
-
-    public static DataSource getFromConfig(ConfigManager config){
-        if (config.getBoolean("mysql.enabled")){
-            DataSource dataSource = new DataSource(
-                    config.getString("mysql.host"),
-                    config.getString("mysql.port"),
-                    config.getString("mysql.database"),
-                    config.getString("mysql.username"),
-                    config.getString("mysql.password")
-            );
-            dataSource.initPool();
-            return dataSource;
-        }
-        return PLJRApiSpigot.getDataSource();
+    public DataSource(ConfigManager config) {
+        host = config.getString("mysql.host");
+        port = config.getString("mysql.port");
+        database = config.getString("mysql.database");
+        username = config.getString("mysql.username");
+        password = config.getString("mysql.password");
+        maximumPoolSize = config.getInt("mysql-settings.maximumPoolSize");
+        maximumIdle = config.getInt("mysql-settings.maximumIdle");
+        maxLifetime = config.getInt("mysql-settings.maxLifetime");
+        connectionTimeout = config.getInt("mysql-settings.connectionTimeout");
+        cachePrepStmts = config.getBoolean("mysql-settings.cachePrepStmts");
+        prepStmtCacheSize = config.getInt("mysql-settings.prepStmtCacheSize");
+        prepStmtCacheSqlLimit = config.getInt("mysql-settings.prepStmtCacheSqlLimit");
     }
 
     public void initPool() {
-        config.setJdbcUrl("jdbc:mysql://" + host + ":" + Integer.parseInt(port) + "/" + database + "?characterEncoding=UTF-8&autoReconnect=true&useSSL=false");
-        config.setUsername(username);
-        config.setPassword(password);
-        config.addDataSourceProperty("cachePrepStmts", CfgMysql.CACHE_PREP_STMTS);
-        config.addDataSourceProperty("prepStmtCacheSize", CfgMysql.PREP_STMT_CACHE_SIZE);
-        config.addDataSourceProperty("prepStmtCacheSqlLimit", CfgMysql.PREP_STMT_CACHE_SQL_LIMIT);
-        config.setMaximumPoolSize(CfgMysql.MAXIMUM_POOL_SIZE);
-        config.setMinimumIdle(CfgMysql.MAXIMUM_IDLE);
-        config.setMaxLifetime(CfgMysql.MAX_LIFE_TIME);
-        config.setConnectionTimeout(CfgMysql.CONNECTION_TIMEOUT);
-        ds = new HikariDataSource(config);
+        this.config.setJdbcUrl("jdbc:mysql://" + this.host + ":" + Integer.parseInt(this.port) + "/" + this.database + "?characterEncoding=UTF-8&autoReconnect=true&useSSL=false");
+        this.config.setUsername(this.username);
+        this.config.setPassword(this.password);
+        this.config.addDataSourceProperty("cachePrepStmts", this.cachePrepStmts);
+        this.config.addDataSourceProperty("prepStmtCacheSize", this.prepStmtCacheSize);
+        this.config.addDataSourceProperty("prepStmtCacheSqlLimit", this.prepStmtCacheSqlLimit);
+        this.config.setMaximumPoolSize(this.maximumPoolSize);
+        this.config.setMinimumIdle(this.maximumIdle);
+        this.config.setMaxLifetime(this.maxLifetime);
+        this.config.setConnectionTimeout(this.connectionTimeout);
+        this.ds = new HikariDataSource(this.config);
     }
 
     public Connection getConnection() throws SQLException {

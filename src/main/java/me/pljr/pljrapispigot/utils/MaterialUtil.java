@@ -3,7 +3,7 @@ package me.pljr.pljrapispigot.utils;
 import com.cryptomorin.xseries.XMaterial;
 import org.bukkit.Material;
 
-public class MaterialUtil {
+public final class MaterialUtil {
     /**
      * Checks if String is a {@link Material}.
      *

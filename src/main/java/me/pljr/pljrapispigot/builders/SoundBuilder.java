@@ -26,7 +26,7 @@ public class SoundBuilder {
      * Creates a default, empty SoundBuilder.
      */
     public SoundBuilder(){
-        this(Sound.VILLAGER_NO, 1, 1);
+        this(XSound.ENTITY_VILLAGER_NO, 1, 1);
     }
 
     /**

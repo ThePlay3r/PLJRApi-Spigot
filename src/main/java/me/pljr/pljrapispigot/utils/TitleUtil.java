@@ -1,11 +1,11 @@
-package me.pljr.pljrapispigot.managers;
+package me.pljr.pljrapispigot.utils;
 
 import com.cryptomorin.xseries.messages.Titles;
 import me.pljr.pljrapispigot.objects.PLJRTitle;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-public class TitleManager {
+public final class TitleUtil {
     /**
      * Will send a {@link PLJRTitle} to {@link Player} using {@link Titles}.
      *

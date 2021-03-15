@@ -1,6 +1,6 @@
 package me.pljr.pljrapispigot.objects;
 
-import me.pljr.pljrapispigot.managers.TitleManager;
+import me.pljr.pljrapispigot.utils.TitleUtil;
 import org.bukkit.entity.Player;
 
 public class PLJRTitle {
@@ -39,10 +39,10 @@ public class PLJRTitle {
     }
 
     public void send(Player player){
-        TitleManager.send(player, this);
+        TitleUtil.send(player, this);
     }
 
     public void broadcast(){
-        TitleManager.broadcast(this);
+        TitleUtil.broadcast(this);
     }
 }

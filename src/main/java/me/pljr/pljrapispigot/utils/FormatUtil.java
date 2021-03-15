@@ -5,7 +5,7 @@ import org.bukkit.ChatColor;
 
 import java.util.Random;
 
-public class FormatUtil {
+public final class FormatUtil {
     /**
      * Applies default {@link ChatColor} codes to String and returns it.
      *

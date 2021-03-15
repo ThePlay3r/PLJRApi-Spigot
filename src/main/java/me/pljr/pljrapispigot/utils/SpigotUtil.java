@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Scanner;
 
-public class SpigotUtil {
+public final class SpigotUtil {
     /**
      * Tries to check, if resource with defined resource ID is up-to-date
      *

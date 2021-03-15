@@ -1,6 +1,7 @@
 package me.pljr.pljrapispigot.utils;
 
 import me.pljr.pljrapispigot.PLJRApiSpigot;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -9,7 +10,8 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class ChatUtil {
+public final class ChatUtil {
+    private final static BukkitAudiences BUKKIT_AUDIENCES = PLJRApiSpigot.get().getBukkitAudiences();
     /**
      * Sends a message with parsed {@link MiniMessage} tags and PAPI Placeholders to {@link OfflinePlayer}, if online.
      *
@@ -43,7 +45,7 @@ public class ChatUtil {
      * @param message String that will be send to the player
      */
     public static void sendMessage(Player player, String message){
-        PLJRApiSpigot.getBukkitAudiences().player(player).sendMessage(MiniMessage.get().parse(PapiUtil.setPlaceholders(player, message)));
+        BUKKIT_AUDIENCES.player(player).sendMessage(MiniMessage.get().parse(PapiUtil.setPlaceholders(player, message)));
     }
 
     /**
@@ -69,7 +71,7 @@ public class ChatUtil {
             sendMessage((Player) target, message);
             return;
         }
-        PLJRApiSpigot.getBukkitAudiences().sender(target).sendMessage(MiniMessage.get().parse(message));
+        BUKKIT_AUDIENCES.sender(target).sendMessage(MiniMessage.get().parse(message));
     }
 
     /**

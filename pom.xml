@@ -6,7 +6,7 @@
 
     <groupId>me.pljr</groupId>
     <artifactId>PLJRApi-Spigot</artifactId>
-    <version>2.0.3</version>
+    <version>2.1.0</version>
     <packaging>jar</packaging>
 
     <name>PLJRApi-Spigot</name>
@@ -39,21 +39,9 @@
                             <shadedPattern>me.pljr.pljrapispigot.xseries</shadedPattern>
                         </relocation>
                         <relocation>
-                            <pattern>net.kyori</pattern>
-                            <shadedPattern>me.pljr.pljrapispigot.kyori</shadedPattern>
-                        </relocation>
-                        <relocation>
                             <pattern>xyz.xenondevs</pattern>
                             <shadedPattern>me.pljr.pljrapispigot.xenondevs</shadedPattern>
                         </relocation>
-                        <!--<relocation>
-                            <pattern>co.aikar.commands</pattern>
-                            <shadedPattern>me.pljr.pljrapispigot.aikar.acf</shadedPattern>
-                        </relocation>
-                        <relocation> TODO: ACF
-                            <pattern>co.aikar.locales</pattern>
-                            <shadedPattern>me.pljr.pljrapispigot.aikar..locales</shadedPattern>
-                        </relocation>-->
                         <relocation>
                             <pattern>org.bstats</pattern>
                             <shadedPattern>me.pljr.pljrapispigot.bstats</shadedPattern>
@@ -103,24 +91,15 @@
             <id>sonatype-oss</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
         </repository>
-        <!--<repository>
-            <id>aikar</id>
-            <url>https://repo.aikar.co/content/groups/aikar/</url>
-        </repository>-->
     </repositories>
 
     <dependencies>
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.8.8-R0.1-SNAPSHOT</version>
+            <version>1.16.5-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
-        <!--<dependency> TODO: ACF
-            <groupId>co.aikar</groupId>
-            <artifactId>acf-paper</artifactId>
-            <version>0.5.0-SNAPSHOT</version>
-        </dependency>-->
         <dependency>
             <groupId>com.github.cryptomorin</groupId>
             <artifactId>XSeries</artifactId>
@@ -157,12 +136,12 @@
         <dependency>
             <groupId>net.kyori</groupId>
             <artifactId>adventure-api</artifactId>
-            <version>4.3.0</version>
+            <version>4.7.0</version>
         </dependency>
         <dependency>
             <groupId>net.kyori</groupId>
             <artifactId>adventure-text-minimessage</artifactId>
-            <version>4.0.0-SNAPSHOT</version>
+            <version>4.1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>net.kyori</groupId>
@@ -180,6 +159,12 @@
             <artifactId>bstats-bukkit</artifactId>
             <version>2.2.1</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.16</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

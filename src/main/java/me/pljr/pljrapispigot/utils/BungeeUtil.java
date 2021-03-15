@@ -1,16 +1,14 @@
 package me.pljr.pljrapispigot.utils;
 
 import com.google.common.collect.Iterables;
-import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import me.pljr.pljrapispigot.PLJRApiSpigot;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.messaging.PluginMessageListener;
 
-public class BungeeUtil implements PluginMessageListener {
-    private final static PLJRApiSpigot instance = PLJRApiSpigot.getInstance();
+public final class BungeeUtil {
+    private final static PLJRApiSpigot PLJRAPI_SPIGOT = PLJRApiSpigot.get();
     /**
      * Sends a BungeeCord message to {@link Player}.
      *
@@ -25,7 +23,7 @@ public class BungeeUtil implements PluginMessageListener {
 
         Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
         if (player == null) return;
-        player.sendPluginMessage(instance, "pljrapi:chat", out.toByteArray());
+        player.sendPluginMessage(PLJRAPI_SPIGOT, "pljrapi:chat", out.toByteArray());
     }
 
     public static void send(Player player, String server){
@@ -33,14 +31,7 @@ public class BungeeUtil implements PluginMessageListener {
         out.writeUTF("Connect");
         out.writeUTF(server);
 
-        player.sendPluginMessage(instance, "BungeeCord", out.toByteArray());
-    }
-
-    private static void receiveMessage(String receiver, String message){
-        if (PlayerUtil.isPlayer(receiver)){
-            Player player = Bukkit.getPlayer(receiver);
-            ChatUtil.sendMessage(player, message);
-        }
+        player.sendPluginMessage(PLJRAPI_SPIGOT, "BungeeCord", out.toByteArray());
     }
 
     /**
@@ -57,25 +48,6 @@ public class BungeeUtil implements PluginMessageListener {
 
         Player player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null);
         if (player == null) return;
-        player.sendPluginMessage(instance, "pljrapi:chat", out.toByteArray());
-    }
-
-    private static void receiveBroadcast(String message, String perm){
-        ChatUtil.broadcast(message, perm, false);
-    }
-
-    @Override
-    public void onPluginMessageReceived(String channel, Player player, byte[] message) {
-        if (channel.equals("pljrapi:chat")){
-            ByteArrayDataInput in = ByteStreams.newDataInput(message);
-            String subChannel = in.readUTF();
-            if (subChannel.equals("message")){
-                receiveMessage(in.readUTF(), in.readUTF());
-                return;
-            }
-            if (subChannel.equals("broadcast")){
-                receiveBroadcast(in.readUTF(), in.readUTF());
-            }
-        }
+        player.sendPluginMessage(PLJRAPI_SPIGOT, "pljrapi:chat", out.toByteArray());
     }
 }

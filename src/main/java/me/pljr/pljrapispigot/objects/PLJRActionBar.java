@@ -1,6 +1,6 @@
 package me.pljr.pljrapispigot.objects;
 
-import me.pljr.pljrapispigot.managers.ActionBarManager;
+import me.pljr.pljrapispigot.utils.ActionBarUtil;
 import org.bukkit.entity.Player;
 
 public class PLJRActionBar {
@@ -20,10 +20,10 @@ public class PLJRActionBar {
     }
 
     public void send(Player player){
-        ActionBarManager.send(player, this);
+        ActionBarUtil.send(player, this);
     }
 
     public void broadcast(){
-        ActionBarManager.broadcast(this);
+        ActionBarUtil.broadcast(this);
     }
 }

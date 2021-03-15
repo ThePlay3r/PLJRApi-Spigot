@@ -1,12 +1,12 @@
-package me.pljr.pljrapispigot.managers;
+package me.pljr.pljrapispigot.utils;
 
 import com.cryptomorin.xseries.messages.ActionBar;
 import me.pljr.pljrapispigot.PLJRApiSpigot;
 import me.pljr.pljrapispigot.objects.PLJRActionBar;
 import org.bukkit.entity.Player;
 
-public class ActionBarManager {
-    private static final PLJRApiSpigot PLJR_API_SPIGOT = PLJRApiSpigot.getInstance();
+public final class ActionBarUtil {
+    private static final PLJRApiSpigot PLJRAPI_SPIGOT = PLJRApiSpigot.get();
 
     /**
      * Will send a {@link PLJRActionBar} to {@link Player} using {@link ActionBar}.
@@ -15,7 +15,7 @@ public class ActionBarManager {
      * @param actionBar {@link PLJRActionBar} that should be send to player
      */
     public static void send(Player player, PLJRActionBar actionBar){
-        ActionBar.sendActionBar(PLJR_API_SPIGOT, player, actionBar.getMessage(), actionBar.getDuration());
+        ActionBar.sendActionBar(PLJRAPI_SPIGOT, player, actionBar.getMessage(), actionBar.getDuration());
     }
 
     /**

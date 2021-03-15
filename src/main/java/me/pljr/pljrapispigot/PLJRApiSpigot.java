@@ -1,8 +1,10 @@
 package me.pljr.pljrapispigot;
 
+import lombok.Getter;
 import me.pljr.pljrapispigot.config.*;
 import me.pljr.pljrapispigot.database.DataSource;
 import me.pljr.pljrapispigot.events.PLJRApiStartupEvent;
+import me.pljr.pljrapispigot.listeners.BungeeListeners;
 import me.pljr.pljrapispigot.listeners.PlayerQuitListener;
 import me.pljr.pljrapispigot.managers.ConfigManager;
 import me.pljr.pljrapispigot.managers.GUIManager;
@@ -17,36 +19,41 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Map;
 import java.util.logging.Logger;
 
 public final class PLJRApiSpigot extends JavaPlugin {
     private static final int BSTATS_ID = 10442;
 
     private static PLJRApiSpigot instance;
-    private static DataSource dataSource;
-    private static final Logger log = Logger.getLogger("Minecraft");
-    private static Economy vaultEcon = null;
-    private static BukkitAudiences bukkitAudiences;
-    private static QueryManager queryManager;
+    public static Logger log;
 
-    // Files
-    private static ConfigManager configManager;
-    private static ConfigManager langManager;
-    private static ConfigManager titleTypeManager;
-    private static ConfigManager soundTypeManager;
+    private DataSource dataSource;
+    @Getter private Economy vaultEcon = null;
+    @Getter private BukkitAudiences bukkitAudiences;
+    @Getter private QueryManager queryManager;
+
+    @Getter private GUIManager guiManager;
+
+    private ConfigManager configManager;
+    @Getter private Settings settings;
+
+    public static PLJRApiSpigot get(){
+        return instance;
+    }
 
     @Override
     public void onEnable() {
         // Plugin startup logic
         instance = this;
+        log = getLogger();
         BStatsUtil.addMetrics(this, BSTATS_ID);
         setupMiniMessage();
         setupConfig();
         setupDatabase();
         setupBungee();
+        setupManagers();
         setupListeners();
-        if (CfgSettings.VAULT) setupVault();
+        if (settings.isVault()) setupVault();
         getServer().getPluginManager().callEvent(new PLJRApiStartupEvent());
     }
 
@@ -75,57 +82,52 @@ public final class PLJRApiSpigot extends JavaPlugin {
     }
 
     private void setupDatabase(){
-        dataSource = new DataSource(CfgMysql.HOST, CfgMysql.PORT, CfgMysql.DATABASE, CfgMysql.USERNAME, CfgMysql.PASSWORD);
+        dataSource = new DataSource(configManager);
         dataSource.initPool();
         queryManager = new QueryManager(dataSource, this);
     }
 
     private void setupBungee(){
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
-        getServer().getMessenger().registerIncomingPluginChannel(this, "pljrapi:chat", new BungeeUtil());
+        getServer().getMessenger().registerIncomingPluginChannel(this, "pljrapi:chat", new BungeeListeners());
         getServer().getMessenger().registerOutgoingPluginChannel(this, "pljrapi:chat");
     }
 
     private void setupConfig(){
         saveDefaultConfig();
         configManager = new ConfigManager(this, "config.yml");
-        langManager = new ConfigManager(this, "lang.yml");
-        titleTypeManager = new ConfigManager(this, "titles.yml");
-        soundTypeManager = new ConfigManager(this, "sounds.yml");
-        Lang.load(langManager);
-        SoundType.load(soundTypeManager);
-        TitleType.load(titleTypeManager);
-        CfgSettings.load(configManager);
-        CfgMysql.load(configManager);
+        settings = new Settings(configManager);
+        Lang.load(new ConfigManager(this, "lang.yml"));
+        SoundType.load(new ConfigManager(this, "sounds.yml"));
+        TitleType.load(new ConfigManager(this, "titles.yml"));
+    }
+
+    private void setupManagers(){
+        guiManager = new GUIManager();
     }
 
     private void setupListeners(){
         PluginManager pluginManager = Bukkit.getPluginManager();
-        pluginManager.registerEvents(new GUIManager(), this);
+        pluginManager.registerEvents(guiManager, this);
         pluginManager.registerEvents(new PlayerQuitListener(queryManager), this);
     }
 
-    public static ConfigManager getConfigManager() {
-        return configManager;
-    }
-    public static DataSource getDataSource(){
+    /**
+     * Sends DataSource from provided configuration, if enabled.
+     * PLJRApi's DataSource otherwise.
+     *
+     * @param config {@link DataSource} that will be checked for enabled MySQL.
+     * @return {@link DataSource} from provided config, PLJRApi's otherwise.
+     */
+    public DataSource getDataSource(ConfigManager config){
+        if (config.getBoolean("mysql.enabled")){
+            return new DataSource(config);
+        }
         return dataSource;
-    }
-    public static Economy getVaultEcon() {
-        return vaultEcon;
-    }
-    public static PLJRApiSpigot getInstance() {
-        return instance;
-    }
-    public static BukkitAudiences getBukkitAudiences() {
-        return bukkitAudiences;
-    }
-    public static QueryManager getQueryManager() {
-        return queryManager;
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        instance = null;
     }
 }

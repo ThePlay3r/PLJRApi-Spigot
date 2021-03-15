@@ -8,16 +8,18 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 public class GUIManager implements Listener {
-    private static final HashMap<UUID, GUI> guis = new HashMap<>();
+    private final HashMap<UUID, GUI> guis;
+
+    public GUIManager(){
+        guis = new HashMap<>();
+    }
 
     /**
      * Opens a {@link GUI} to {@link Player}
@@ -25,7 +27,7 @@ public class GUIManager implements Listener {
      * @param player {@link Player} that will be opened with the gui.
      * @param gui {@link GUI} that will be opened to player.
      */
-    public static void open(Player player, GUI gui){
+    public void open(Player player, GUI gui){
         UUID playerId = player.getUniqueId();
         Inventory inventory = gui.getInventory();
 
@@ -36,7 +38,7 @@ public class GUIManager implements Listener {
     /**
      * Closes all currently opened guis.
      */
-    public static void closeAll(){
+    public void closeAll(){
         for (Map.Entry<UUID, GUI> entry : guis.entrySet()){
             UUID playerId = entry.getKey();
             Player player = Bukkit.getPlayer(playerId);

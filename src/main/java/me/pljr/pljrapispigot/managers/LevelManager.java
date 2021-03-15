@@ -72,7 +72,7 @@ public class LevelManager {
     }
 
     public void loadPlayer(UUID uuid){
-        Level level = query.loadPlayerSync(uuid);
+        Level level = query.loadPlayer(uuid);
         if (level == null){
             level = getLevel(1);
         }

@@ -3,7 +3,7 @@ package me.pljr.pljrapispigot.utils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
-public class MiniMessageUtil {
+public final class MiniMessageUtil {
     /**
      * Parses a string into an {@link MiniMessage} {@link Component}.
      *

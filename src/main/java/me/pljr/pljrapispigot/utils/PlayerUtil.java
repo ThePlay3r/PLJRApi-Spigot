@@ -2,7 +2,7 @@ package me.pljr.pljrapispigot.utils;
 
 import me.pljr.pljrapispigot.PLJRApiSpigot;
 import me.pljr.pljrapispigot.builders.TitleBuilder;
-import me.pljr.pljrapispigot.config.CfgSettings;
+import me.pljr.pljrapispigot.config.Settings;
 import me.pljr.pljrapispigot.config.TitleType;
 import me.pljr.pljrapispigot.config.SoundType;
 import me.pljr.pljrapispigot.managers.QueryManager;
@@ -16,7 +16,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.UUID;
 
-public class PlayerUtil {
+public final class PlayerUtil {
+    private static final Settings SETTINGS = PLJRApiSpigot.get().getSettings();
+    private static final QueryManager QUERYMANAGER = PLJRApiSpigot.get().getQueryManager();
+
     /**
      * Checks if input belongs to a username of {@link Player}
      *
@@ -61,8 +64,7 @@ public class PlayerUtil {
      * @return Username of player, "?" otherwise
      */
     public static String getName(UUID uuid){
-        QueryManager queryManager = PLJRApiSpigot.getQueryManager();
-        String name = queryManager.getPlayerName(uuid);
+        String name = QUERYMANAGER.getPlayerName(uuid);
         if (name == null){
             return "?";
         }
@@ -94,7 +96,7 @@ public class PlayerUtil {
             TitleType.TELEPORT_TELEPORT.get().send(player);
             return;
         }
-        final int countdown = CfgSettings.TELEPORT_DELAY;
+        final int countdown = SETTINGS.getTeleportDelay();
         new BukkitRunnable() {
             int finalCountdown = countdown;
             final Location pLoc = player.getLocation();
@@ -122,7 +124,7 @@ public class PlayerUtil {
                             .replaceSubtitle("{time}", finalCountdown+"")
                             .create().send(player);
                     SoundType.TELEPORT_TP.get().play(player);
-                    Bukkit.getScheduler().runTask(PLJRApiSpigot.getInstance(), ()-> player.teleport(location));
+                    Bukkit.getScheduler().runTask(PLJRApiSpigot.get(), ()-> player.teleport(location));
                     cancel();
                     return;
                 }
@@ -134,7 +136,7 @@ public class PlayerUtil {
                 SoundType.TELEPORT_TICK.get().play(player);
                 finalCountdown--;
             }
-        }.runTaskTimerAsynchronously(PLJRApiSpigot.getInstance(), 0, 20);
+        }.runTaskTimerAsynchronously(PLJRApiSpigot.get(), 0, 20);
     }
 
     /**

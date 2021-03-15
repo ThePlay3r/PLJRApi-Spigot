@@ -1,15 +1,14 @@
-package me.pljr.pljrapispigot.managers;
+package me.pljr.pljrapispigot.utils;
 
 import me.pljr.pljrapispigot.builders.ScoreboardBuilder;
 import me.pljr.pljrapispigot.objects.PLJRScoreboard;
-import me.pljr.pljrapispigot.utils.PapiUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ScoreboardManager {
+public final class ScoreboardUtil {
     /**
      * Sends {@link PLJRScoreboard} to {@link Player}
      *

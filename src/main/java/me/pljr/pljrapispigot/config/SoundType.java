@@ -26,18 +26,15 @@ public enum SoundType {
         soundType = new HashMap<>();
         for (SoundType soundType : values()){
             if (!fileConfig.isSet(soundType.toString())){
-                config.setPLJRSound(soundType.toString(), soundType.getDefault());
+                config.setPLJRSound(soundType.toString(), soundType.defaultValue);
+            }else{
+                SoundType.soundType.put(soundType, config.getPLJRSound(soundType.toString()));
             }
-            SoundType.soundType.put(soundType, config.getPLJRSound(soundType.toString()));
         }
         config.save();
     }
 
     public PLJRSound get(){
-        return soundType.get(this);
-    }
-
-    public PLJRSound getDefault(){
-        return this.defaultValue;
+        return soundType.getOrDefault(this, defaultValue);
     }
 }

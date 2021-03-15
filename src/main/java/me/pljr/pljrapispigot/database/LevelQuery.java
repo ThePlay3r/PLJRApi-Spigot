@@ -38,7 +38,7 @@ public class LevelQuery {
         }
     }
 
-    public Level loadPlayerSync(UUID uuid){
+    public Level loadPlayer(UUID uuid){
         try {
             Connection connectionLevels = dataSource.getConnection();
             PreparedStatement statementLevels = connectionLevels.prepareStatement(
