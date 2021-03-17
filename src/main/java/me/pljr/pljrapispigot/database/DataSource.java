@@ -41,7 +41,7 @@ public class DataSource {
         prepStmtCacheSqlLimit = config.getInt("mysql-settings.prepStmtCacheSqlLimit");
     }
 
-    public void initPool() {
+    public void initPool(String name) {
         this.config.setJdbcUrl("jdbc:mysql://" + this.host + ":" + Integer.parseInt(this.port) + "/" + this.database + "?characterEncoding=UTF-8&autoReconnect=true&useSSL=false");
         this.config.setUsername(this.username);
         this.config.setPassword(this.password);
@@ -52,7 +52,7 @@ public class DataSource {
         this.config.setMinimumIdle(this.maximumIdle);
         this.config.setMaxLifetime(this.maxLifetime);
         this.config.setConnectionTimeout(this.connectionTimeout);
-        this.config.setPoolName("PLJRApi-Spigot-Pool");
+        this.config.setPoolName(name);
         this.ds = new HikariDataSource(this.config);
     }
 

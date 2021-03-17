@@ -85,7 +85,7 @@ public final class PLJRApiSpigot extends JavaPlugin {
 
     private void setupDatabase(){
         dataSource = new DataSource(configManager);
-        dataSource.initPool();
+        dataSource.initPool("PLJRAPI-Spigot-Pool");
         queryManager = new QueryManager(dataSource, this);
     }
 
