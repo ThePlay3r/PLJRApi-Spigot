@@ -216,7 +216,7 @@ public class ItemBuilder {
         }
         if (!lore.isEmpty()){
             List<String> coloredLore = new ArrayList<>();
-            lore.forEach(line -> coloredLore.add(FormatUtil.colorString(name)));
+            lore.forEach(line -> coloredLore.add(FormatUtil.colorString(line)));
             itemMeta.setLore(coloredLore);
         }
         itemStack.setItemMeta(itemMeta);

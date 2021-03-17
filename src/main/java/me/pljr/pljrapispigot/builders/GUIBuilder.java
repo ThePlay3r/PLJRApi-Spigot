@@ -3,6 +3,7 @@ package me.pljr.pljrapispigot.builders;
 import me.pljr.pljrapispigot.managers.GUIManager;
 import me.pljr.pljrapispigot.objects.GUI;
 import me.pljr.pljrapispigot.objects.GUIItem;
+import me.pljr.pljrapispigot.utils.FormatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -140,7 +141,7 @@ public class GUIBuilder {
      * @return New {@link GUI} with selected attributes.
      */
     public GUI create(){
-        Inventory inventory = Bukkit.createInventory(null, this.rows*9, this.title);
+        Inventory inventory = Bukkit.createInventory(null, this.rows*9, FormatUtil.colorString(this.title));
         HashMap<Integer, GUIManager.ClickRunnable> items = new HashMap<>();
         for (Map.Entry<Integer, GUIItem> entry : this.items.entrySet()){
             int slot = entry.getKey();
@@ -150,6 +151,6 @@ public class GUIBuilder {
                 items.put(slot, item.getRunnable());
             }
         }
-        return new GUI(inventory, items);
+        return new GUI(inventory, items, onClose);
     }
 }

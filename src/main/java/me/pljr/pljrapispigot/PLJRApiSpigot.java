@@ -105,7 +105,7 @@ public final class PLJRApiSpigot extends JavaPlugin {
     }
 
     private void setupManagers(){
-        guiManager = new GUIManager();
+        guiManager = new GUIManager(this);
     }
 
     private void setupListeners(){

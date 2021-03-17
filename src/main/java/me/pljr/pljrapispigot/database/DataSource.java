@@ -52,6 +52,7 @@ public class DataSource {
         this.config.setMinimumIdle(this.maximumIdle);
         this.config.setMaxLifetime(this.maxLifetime);
         this.config.setConnectionTimeout(this.connectionTimeout);
+        this.config.setPoolName("PLJRApi-Spigot-Pool");
         this.ds = new HikariDataSource(this.config);
     }
 

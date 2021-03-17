@@ -9,15 +9,18 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 public class GUIManager implements Listener {
+    private final JavaPlugin plugin;
     private final HashMap<UUID, GUI> guis;
 
-    public GUIManager(){
+    public GUIManager(JavaPlugin plugin){
+        this.plugin = plugin;
         guis = new HashMap<>();
     }
 
@@ -67,6 +70,10 @@ public class GUIManager implements Listener {
         Player player = (Player) event.getPlayer();
         UUID playerId = player.getUniqueId();
         if (!guis.containsKey(playerId)) return;
+        if (guis.get(playerId).getOnClose() != null){
+            Bukkit.getScheduler().runTaskLater(plugin, () -> open(player, guis.get(playerId).getOnClose()), 1);
+            return;
+        }
         guis.remove(playerId);
     }
 
