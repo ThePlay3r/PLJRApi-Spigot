@@ -42,7 +42,7 @@ public class DataSource {
     }
 
     public void initPool(String name) {
-        if (this.ds.isRunning()) return;
+        if (this.ds != null && this.ds.isRunning()) return;
         this.config.setJdbcUrl("jdbc:mysql://" + this.host + ":" + Integer.parseInt(this.port) + "/" + this.database + "?characterEncoding=UTF-8&autoReconnect=true&useSSL=false");
         this.config.setUsername(this.username);
         this.config.setPassword(this.password);
