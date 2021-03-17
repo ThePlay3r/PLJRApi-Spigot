@@ -1,6 +1,7 @@
 package me.pljr.pljrapispigot.builders;
 
 import me.pljr.pljrapispigot.objects.PLJRActionBar;
+import me.pljr.pljrapispigot.utils.FormatUtil;
 
 public class ActionBarBuilder {
     private String message;
@@ -91,6 +92,6 @@ public class ActionBarBuilder {
      * @return {@link PLJRActionBar} consisting of all previously selected values.
      */
     public PLJRActionBar create(){
-        return new PLJRActionBar(message, duration);
+        return new PLJRActionBar(FormatUtil.colorString(message), duration);
     }
 }

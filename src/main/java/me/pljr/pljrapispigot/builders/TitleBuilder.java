@@ -1,6 +1,7 @@
 package me.pljr.pljrapispigot.builders;
 
 import me.pljr.pljrapispigot.objects.PLJRTitle;
+import me.pljr.pljrapispigot.utils.FormatUtil;
 
 public class TitleBuilder {
     private String title;
@@ -152,6 +153,6 @@ public class TitleBuilder {
      * @return {@link PLJRTitle} with previously defined values.
      */
     public PLJRTitle create(){
-        return new PLJRTitle(title, subtitle, in, stay, out);
+        return new PLJRTitle(FormatUtil.colorString(title), FormatUtil.colorString(subtitle), in, stay, out);
     }
 }

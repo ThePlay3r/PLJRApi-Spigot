@@ -1,6 +1,7 @@
 package me.pljr.pljrapispigot.builders;
 
 import me.pljr.pljrapispigot.objects.PLJRScoreboard;
+import me.pljr.pljrapispigot.utils.FormatUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -120,6 +121,8 @@ public class ScoreboardBuilder {
      * @return {@link PLJRScoreboard} consisting of all previously selected values.
      */
     public PLJRScoreboard create(){
-        return new PLJRScoreboard(title, lines);
+        List<String> coloredLines = new ArrayList<>();
+        lines.forEach(line -> coloredLines.add(FormatUtil.colorString(line)));
+        return new PLJRScoreboard(FormatUtil.colorString(title), coloredLines);
     }
 }
