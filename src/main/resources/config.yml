@@ -41,7 +41,7 @@ settings:
   sounds: true #-> Should the plugin play sounds?
   teleport-delay: 7 #-> How long should be the delay before teleporting player?
   vault: false #-> Should we try to hook to Vault? (Requires Vault and any Vault Economy plugin)
-  holograms: false #-> Should we use holograms? (Requires HolographicDisplays on server)
+  holograms: false #-> Should we use holograms? (Requires Holograms on server)
   placeholders: false #-> Should we try to replace PlaceholderAPI placeholders?
   disabled-messages: true #-> Should we message the Console, when the plugin tries to use disabled function?
 #|--------------------------------------------------------------------------------------------------------------------|#

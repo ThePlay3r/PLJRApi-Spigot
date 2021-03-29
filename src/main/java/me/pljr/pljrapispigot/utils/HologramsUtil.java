@@ -1,17 +1,22 @@
 package me.pljr.pljrapispigot.utils;
 
-import com.gmail.filoghost.holographicdisplays.api.Hologram;
-import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
+import com.sainttx.holograms.api.Hologram;
+import com.sainttx.holograms.api.HologramManager;
+import com.sainttx.holograms.api.HologramPlugin;
+import com.sainttx.holograms.api.line.TextLine;
 import me.pljr.pljrapispigot.PLJRApiSpigot;
 import me.pljr.pljrapispigot.config.Settings;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
+import java.util.UUID;
 
 public final class HologramsUtil {
     private final static Settings SETTINGS = PLJRApiSpigot.get().getSettings();
+    private final static HologramPlugin HOLOGRAM_PLUGIN = JavaPlugin.getPlugin(HologramPlugin.class);
 
     /**
      * Creates a {@link Hologram} for specified time using HolographicDisplays API.
@@ -22,13 +27,15 @@ public final class HologramsUtil {
      */
     public static void create(Location location, List<String> text, int ticks){
         if (!SETTINGS.isHolograms()){
-            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "PLJRApi: Tried to create a HolographicDisplays Hologram while disabled in config!");
+            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "PLJRApi: Tried to create a Holograms Hologram while disabled in config!");
             return;
         }
-        Hologram hologram = HologramsAPI.createHologram(PLJRApiSpigot.get(), location);
+        HologramManager hologramManager = HOLOGRAM_PLUGIN.getHologramManager();
+        Hologram hologram = new Hologram(UUID.randomUUID().toString(), location);
         for (String line : text){
-            hologram.appendTextLine(line);
+            hologram.addLine(new TextLine(hologram, line));
         }
-        Bukkit.getScheduler().runTaskLaterAsynchronously(PLJRApiSpigot.get(), hologram::delete, ticks);
+        hologramManager.addActiveHologram(hologram);
+        Bukkit.getScheduler().runTaskLaterAsynchronously(PLJRApiSpigot.get(), () -> hologramManager.deleteHologram(hologram), ticks);
     }
 }

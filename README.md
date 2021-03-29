@@ -12,7 +12,7 @@ Spigot plugin created to make development of other plugins as easy and efficient
 - XSeries: https://github.com/CryptoMorin/XSeries
 - MiniMessage: https://github.com/KyoriPowered/adventure-text-minimessage
 - VaultAPI: https://github.com/MilkBowl/VaultAPI
-- HolographicDisplays: https://github.com/filoghost/HolographicDisplays
+- HolographicDisplays: https://github.com/wherkamp/Holograms
 - PlaceholderAPI: https://github.com/PlaceholderAPI/PlaceholderAPI
 - ParticleLib: https://github.com/ByteZ1337/ParticleLib
 
