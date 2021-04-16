@@ -88,8 +88,8 @@
             <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
         </repository>
         <repository>
-            <id>kingtux-repo</id>
-            <url>https://repo.potatocorp.dev/storages/maven/kingtux-repo</url>
+            <id>codemc-repo</id>
+            <url>https://repo.codemc.io/repository/maven-public/</url>
         </repository>
     </repositories>
 
@@ -161,9 +161,10 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.sainttx.holograms</groupId>
-            <artifactId>holograms-api</artifactId>
-            <version>2.13.3</version>
+            <groupId>com.gmail.filoghost.holographicdisplays</groupId>
+            <artifactId>holographicdisplays-api</artifactId>
+            <version>2.4.0</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
