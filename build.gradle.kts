@@ -59,6 +59,10 @@ tasks.test {
     useJUnit()
 }
 
+tasks.build {
+    dependsOn("shadowJar")
+}
+
 tasks.withType<KotlinCompile>() {
     kotlinOptions.jvmTarget = "11"
 }
