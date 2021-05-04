@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.4.32"
     id("com.github.johnrengelman.shadow") version "2.0.4"
+    id("maven")
 }
 
 group = "me.pljr"
