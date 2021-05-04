@@ -1,0 +1,47 @@
+# Big thanks and love for using my plugins! ^^
+
+#|--------------------------------------------------------------------------------------------------------------------|#
+# Plugin: PLJRApi
+# Author: https://www.mc-market.org/members/89497/
+# Description: Main API for all of my plugins to work.
+# Dependencies:
+#   -> MySQL Database
+#   -> Vault<Optional> (https://www.spigotmc.org/resources/vault.34315/)
+#   -> PlaceholderAPI<Optional> (https://www.spigotmc.org/resources/placeholderapi.6245/)
+#   -> HolographicDisplays<Optional> (https://dev.bukkit.org/projects/holographic-displays)
+#|--------------------------------------------------------------------------------------------------------------------|#
+
+###############\
+# MySQL Setup ##############################################################################################\
+############### This is the most important part, as the plugin can not work without proper MySQL Database. # \
+              ##############################################################################################  \
+mysql:
+  host: "127.0.0.1"
+  port: "3306"
+  database: "db"
+  username: "root"
+  password: ""
+
+# Detailed documentation about this configuration: https://github.com/brettwooldridge/HikariCP#configuration-knobs-baby
+mysql-settings:
+  maximumPoolSize: 16
+  maximumIdle: 2
+  maxLifetime: 1800000
+  connectionTimeout: 30000
+  cachePrepStmts: true
+  prepStmtCacheSize: 250
+  prepStmtCacheSqlLimit: 2048
+#|--------------------------------------------------------------------------------------------------------------------|#
+
+##################\
+# Settings Setup #############################################################\
+################## Here, you can enable or disable functions of this plugin. # \
+                 #############################################################  \
+settings:
+  sounds: true #-> Should the plugin play sounds?
+  teleport-delay: 7 #-> How long should be the delay before teleporting player?
+  vault: false #-> Should we try to hook to Vault? (Requires Vault and any Vault Economy plugin)
+  holograms: false #-> Should we use holograms? (Requires Holograms on server)
+  placeholders: false #-> Should we try to replace PlaceholderAPI placeholders?
+  disabled-messages: true #-> Should we message the Console, when the plugin tries to use disabled function?
+#|--------------------------------------------------------------------------------------------------------------------|#

@@ -1,0 +1,7 @@
+name: PLJRApi-Spigot
+version: 3.0.0
+main: me.pljr.pljrapispigot.PLJRApiSpigot
+api-version: 1.13
+authors: [9hx]
+#softdepend: [Vault, PlaceholderAPI, HolographicDisplays]
+description: API for all of my plugins.
