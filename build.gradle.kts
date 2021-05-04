@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     kotlin("jvm") version "1.4.32"
@@ -65,6 +66,14 @@ tasks.build {
 
 tasks.install {
     dependsOn("shadowJar")
+}
+
+tasks.named<ShadowJar>("shadowJar") {
+    archiveName = "$baseName-$version.$extension"
+}
+
+tasks.named<Jar>("jar") {
+    enabled = false
 }
 
 tasks.withType<KotlinCompile>() {
