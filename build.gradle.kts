@@ -63,6 +63,10 @@ tasks.build {
     dependsOn("shadowJar")
 }
 
+tasks.install {
+    dependsOn("shadowJar")
+}
+
 tasks.withType<KotlinCompile>() {
     kotlinOptions.jvmTarget = "11"
 }
