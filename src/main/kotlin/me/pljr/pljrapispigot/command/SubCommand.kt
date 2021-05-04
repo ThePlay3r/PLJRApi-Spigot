@@ -46,9 +46,9 @@ abstract class SubCommand(val command: String, val permission: String) {
         return false
     }
 
-    fun onPlayerCommand(player: Player, args: List<String>) = sendMessage(player, Lang.COMMAND_RESPONSE_PLAYER.get())
+    open fun onPlayerCommand(player: Player, args: List<String>) = sendMessage(player, Lang.COMMAND_RESPONSE_PLAYER.get())
 
-    fun onConsoleCommand(sender: ConsoleCommandSender, args: List<String>) = sendMessage(sender, Lang.COMMAND_RESPONSE_CONSOLE.get())
+    open fun onConsoleCommand(sender: ConsoleCommandSender, args: List<String>) = sendMessage(sender, Lang.COMMAND_RESPONSE_CONSOLE.get())
 
     /**
      * Checks if [CommandSender] has a specified permission, sends NO_PERM message and fails command.
@@ -58,7 +58,7 @@ abstract class SubCommand(val command: String, val permission: String) {
      * @return True if sender isn't a Player or is a Player and does have the permission, False if sender is Player and
      * does not have the required permission
      */
-    open fun checkPerm(sender: CommandSender, perm: String): Boolean {
+    fun checkPerm(sender: CommandSender, perm: String): Boolean {
         if (sender !is Player) return true
         if (sender.hasPermission(perm)) return true
         sendMessage(sender, Lang.NO_PERM.get())

@@ -16,14 +16,14 @@ abstract class MainCommand(command: String, permission: String) : CommandExecuto
         }
     }
 
-    override fun onTabComplete(
+    final override fun onTabComplete(
         sender: CommandSender,
         command: Command,
         alias: String,
         args: Array<out String>
     ) = onTabComplete(args.asList()).toMutableList()
 
-    override fun onCommand(
+    final override fun onCommand(
         sender: CommandSender,
         command: Command,
         label: String,
