@@ -21,11 +21,11 @@ fun create(location: Location?, text: List<String?>, ticks: Int) {
             .sendMessage(ChatColor.RED.toString() + "PLJRApi: Tried to create a HolographicDisplays Hologram while disabled in config!")
         return
     }
-    val hologram = HologramsAPI.createHologram(PLJRApiSpigot, location)
+    val hologram = HologramsAPI.createHologram(PLJRApiSpigot.instance, location)
     for (line in text) {
         hologram!!.appendTextLine(line)
     }
-    Bukkit.getScheduler().runTaskLaterAsynchronously(PLJRApiSpigot,
+    Bukkit.getScheduler().runTaskLaterAsynchronously(PLJRApiSpigot.instance,
         Runnable {
             if (hologram != null && !hologram.isDeleted) {
                 hologram.delete()

@@ -105,7 +105,7 @@ fun teleport(player: Player, location: Location) {
                     .replaceSubtitle("{time}", countdown.toString() + "")
                     .create().send(player)
                 SoundType.TELEPORT_TP.get().play(player)
-                Bukkit.getScheduler().runTask(PLJRApiSpigot, Runnable { player.teleport(location) })
+                Bukkit.getScheduler().runTask(PLJRApiSpigot.instance, Runnable { player.teleport(location) })
                 cancel()
                 return
             }
@@ -117,7 +117,7 @@ fun teleport(player: Player, location: Location) {
             SoundType.TELEPORT_TICK.get().play(player)
             countdown--
         }
-    }.runTaskTimerAsynchronously(PLJRApiSpigot, 0, 20)
+    }.runTaskTimerAsynchronously(PLJRApiSpigot.instance, 0, 20)
 }
 
 /**

@@ -12,7 +12,7 @@ import org.bukkit.entity.Player
  */
 fun sendActionBar(player: Player, actionBar: PLJRActionBar) {
     ActionBar.sendActionBar(
-        PLJRApiSpigot,
+        PLJRApiSpigot.instance,
         player, actionBar.message, actionBar.duration
     )
 }

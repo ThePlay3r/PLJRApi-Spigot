@@ -11,7 +11,7 @@ private fun checkEnabled() : Boolean {
     if (Settings.VAULT) {
         return true
     } else if (Settings.DISABLED_MESSAGES) {
-        PLJRApiSpigot.logger.warning("Tried to use Vault while disabled in config!")
+        PLJRApiSpigot.instance.logger.warning("Tried to use Vault while disabled in config!")
     }
     return false
 }

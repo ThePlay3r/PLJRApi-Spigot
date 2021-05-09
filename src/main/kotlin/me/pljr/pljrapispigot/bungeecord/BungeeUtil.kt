@@ -18,14 +18,14 @@ fun sendBungeeMessage(receiver: String, message: String) {
     out.writeUTF(receiver)
     out.writeUTF(message)
     val player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null) ?: return
-    player.sendPluginMessage(PLJRApiSpigot, "pljrapi:chat", out.toByteArray())
+    player.sendPluginMessage(PLJRApiSpigot.instance, "pljrapi:chat", out.toByteArray())
 }
 
 fun connectToServer(player: Player, server: String) {
     val out = ByteStreams.newDataOutput()
     out.writeUTF("Connect")
     out.writeUTF(server)
-    player.sendPluginMessage(PLJRApiSpigot, "BungeeCord", out.toByteArray())
+    player.sendPluginMessage(PLJRApiSpigot.instance, "BungeeCord", out.toByteArray())
 }
 
 /**
@@ -40,5 +40,5 @@ fun broadcastBungeeMessage(message: String, perm: String) {
     out.writeUTF(perm)
     out.writeUTF(message)
     val player = Iterables.getFirst(Bukkit.getOnlinePlayers(), null) ?: return
-    player.sendPluginMessage(PLJRApiSpigot, "pljrapi:chat", out.toByteArray())
+    player.sendPluginMessage(PLJRApiSpigot.instance, "pljrapi:chat", out.toByteArray())
 }

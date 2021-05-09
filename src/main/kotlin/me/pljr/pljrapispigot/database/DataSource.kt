@@ -23,8 +23,8 @@ class DataSource(config: ConfigManager) {
 
     val maximumPoolSize = config.getInt("$CFG_PATH_SETTINGS.maximumPoolSize")
     val maximumIdle = config.getInt("$CFG_PATH_SETTINGS.maximumIdle")
-    val maxLifeTime = config.getLong("$CFG_PATH_SETTINGS.maxLifeTime")
-    val connectionTimeout = config.getLong("$CFG_PATH_SETTINGS.connectionTimeout")
+    val maxLifeTime = config.getInt("$CFG_PATH_SETTINGS.maxLifeTime").toLong()
+    val connectionTimeout = config.getInt("$CFG_PATH_SETTINGS.connectionTimeout").toLong()
     val cachePrepStmts = config.getBoolean("$CFG_PATH_SETTINGS.cachePrepStmts")
     val prepStmtCacheSize = config.getInt("$CFG_PATH_SETTINGS.prepStmtCacheSize")
     val prepStmtCacheSqlLimit = config.getInt("$CFG_PATH_SETTINGS.prepStmtCacheSqlLimit")

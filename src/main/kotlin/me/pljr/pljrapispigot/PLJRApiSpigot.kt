@@ -19,20 +19,37 @@ import org.bstats.bukkit.Metrics
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 
-object PLJRApiSpigot : JavaPlugin() {
-    private const val BSTATS_ID = 10442
+class PLJRApiSpigot : JavaPlugin() {
+    companion object {
+        private const val BSTATS_ID = 10442
+        lateinit var instance: PLJRApiSpigot
 
-    lateinit var dataSource: DataSource
-    var vaultEcon: Economy? = null
-    lateinit var bukkitAudiences: BukkitAudiences
+        lateinit var dataSource: DataSource
+        var vaultEcon: Economy? = null
+        lateinit var bukkitAudiences: BukkitAudiences
 
-    lateinit var playerQuery: PlayerQuery
+        lateinit var playerQuery: PlayerQuery
 
-    lateinit var guiManager: GUIManager
+        lateinit var guiManager: GUIManager
 
-    lateinit var configManager: ConfigManager
+        lateinit var configManager: ConfigManager
+
+        /**
+         * Sends DataSource from provided configuration, if enabled.
+         * PLJRApi's DataSource otherwise.
+         *
+         * @param config [DataSource] that will be checked for enabled MySQL.
+         * @return [DataSource] from provided config, PLJRApi's otherwise.
+         */
+        fun getDataSource(config: ConfigManager): DataSource {
+            return if (config.getBoolean("mysql.enabled")) {
+                DataSource(config)
+            } else dataSource
+        }
+    }
 
     override fun onEnable() {
+        instance = this
         Metrics(this, BSTATS_ID)
         setupAdventure()
         setupConfig()
@@ -83,8 +100,10 @@ object PLJRApiSpigot : JavaPlugin() {
     }
 
     private fun setupVault() {
-        logger.severe("Plugin disabled due to no Vault dependecy found!")
-        server.pluginManager.disablePlugin(this)
+        if (!setupVaultEconomy()) {
+            logger.severe("Plugin disabled due to no Vault dependecy found!")
+            server.pluginManager.disablePlugin(this)
+        }
     }
 
     private fun setupVaultEconomy() : Boolean {
@@ -96,22 +115,5 @@ object PLJRApiSpigot : JavaPlugin() {
             }
         }
         return false
-    }
-
-    /**
-     * Sends DataSource from provided configuration, if enabled.
-     * PLJRApi's DataSource otherwise.
-     *
-     * @param config [DataSource] that will be checked for enabled MySQL.
-     * @return [DataSource] from provided config, PLJRApi's otherwise.
-     */
-    fun getDataSource(config: ConfigManager): DataSource {
-        return if (config.getBoolean("mysql.enabled")) {
-            DataSource(config)
-        } else dataSource
-    }
-
-    override fun onDisable() {
-
     }
 }

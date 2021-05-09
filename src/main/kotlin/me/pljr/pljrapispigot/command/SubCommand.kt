@@ -8,12 +8,17 @@ import org.bukkit.entity.Player
 
 abstract class SubCommand(val command: String, val permission: String) {
     val subCommands: MutableList<SubCommand> = ArrayList()
+    val arguments: MutableList<String> = ArrayList()
 
     fun onTabComplete(args: List<String>) : List<String> {
         if (args.isEmpty()) {
-            val list: MutableList<String> = ArrayList()
-            subCommands.forEach { list.add(it.command) }
-            return list
+            return if (arguments.isEmpty()) {
+                val list: MutableList<String> = ArrayList()
+                subCommands.forEach { list.add(it.command) }
+                list
+            } else {
+                arguments
+            }
         } else {
             subCommands.forEach {
                 if (it.equals(args[0])) {
@@ -39,7 +44,7 @@ abstract class SubCommand(val command: String, val permission: String) {
                 onConsoleCommand(sender, args)
                 return true
             } else {
-                sender.sendMessage("Unknows Sender")
+                sender.sendMessage("Unknown Sender")
                 return false
             }
         }
