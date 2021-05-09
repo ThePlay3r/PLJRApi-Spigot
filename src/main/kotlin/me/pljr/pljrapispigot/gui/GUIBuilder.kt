@@ -2,6 +2,7 @@ package me.pljr.pljrapispigot.gui
 
 import me.pljr.pljrapispigot.util.colorString
 import org.bukkit.Bukkit
+import org.bukkit.inventory.ItemStack
 
 class GUIBuilder(var title: String, var rows: Int, var items: HashMap<Int, GUIItem>, var onClose: GUI?) {
 
@@ -22,7 +23,12 @@ class GUIBuilder(var title: String, var rows: Int, var items: HashMap<Int, GUIIt
     }
 
     fun setItem(slot: Int, item: GUIItem) : GUIBuilder {
-        this.items.put(slot, item)
+        this.items[slot] = item
+        return this
+    }
+
+    fun setItem(slot: Int, item: ItemStack) : GUIBuilder {
+        this.items[slot] = GUIItem(item)
         return this
     }
 
@@ -34,7 +40,7 @@ class GUIBuilder(var title: String, var rows: Int, var items: HashMap<Int, GUIIt
     fun create() : GUI {
         val inventory =  Bukkit.createInventory(null, this.rows*9, colorString(title))
         val items = HashMap<Int, ClickRunnable>()
-        this.items.forEach { slot, item ->
+        this.items.forEach { (slot, item) ->
             inventory.setItem(slot, item.itemStack)
             if (item.clickRunnable != null) {
                 items[slot] = item.clickRunnable
