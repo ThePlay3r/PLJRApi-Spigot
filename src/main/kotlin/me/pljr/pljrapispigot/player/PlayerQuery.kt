@@ -30,7 +30,7 @@ class PlayerQuery(val dataSource: DataSource, val plugin: JavaPlugin) {
     }
 
     fun savePlayerName(uuid: UUID, name: String) {
-        dataSource.updateStatement("REPLACE INTO $TABLE_NAMES VALUES ($uuid,$name)")
+        dataSource.updateStatement("REPLACE INTO $TABLE_NAMES VALUES ('$uuid','$name')")
         playerNames[uuid] = name
     }
 }
