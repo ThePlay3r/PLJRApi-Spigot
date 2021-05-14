@@ -1,7 +1,6 @@
 package me.pljr.pljrapispigot.scoreboard
 
 import me.pljr.pljrapispigot.util.colorString
-import java.util.function.Consumer
 
 class ScoreboardBuilder(var title: String, var lines: MutableList<String>) {
 

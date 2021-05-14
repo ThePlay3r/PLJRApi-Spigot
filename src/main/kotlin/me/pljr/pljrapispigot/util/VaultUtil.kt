@@ -2,7 +2,6 @@ package me.pljr.pljrapispigot.util
 
 import me.pljr.pljrapispigot.PLJRApiSpigot
 import me.pljr.pljrapispigot.config.configuration.Settings
-import org.bukkit.Bukkit
 import org.bukkit.OfflinePlayer
 
 private val ECONOMY = PLJRApiSpigot.vaultEcon!!

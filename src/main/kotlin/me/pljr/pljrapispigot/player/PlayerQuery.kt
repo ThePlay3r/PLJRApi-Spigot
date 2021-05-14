@@ -2,9 +2,7 @@ package me.pljr.pljrapispigot.player
 
 import me.pljr.pljrapispigot.database.DataSource
 import org.bukkit.plugin.java.JavaPlugin
-import java.sql.SQLException
 import java.util.*
-import kotlin.collections.HashMap
 
 private const val TABLE_NAMES = "pljrapi_playernames"
 
