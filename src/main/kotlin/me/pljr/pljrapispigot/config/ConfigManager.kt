@@ -14,6 +14,7 @@ import me.pljr.pljrapispigot.title.TitleBuilder
 import me.pljr.pljrapispigot.util.colorString
 import me.pljr.pljrapispigot.util.isInt
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.Sound
@@ -27,7 +28,6 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
 import java.io.IOException
-import java.util.*
 
 class ConfigManager(private val plugin: JavaPlugin, private val fileName: String) {
     val file: File
@@ -141,17 +141,7 @@ class ConfigManager(private val plugin: JavaPlugin, private val fileName: String
      * @param path Path to the Double
      * @return Custom Long if one was found, default value otherwise.
      */
-    fun getLong(path: String, def: Long = -1): Long {
-        if (config.isSet(path)) {
-            if (config.isLong(path)) {
-                return config.getLong(path, def)
-            }
-            isNot("Long", getString(path), path)
-            return def
-        }
-        pathNotFound(path)
-        return def
-    }
+    fun getLong(path: String, def: Int = -1) = getInt(path, def).toLong()
 
     /**
      * Gets an Float from [FileConfiguration].
@@ -159,7 +149,7 @@ class ConfigManager(private val plugin: JavaPlugin, private val fileName: String
      * @param path Path to the Float.
      * @return Custom Float.
      */
-    fun getFloat(path: String, def: Double = -1.0): Float = getDouble(path, def).toFloat()
+    fun getFloat(path: String, def: Double = -1.0) = getDouble(path, def).toFloat()
 
     /**
      * Tries to get an Boolean from [FileConfiguration].
@@ -280,7 +270,7 @@ class ConfigManager(private val plugin: JavaPlugin, private val fileName: String
                 itemMeta.displayName(Component.text(getString("$path.name")))
             }
             if (config.isSet("$path.lore")) {
-                var lore: MutableList<Component> = ArrayList()
+                val lore: MutableList<Component> = ArrayList()
                 getStringList("$path.lore").forEach { lore.add(Component.text(it))  }
                 itemMeta.lore(lore)
             }
@@ -307,8 +297,14 @@ class ConfigManager(private val plugin: JavaPlugin, private val fileName: String
         config["$path.amount"] = itemStack.amount
         if (itemStack.hasItemMeta()){
             val itemMeta = itemStack.itemMeta
-            if (itemMeta.hasDisplayName()) config["$path.name"] = itemMeta.displayName()
-            if (itemMeta.hasLore()) config["$path.lore"] = itemMeta.lore()
+            if (itemMeta.hasDisplayName()) config["$path.name"] = MiniMessage.get().serialize(itemMeta.displayName()!!)
+            if (itemMeta.hasLore()) {
+                val lore : MutableList<String> = ArrayList()
+                itemMeta.lore()!!.forEach { line ->
+                    lore.add(MiniMessage.get().serialize(line))
+                }
+                config["$path.lore"] = lore
+            }
         }
         if (itemStack.enchantments.isNotEmpty()) setEnchantments("$path.enchantments", itemStack.enchantments)
     }
@@ -458,8 +454,8 @@ class ConfigManager(private val plugin: JavaPlugin, private val fileName: String
      * @param title [PLJRTitle] that should be set.
      */
     fun setPLJRTitle(path: String, title: PLJRTitle) {
-        config["$path.title"] = title.title
-        config["$path.subtitle"] = title.subtitle
+        config["$path.title"] = MiniMessage.get().serialize(title.title)
+        config["$path.subtitle"] = MiniMessage.get().serialize(title.subtitle)
         config["$path.in"] = title.inTime
         config["$path.stay"] = title.stayTime
         config["$path.out"] = title.outTime
@@ -483,7 +479,7 @@ class ConfigManager(private val plugin: JavaPlugin, private val fileName: String
     }
 
     /**
-     * Sets [PLJRSound] to [PLJRActionBar].
+     * Sets [PLJRSound] to [FileConfiguration].
      *
      * @param path Path to where the [PLJRSound] should be set.
      * @param sound [PLJRSound] that should be set.
