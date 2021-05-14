@@ -21,9 +21,9 @@ enum class SoundType(val defaultValue: PLJRSound) {
             soundType.clear()
             values().forEach {
                 if (!fileConfig.isSet(it.toString())){
-                    fileConfig[it.toString()] = it.defaultValue
+                    config.setPLJRSound(it.toString(), it.defaultValue)
                 } else {
-                    soundType[it] = config.getPLJRSound(soundType.toString())
+                    soundType[it] = config.getPLJRSound(it.toString())
                 }
             }
             config.save()

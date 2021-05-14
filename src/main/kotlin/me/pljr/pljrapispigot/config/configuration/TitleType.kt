@@ -29,9 +29,9 @@ enum class TitleType(val defaultValue: PLJRTitle) {
             titleType.clear()
             values().forEach {
                 if (!fileConfig.isSet(it.toString())){
-                    fileConfig[it.toString()] = it.defaultValue
+                    config.setPLJRTitle(it.toString(), it.defaultValue)
                 } else {
-                    titleType[it] = config.getPLJRTitle(titleType.toString())
+                    titleType[it] = config.getPLJRTitle(it.toString())
                 }
             }
             config.save()

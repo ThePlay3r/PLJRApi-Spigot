@@ -27,7 +27,7 @@ enum class Lang(val defaultValue: String) {
                 if (!fileConfig.isSet(it.toString())){
                     fileConfig[it.toString()] = it.defaultValue
                 } else {
-                    lang[it] = config.getString(lang.toString())
+                    lang[it] = config.getString(it.toString())
                 }
             }
             config.save()
