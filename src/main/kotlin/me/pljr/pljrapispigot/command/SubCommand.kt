@@ -1,10 +1,13 @@
 package me.pljr.pljrapispigot.command
 
+import me.pljr.pljrapispigot.PLJRApiSpigot
 import me.pljr.pljrapispigot.config.configuration.Lang
 import me.pljr.pljrapispigot.util.sendMessage
 import org.bukkit.command.CommandSender
 import org.bukkit.command.ConsoleCommandSender
 import org.bukkit.entity.Player
+import java.util.*
+import kotlin.collections.ArrayList
 
 abstract class SubCommand(val command: String, val permission: String) {
     val subCommands: MutableList<SubCommand> = ArrayList()
@@ -29,31 +32,36 @@ abstract class SubCommand(val command: String, val permission: String) {
         return emptyList()
     }
 
-    fun onCommand(sender: CommandSender, args: List<String>) : Boolean {
+    fun onCommand(sender: CommandSender, args: Array<String>) : Boolean {
         if (checkPerm(sender, permission)){
             if (args.isNotEmpty()) {
                 subCommands.forEach {
-                    if (it.equals(args[0])) {
-                        return it.onCommand(sender, args.drop(1))
+                    if (it.command.equals(args[0], ignoreCase = true)) {
+                        return it.onCommand(sender, args.copyOfRange(1, args.size))
                     }
                 }
-            } else if (sender is Player) {
-                onPlayerCommand(sender, args)
-                return true
-            } else if (sender is ConsoleCommandSender) {
-                onConsoleCommand(sender, args)
-                return true
-            } else {
-                sender.sendMessage("Unknown Sender")
-                return false
+            }
+            return when (sender) {
+                is Player -> {
+                    onPlayerCommand(sender, args)
+                    true
+                }
+                is ConsoleCommandSender -> {
+                    onConsoleCommand(sender, args)
+                    true
+                }
+                else -> {
+                    sender.sendMessage("Unknown Sender")
+                    false
+                }
             }
         }
         return false
     }
 
-    open fun onPlayerCommand(player: Player, args: List<String>) = sendMessage(player, Lang.COMMAND_RESPONSE_PLAYER.get())
+    open fun onPlayerCommand(player: Player, args: Array<String>) = sendMessage(player, Lang.COMMAND_RESPONSE_PLAYER.get())
 
-    open fun onConsoleCommand(sender: ConsoleCommandSender, args: List<String>) = sendMessage(sender, Lang.COMMAND_RESPONSE_CONSOLE.get())
+    open fun onConsoleCommand(sender: ConsoleCommandSender, args: Array<String>) = sendMessage(sender, Lang.COMMAND_RESPONSE_CONSOLE.get())
 
     /**
      * Checks if [CommandSender] has a specified permission, sends NO_PERM message and fails command.

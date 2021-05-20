@@ -27,6 +27,6 @@ abstract class MainCommand(command: String, permission: String) : CommandExecuto
         sender: CommandSender,
         command: Command,
         label: String,
-        args: Array<out String>
-    ) = onCommand(sender, args.asList())
+        args: Array<String>
+    ) = onCommand(sender, args)
 }
