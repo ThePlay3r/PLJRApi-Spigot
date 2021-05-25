@@ -69,6 +69,8 @@ tasks.install {
 }
 
 tasks.named<ShadowJar>("shadowJar") {
+    exclude("**/*.kotlin_metadata")
+
     archiveName = "$baseName-$version.$extension"
 
     relocate("com.cryptomorin.xseries", "me.pljr.pljrapispigot.xseries")
