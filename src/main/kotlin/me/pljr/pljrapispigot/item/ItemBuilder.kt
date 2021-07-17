@@ -11,17 +11,9 @@ import org.bukkit.inventory.ItemStack
 
 class ItemBuilder(itemStack: ItemStack) {
     val itemStack = ItemStack(itemStack)
-    var name = if (itemStack.hasItemMeta() && itemStack.itemMeta.hasDisplayName()) {
-        itemStack.itemMeta.displayName()!!
-    } else {
-        Component.text("")
-    }
+    var name = itemStack.itemMeta.displayName() ?: Component.text("")
     var amount = itemStack.amount
-    var lore: MutableList<Component> = if (itemStack.hasItemMeta() && itemStack.itemMeta.hasLore()) {
-        itemStack.itemMeta.lore()!!
-    } else {
-        ArrayList()
-    }
+    var lore = itemStack.itemMeta.lore() ?: ArrayList()
 
     constructor() : this(ItemStack(Material.STONE))
 

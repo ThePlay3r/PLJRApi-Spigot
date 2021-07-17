@@ -15,7 +15,7 @@ import org.bukkit.Location
  * @param text Lines of Hologram
  * @param ticks For how long the Hologram should last
  */
-fun create(location: Location?, text: List<String?>, ticks: Int) {
+fun createTemporaryHologram(location: Location, text: List<String>, ticks: Int) {
     if (!Settings.HOLOGRAMS) {
         Bukkit.getConsoleSender()
             .sendMessage(ChatColor.RED.toString() + "PLJRApi: Tried to create a HolographicDisplays Hologram while disabled in config!")

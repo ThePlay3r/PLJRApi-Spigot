@@ -15,9 +15,7 @@ import me.pljr.pljrapispigot.util.colorString
 import me.pljr.pljrapispigot.util.isInt
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.minimessage.MiniMessage
-import org.bukkit.ChatColor
-import org.bukkit.Material
-import org.bukkit.Sound
+import org.bukkit.*
 import org.bukkit.configuration.ConfigurationSection
 import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.configuration.file.YamlConfiguration
@@ -28,6 +26,7 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
 import java.io.IOException
+
 
 class ConfigManager(private val plugin: JavaPlugin, private val fileName: String) {
     val file: File
@@ -531,5 +530,43 @@ class ConfigManager(private val plugin: JavaPlugin, private val fileName: String
     fun setPLJRActionBar(path: String, actionBar: PLJRActionBar) {
         config["$path.message"] = actionBar.message
         config["$path.duration"] = actionBar.duration
+    }
+
+    /**
+     * Tries to get an [World] from [FileConfiguration].
+     *
+     * @param path Path to the [World]
+     * @return [World] if one was found, random from loaded worlds otherwise.
+     *
+     * @see .getString
+     * @see .isNotWorld
+     */
+    fun getWorld(path: String): World {
+        val worldName = getString(path)
+        if (Bukkit.getWorld(worldName) == null) {
+            isNot("World", worldName, path)
+            return Bukkit.getWorlds()[0]
+        }
+        return Bukkit.getWorld(worldName)!!
+    }
+
+    /**
+     * Gets an [Location] from [FileConfiguration].
+     *
+     * @param path Path to the [Location]
+     * @return Custom [Location] from the settings.
+     *
+     * @see .getWorld
+     * @see .getInt
+     * @see .getFloat
+     */
+    fun getLocation(path: String): Location {
+        val world: World = getWorld("$path.world")
+        val x = getDouble("$path.x")
+        val y = getDouble("$path.y")
+        val z = getDouble("$path.z")
+        val yaw = getFloat("$path.yaw")
+        val pitch = getFloat("$path.pitch")
+        return Location(world, x, y, z, yaw, pitch)
     }
 }

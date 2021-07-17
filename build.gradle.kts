@@ -41,14 +41,19 @@ repositories {
 dependencies {
     testImplementation(kotlin("test-junit"))
 
+    // Kotlin
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("com.github.cryptomorin:XSeries:7.9.1.1")
-    implementation("com.zaxxer:HikariCP:4.0.1")
+
+    // Quality Of Life
     implementation("xyz.xenondevs:particle:1.5.1")
-    implementation("net.kyori:adventure-api:4.7.0")
+    implementation("com.github.cryptomorin:XSeries:7.9.1.1")
+
+    // Kyori
     implementation("net.kyori:adventure-text-minimessage:4.1.0-SNAPSHOT")
     implementation("net.kyori:adventure-platform-bukkit:4.0.0-SNAPSHOT")
+
     implementation("org.bstats:bstats-bukkit:2.2.1")
+    implementation("com.zaxxer:HikariCP:4.0.1")
 
     compileOnly("com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT")
     compileOnly("com.github.MilkBowl:VaultAPI:1.7")
@@ -76,6 +81,7 @@ tasks.named<ShadowJar>("shadowJar") {
     relocate("com.cryptomorin.xseries", "me.pljr.pljrapispigot.xseries")
     relocate("xyz.xenondevs", "me.pljr.pljrapispigot.xenondevs")
     relocate("org.bstats", "me.pljr.pljrapispigot.bstats")
+    relocate("net.kyori", "me.pljr.pljrapispigot.kyori")
 }
 
 tasks.named<Jar>("jar") {
