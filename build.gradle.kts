@@ -55,7 +55,7 @@ dependencies {
     implementation("org.bstats:bstats-bukkit:2.2.1")
     implementation("com.zaxxer:HikariCP:4.0.1")
 
-    compileOnly("com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT")
+    compileOnly("com.destroystokyo.paper:paper-api:1.17.1")
     compileOnly("com.github.MilkBowl:VaultAPI:1.7")
     compileOnly("me.clip:placeholderapi:2.10.6")
     compileOnly("com.gmail.filoghost.holographicdisplays:holographicdisplays-api:2.4.0")
