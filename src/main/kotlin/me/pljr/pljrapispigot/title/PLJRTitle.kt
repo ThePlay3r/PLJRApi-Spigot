@@ -9,7 +9,10 @@ class PLJRTitle(val title: Component, val subtitle: Component, val inTime: Long,
 
     fun send(player: Player) = sendTitle(player, this)
 
-    fun broadcast() = broadcastTitle(this)
+    fun broadcast() = {
+        println("log")
+        broadcastTitle(this)
+    }
 
     fun toAdventureTitle(): Title {
         return Title.title(title, subtitle,
